@@ -64,6 +64,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.nudLangSeed = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gradlib = new System.Windows.Forms.Label();
             this.graficoObtenida = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dtgIntervalos = new System.Windows.Forms.DataGridView();
             this.columna1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,7 +72,6 @@
             this.columna4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gradlib = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudNumInvervals)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRandomNumbersCount)).BeginInit();
@@ -392,10 +392,25 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             // 
+            // gradlib
+            // 
+            this.gradlib.AutoSize = true;
+            this.gradlib.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gradlib.Location = new System.Drawing.Point(738, 672);
+            this.gradlib.Name = "gradlib";
+            this.gradlib.Size = new System.Drawing.Size(184, 25);
+            this.gradlib.TabIndex = 11;
+            this.gradlib.Text = "Grados de Libertad:";
+            this.gradlib.Visible = false;
+            // 
             // graficoObtenida
             // 
             this.graficoObtenida.AllowDrop = true;
             chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisX.Title = "Intervalos / Clases";
+            chartArea1.AxisX.TitleAlignment = System.Drawing.StringAlignment.Near;
+            chartArea1.AxisY.Title = "Frecuencia";
+            chartArea1.AxisY.TitleAlignment = System.Drawing.StringAlignment.Near;
             chartArea1.Name = "ChartArea1";
             this.graficoObtenida.ChartAreas.Add(chartArea1);
             this.graficoObtenida.ImeMode = System.Windows.Forms.ImeMode.On;
@@ -477,17 +492,6 @@
             this.Column3.HeaderText = "C (Acum)";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
-            // 
-            // gradlib
-            // 
-            this.gradlib.AutoSize = true;
-            this.gradlib.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gradlib.Location = new System.Drawing.Point(738, 672);
-            this.gradlib.Name = "gradlib";
-            this.gradlib.Size = new System.Drawing.Size(184, 25);
-            this.gradlib.TabIndex = 11;
-            this.gradlib.Text = "Grados de Libertad:";
-            this.gradlib.Visible = false;
             // 
             // Main
             // 

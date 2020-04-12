@@ -48,14 +48,15 @@ namespace SIM_G7_TP1
 
         private void generateCongrLineal()
         {
-            int rndNumCount = Convert.ToInt16(nudRandomNumbersCount.Value);
-            int seed = Convert.ToInt16(nudCongrLinealSemilla.Value);
-            int constMulti = Convert.ToInt16(nudCongrLinealConstMulti.Value);
-            int constAditiv = Convert.ToInt16(nudCongrLinealConstAditiva.Value);
-            int magMod = Convert.ToInt16(nudCongrLinealMagnitudModulo.Value);
+            var rndNumCount = Convert.ToInt16(nudRandomNumbersCount.Value);
+            var seed = Convert.ToInt16(nudCongrLinealSemilla.Value);
+            var constMulti = Convert.ToInt16(nudCongrLinealConstMulti.Value);
+            var constAditiv = Convert.ToInt16(nudCongrLinealConstAditiva.Value);
+            var magMod = Convert.ToInt16(nudCongrLinealMagnitudModulo.Value);
 
-            RandomGenerator rndGen = new RandomGenerator(seed, constMulti, magMod, constAditiv);
+            if (!linerControl(seed, constMulti, magMod, constAditiv)) return;
 
+            var rndGen = new RandomGenerator(seed, constMulti, magMod, constAditiv);
             randomNumbers = rndGen.generateCongrLinealRandom(rndNumCount);
             fillDGNumbers(randomNumbers);
             generateFrecuencies();
@@ -68,8 +69,9 @@ namespace SIM_G7_TP1
             int constMulti = Convert.ToInt16(nudCongrMultiConstMulti.Value);
             int magMod = Convert.ToInt16(nudCongrMultiMagnitudModulo.Value);
 
-            RandomGenerator rndGen = new RandomGenerator(seed, constMulti, magMod, 0);
+            if (congrControl(seed, constMulti, magMod)) return;
 
+            var rndGen = new RandomGenerator(seed, constMulti, magMod, 0);
             randomNumbers = rndGen.generateCongrMultiRandom(rndNumCount);
             fillDGNumbers(randomNumbers);
             generateFrecuencies();
@@ -80,12 +82,14 @@ namespace SIM_G7_TP1
             RandomGenerator gen = new RandomGenerator();
             int numIntervals = Convert.ToInt16(nudNumInvervals.Value);
 
-            double[,] frecuencias = gen.validateFrecuencies(randomNumbers, numIntervals);
-
-            fillDBFrecuencies(frecuencias);
-            gradlib.Visible = true;
-            gradlib.Text = $"Grados de Libertad = {(frecuencias.GetLength(0) - 1)}";
-            fillChart(frecuencias);
+            if (numIntervals > 0)
+            {
+                var frecuencias = gen.validateFrecuencies(randomNumbers, numIntervals);
+                fillDBFrecuencies(frecuencias);
+                gradlib.Visible = true;
+                gradlib.Text = $"Grados de Libertad = {(frecuencias.GetLength(0) - 1)}";
+                fillChart(frecuencias);
+            }
         }
 
         private void fillDGNumbers(double[] num)
@@ -117,7 +121,7 @@ namespace SIM_G7_TP1
             graficoObtenida.Series[0].Points.Clear();
             graficoObtenida.Series[1].Points.Clear();
 
-            for (int f = 0; f < frec.GetLength(0); f++)
+            for (var f = 0; f < frec.GetLength(0); f++)
             {
                 intervalo = $"{frec[f, 1]} - {frec[f, 0]}";
                 graficoObtenida.Series["Observada"].Points.AddXY(frec[f, 1], frec[f, 2]);
@@ -132,7 +136,6 @@ namespace SIM_G7_TP1
             graficoObtenida.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             //graficoObtenida.ChartAreas[0].AxisX.ScaleView.Zoom(0, 0.5);
             graficoObtenida.Series["Observada"].IsVisibleInLegend = true;
-           
 
         }
 
@@ -154,5 +157,47 @@ namespace SIM_G7_TP1
             fillDGNumbers(randomNumbers);
             generateFrecuencies();
         }
+
+        private bool linerControl(int semilla, int a, int m, int c)
+        {
+            if (a == 0 && m == 0 && c == 0) return false;
+
+            var cond_a = (a - 1) % 4 == 0;
+            var cond_m = Math.Log(m, 2) % 1 == 0 && m != 1; 
+
+            var a1 = Math.Max(m, c);
+            var b1 = Math.Min(m, c);
+            int resultado;
+            do
+            {
+                resultado = b1;  
+                b1 = a1 % b1;    
+                a1 = resultado;  
+            }
+            while(b1 != 0);
+
+
+            if (cond_a && cond_m && resultado == 1) return true;
+
+            var dialogResult = MessageBox.Show(@"Alguno de los valores es Incorrecto y puede no cumplir con las 
+condiciones necesarias para el buen funcionamiento. ¿Desea Continuar? ", @"Control de valores", MessageBoxButtons.YesNo);
+            return (dialogResult == DialogResult.Yes);
+        }
+
+        private bool congrControl(int semilla, int a, int m)
+        {
+            if (a == 0 && m == 0) return false;
+
+            var cond_a = ((a - 3) % 8 == 0 || (a - 5) % 8 == 0 ) && a != 1;
+            var cond_m = Math.Log(m, 2) % 1 == 0 && m != 1; 
+            var cond_sem = semilla % 2 != 0;
+
+            if (cond_a && cond_m && cond_sem) return true;
+
+            var dialogResult = MessageBox.Show(@"Alguno de los valores es Incorrecto y puede no cumplir con las 
+condiciones necesarias para el buen funcionamiento. ¿Desea Continuar? ", @"Control de valores", MessageBoxButtons.YesNo);
+            return (dialogResult == DialogResult.Yes);
+        }
+
     }
 }
