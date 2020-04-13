@@ -98,7 +98,7 @@ namespace SIM_G7_TP1.Models
             for (int i = 0; i < count; i++)
             {
                 int newSeed = generateSeed();
-                double rnd = ((double)newSeed) / (M - 1);
+                double rnd = ((double)newSeed) / (M);
 
                 nums[i] = Math.Round(rnd, 4);
             }
@@ -161,7 +161,7 @@ namespace SIM_G7_TP1.Models
 
         public int countNumbersWithinInterval(double low, double high, double[] nums)
         {
-            return nums.Count(item => item >= low && item <= high);
+            return nums.Count(item => item >= low && item < high);
         }
     }
 }
