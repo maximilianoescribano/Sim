@@ -137,13 +137,14 @@ namespace SIM_G7_TP1
             graficoObtenida.Series["Observada"].IsVisibleInLegend = true;
             graficoObtenida.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Number;
             graficoObtenida.ChartAreas[0].AxisX.Minimum = 0;
-            graficoObtenida.ChartAreas[0].AxisX.Maximum = 1;
+            graficoObtenida.ChartAreas[0].AxisX.Maximum = 1 + (frec[0, 1] - frec[0, 0] / 2);
 
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             dtgNumeros.Rows.Clear();
+            dtgIntervalos.Rows.Clear();
             graficoObtenida.Series[0].Points.Clear();
             graficoObtenida.Series[1].Points.Clear();
             gradlib.Visible = false;
