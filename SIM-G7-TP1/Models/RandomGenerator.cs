@@ -142,8 +142,8 @@ namespace SIM_G7_TP1.Models
             {
                 low = high;
                 var high1 = Math.Round(((double)1 / intervals), 4);
-                high = Math.Round(low + high1,2);
-                frecEsp = ((double)nums.Length) / intervals;
+                high = Math.Round(low + high1, 4);
+                frecEsp = Math.Round(((double)nums.Length) / intervals, 4);
                 frecObs = countNumbersWithinInterval(low, high, nums);
                 calcEst = Math.Round(Math.Pow(frecObs - frecEsp, 2) / frecEsp, 4);
                 calcEstAcum += calcEst;

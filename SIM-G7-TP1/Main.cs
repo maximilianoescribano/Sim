@@ -87,7 +87,7 @@ namespace SIM_G7_TP1
                 var frecuencias = gen.validateFrecuencies(randomNumbers, numIntervals);
                 fillDBFrecuencies(frecuencias);
                 gradlib.Visible = true;
-                gradlib.Text = $"Grados de Libertad = {(frecuencias.GetLength(0) - 1)}";
+                gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencias.GetLength(0) - 1));
                 fillChart(frecuencias);
             }
         }
@@ -108,7 +108,7 @@ namespace SIM_G7_TP1
 
             for (var i = 0; i < frec.GetLength(0); i++)
             {
-                intervalo = $"{frec[i, 0]} - {frec[i, 1]}";
+                intervalo = String.Format("{0} - {1}", frec[i, 0], frec[i, 1]);
                 dtgIntervalos.Rows.Add(intervalo, frec[i, 2], frec[i, 3], frec[i, 4], frec[i, 5]);
             }
 
@@ -123,7 +123,7 @@ namespace SIM_G7_TP1
 
             for (var f = 0; f < frec.GetLength(0); f++)
             {
-                intervalo = $"{frec[f, 1]} - {frec[f, 0]}";
+                intervalo = String.Format("{0} - {1}", frec[f, 1], frec[f, 0]);
                 graficoObtenida.Series["Observada"].Points.AddXY(frec[f, 1], frec[f, 2]);
                 graficoObtenida.Series["Esperada"].Points.AddXY(frec[f, 1], frec[f, 3]);
                 graficoObtenida.Series["Observada"].Points[f].AxisLabel = intervalo;
@@ -134,8 +134,10 @@ namespace SIM_G7_TP1
             graficoObtenida.Series["Observada"].YValueType = ChartValueType.Int32;
             graficoObtenida.ChartAreas[0].AxisX.LabelStyle.Interval = (frec[0, 1] - frec[0, 0]/2);
             graficoObtenida.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
-            //graficoObtenida.ChartAreas[0].AxisX.ScaleView.Zoom(0, 0.5);
             graficoObtenida.Series["Observada"].IsVisibleInLegend = true;
+            graficoObtenida.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Number;
+            graficoObtenida.ChartAreas[0].AxisX.Minimum = 0;
+            graficoObtenida.ChartAreas[0].AxisX.Maximum = 1;
 
         }
 

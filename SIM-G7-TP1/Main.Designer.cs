@@ -33,6 +33,7 @@
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -465,6 +466,8 @@
             // 
             // columna1
             // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columna1.DefaultCellStyle = dataGridViewCellStyle2;
             this.columna1.HeaderText = "Intervalos";
             this.columna1.Name = "columna1";
             this.columna1.ReadOnly = true;
@@ -565,13 +568,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown nudRandomNumbersCount;
         private System.Windows.Forms.Label label10;
+        internal System.Windows.Forms.DataVisualization.Charting.Chart graficoObtenida;
+        private System.Windows.Forms.Label gradlib;
         private System.Windows.Forms.DataGridViewTextBoxColumn columna1;
         private System.Windows.Forms.DataGridViewTextBoxColumn columna3;
         private System.Windows.Forms.DataGridViewTextBoxColumn columna4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        internal System.Windows.Forms.DataVisualization.Charting.Chart graficoObtenida;
-        private System.Windows.Forms.Label gradlib;
     }
 }
 
