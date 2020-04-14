@@ -85,10 +85,18 @@ namespace SIM_G7_TP1.Models
 
             for (var i = 0; i < count; i++)
             {
-                nums[i] = Math.Round(rnd.NextDouble(), 4);
+                //nums[i] = Math.Round(rnd.NextDouble(), 4);
+                nums[i] = TruncateDecimal(rnd.NextDouble(), 4);
             }
 
             return nums;
+        }
+
+        public double TruncateDecimal(double value, int precision)
+        {
+            double step = (double)Math.Pow(10, precision);
+            double tmp = Math.Truncate(step * value);
+            return tmp / step;
         }
 
         public double[] generateCongrLinealRandom(int count)
@@ -100,7 +108,8 @@ namespace SIM_G7_TP1.Models
                 int newSeed = generateSeed();
                 double rnd = ((double)newSeed) / (M);
 
-                nums[i] = Math.Round(rnd, 4);
+                //nums[i] = Math.Round(rnd, 4);
+                nums[i] = TruncateDecimal(rnd, 4);
             }
 
             return nums;

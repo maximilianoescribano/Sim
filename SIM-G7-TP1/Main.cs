@@ -41,9 +41,11 @@ namespace SIM_G7_TP1
             int seed = Convert.ToInt16(nudLangSeed.Value);
             RandomGenerator rndGen = new RandomGenerator(seed);
 
+            this.Cursor = Cursors.WaitCursor;
             randomNumbers = rndGen.generateLangRandom(rndNumCount);
             fillDGNumbers(randomNumbers);
             generateFrecuencies();
+            this.Cursor = Cursors.Default;
         }
 
         private void generateCongrLineal()
@@ -54,12 +56,15 @@ namespace SIM_G7_TP1
             var constAditiv = Convert.ToInt16(nudCongrLinealConstAditiva.Value);
             var magMod = Convert.ToInt16(nudCongrLinealMagnitudModulo.Value);
 
-            if (!linerControl(seed, constMulti, magMod, constAditiv)) return;
+            //if (!linerControl(seed, constMulti, magMod, constAditiv)) return;
 
             var rndGen = new RandomGenerator(seed, constMulti, magMod, constAditiv);
+
+            this.Cursor = Cursors.WaitCursor;
             randomNumbers = rndGen.generateCongrLinealRandom(rndNumCount);
             fillDGNumbers(randomNumbers);
             generateFrecuencies();
+            this.Cursor = Cursors.Default;
         }
 
         private void generateCongrMulti()
@@ -69,12 +74,15 @@ namespace SIM_G7_TP1
             int constMulti = Convert.ToInt16(nudCongrMultiConstMulti.Value);
             int magMod = Convert.ToInt16(nudCongrMultiMagnitudModulo.Value);
 
-            if (congrControl(seed, constMulti, magMod)) return;
+            //if (congrControl(seed, constMulti, magMod)) return;
 
             var rndGen = new RandomGenerator(seed, constMulti, magMod, 0);
+
+            this.Cursor = Cursors.WaitCursor;
             randomNumbers = rndGen.generateCongrMultiRandom(rndNumCount);
             fillDGNumbers(randomNumbers);
             generateFrecuencies();
+            this.Cursor = Cursors.Default;
         }
 
         private void generateFrecuencies()

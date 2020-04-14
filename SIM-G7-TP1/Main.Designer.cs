@@ -157,6 +157,7 @@
             this.dtgNumeros.Location = new System.Drawing.Point(84, 259);
             this.dtgNumeros.Name = "dtgNumeros";
             this.dtgNumeros.RowHeadersVisible = false;
+            this.dtgNumeros.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgNumeros.Size = new System.Drawing.Size(173, 426);
             this.dtgNumeros.StandardTab = true;
             this.dtgNumeros.TabIndex = 5;
@@ -461,6 +462,7 @@
             this.dtgIntervalos.Name = "dtgIntervalos";
             this.dtgIntervalos.ReadOnly = true;
             this.dtgIntervalos.RowHeadersVisible = false;
+            this.dtgIntervalos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dtgIntervalos.Size = new System.Drawing.Size(991, 147);
             this.dtgIntervalos.TabIndex = 8;
             // 
