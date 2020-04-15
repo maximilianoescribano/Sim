@@ -139,6 +139,25 @@ namespace SIM_G7_TP1.Models
 
         public double[,] validateFrecuencies(double[] nums, int intervals)
         {
+            double[,] frecuencies = buildIntervals(intervals, nums.Length);
+            int index = 0;
+            int frecObs = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                index = getIndexIntervalForNumber(nums[i], frecuencies);
+                frecObs = (int)frecuencies[index, 2];
+                frecObs++;
+                frecuencies[index, 2] = frecObs;
+            }
+
+            return calculateTestValues(frecuencies);
+
+            //return oldMethod(nums, intervals);
+        }
+
+        private double[,] oldMethod(double[] nums, int intervals)
+        {
             double[,] frecuencies = new double[intervals, 6];
             double low = 0;
             double high = 0;
@@ -168,9 +187,68 @@ namespace SIM_G7_TP1.Models
             return frecuencies;
         }
 
+        private double[,] calculateTestValues(double[,] intervals)
+        {
+            double calcEst = 0;
+            double calcEstAcum = 0;
+            double frecEsp = 0;
+            int frecObs = 0;
+
+            for (int i = 0; i < intervals.GetLength(0); i++)
+            {
+                frecEsp = intervals[i, 3];
+                frecObs = (int)intervals[i, 2];
+
+                calcEst = Math.Round(Math.Pow(frecObs - frecEsp, 2) / frecEsp, 4);
+                calcEstAcum += calcEst;
+
+                intervals[i, 4] = calcEst;
+                intervals[i, 5] = calcEstAcum;
+            }
+
+            return intervals;
+        }
+
+        private double[,] buildIntervals(int numIntervals, int numsTotals) 
+        {
+            double[,] intervals = new double[numIntervals, 6];
+            double low = 0;
+            double high = 0;
+            double frecEsp = 0;
+
+            for (int i = 0; i < numIntervals; i++)
+            {
+                low = high;
+                var high1 = Math.Round(((double)1 / numIntervals), 4);
+                high = Math.Round(low + high1, 4);
+                intervals[i, 0] = low;
+                intervals[i, 1] = high;
+                frecEsp = Math.Round(((double)numsTotals) / numIntervals, 4);
+                intervals[i, 3] = frecEsp;
+            }
+
+            return intervals;
+        }
+
         public int countNumbersWithinInterval(double low, double high, double[] nums)
         {
             return nums.Count(item => item >= low && item < high);
         }
+
+        public int getIndexIntervalForNumber(double num, double[,] intervals)
+        {
+            int index = 0;
+
+            for (int i = 0; i < intervals.GetLength(0); i++)
+            {
+                if (num >= intervals[i, 0] && num < intervals[i, 1])
+                {
+                    return i;
+                }
+            }
+
+            return index;
+        }
+ 
     }
 }

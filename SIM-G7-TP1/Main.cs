@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -13,6 +14,7 @@ namespace SIM_G7_TP1
     public partial class Main : Form
     {
         double[] randomNumbers;
+        Stopwatch timer;
 
         public Main()
         {
@@ -37,12 +39,16 @@ namespace SIM_G7_TP1
 
         private void generateLanguageRandom()
         {
-            int rndNumCount = Convert.ToInt16(nudRandomNumbersCount.Value);
+            Int32 rndNumCount = Convert.ToInt32(nudRandomNumbersCount.Value);
             int seed = Convert.ToInt16(nudLangSeed.Value);
             RandomGenerator rndGen = new RandomGenerator(seed);
 
             this.Cursor = Cursors.WaitCursor;
+            timer = Stopwatch.StartNew();
             randomNumbers = rndGen.generateLangRandom(rndNumCount);
+            timer.Stop();
+            lblElapsedTimeGenerator.Text = timer.ElapsedMilliseconds.ToString();
+
             fillDGNumbers(randomNumbers);
             generateFrecuencies();
             this.Cursor = Cursors.Default;
@@ -92,7 +98,11 @@ namespace SIM_G7_TP1
 
             if (numIntervals > 0)
             {
+                timer = Stopwatch.StartNew();
                 var frecuencias = gen.validateFrecuencies(randomNumbers, numIntervals);
+                timer.Stop();
+                lblElapsedTimeFrecuencies.Text = timer.ElapsedMilliseconds.ToString();
+
                 fillDBFrecuencies(frecuencias);
                 gradlib.Visible = true;
                 gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencias.GetLength(0) - 1));
@@ -135,6 +145,7 @@ namespace SIM_G7_TP1
                 graficoObtenida.Series["Observada"].Points.AddXY(frec[f, 1], frec[f, 2]);
                 graficoObtenida.Series["Esperada"].Points.AddXY(frec[f, 1], frec[f, 3]);
                 graficoObtenida.Series["Observada"].Points[f].AxisLabel = intervalo;
+
             }
 
             graficoObtenida.Series["Observada"].ChartType = SeriesChartType.Column;
@@ -146,7 +157,8 @@ namespace SIM_G7_TP1
             graficoObtenida.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Number;
             graficoObtenida.ChartAreas[0].AxisX.Minimum = 0;
             graficoObtenida.ChartAreas[0].AxisX.Maximum = 1 + (frec[0, 1] - frec[0, 0] / 2);
-
+            //graficoObtenida.Series["Observada"]["PointWidth"] = (0.6).ToString();
+            //graficoObtenida.Series["Esperada"]["PointWidth"] = (0.6).ToString();
         }
 
         private void btnClear_Click(object sender, EventArgs e)

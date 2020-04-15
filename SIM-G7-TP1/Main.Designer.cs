@@ -65,6 +65,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.nudLangSeed = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblElapsedTimeFrecuencies = new System.Windows.Forms.Label();
             this.gradlib = new System.Windows.Forms.Label();
             this.graficoObtenida = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.dtgIntervalos = new System.Windows.Forms.DataGridView();
@@ -73,6 +74,7 @@
             this.columna4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblElapsedTimeGenerator = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudNumInvervals)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRandomNumbersCount)).BeginInit();
@@ -96,6 +98,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblElapsedTimeGenerator);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.nudNumInvervals);
@@ -385,6 +388,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lblElapsedTimeFrecuencies);
             this.groupBox2.Controls.Add(this.gradlib);
             this.groupBox2.Controls.Add(this.graficoObtenida);
             this.groupBox2.Controls.Add(this.dtgIntervalos);
@@ -393,6 +397,16 @@
             this.groupBox2.Size = new System.Drawing.Size(1003, 700);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
+            // 
+            // lblElapsedTimeFrecuencies
+            // 
+            this.lblElapsedTimeFrecuencies.AutoSize = true;
+            this.lblElapsedTimeFrecuencies.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblElapsedTimeFrecuencies.Location = new System.Drawing.Point(19, 676);
+            this.lblElapsedTimeFrecuencies.Name = "lblElapsedTimeFrecuencies";
+            this.lblElapsedTimeFrecuencies.Size = new System.Drawing.Size(48, 13);
+            this.lblElapsedTimeFrecuencies.TabIndex = 12;
+            this.lblElapsedTimeFrecuencies.Text = "label11";
             // 
             // gradlib
             // 
@@ -498,6 +512,16 @@
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
             // 
+            // lblElapsedTimeGenerator
+            // 
+            this.lblElapsedTimeGenerator.AutoSize = true;
+            this.lblElapsedTimeGenerator.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblElapsedTimeGenerator.Location = new System.Drawing.Point(86, 243);
+            this.lblElapsedTimeGenerator.Name = "lblElapsedTimeGenerator";
+            this.lblElapsedTimeGenerator.Size = new System.Drawing.Size(48, 13);
+            this.lblElapsedTimeGenerator.TabIndex = 13;
+            this.lblElapsedTimeGenerator.Text = "label11";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -577,6 +601,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn columna4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.Label lblElapsedTimeFrecuencies;
+        private System.Windows.Forms.Label lblElapsedTimeGenerator;
     }
 }
 
