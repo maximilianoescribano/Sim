@@ -136,10 +136,30 @@ namespace SIM_G7_TP1.Models
             return nums;
         }
 
-
-        public double[,] validateFrecuencies(double[] nums, int intervals)
+        public double[] generateUniformDistrib(int lowBind, int highBind, double[] randoms)
         {
-            double[,] frecuencies = buildIntervals(intervals, nums.Length);
+            double[] randNormal = new double[randoms.Length];
+
+            for (int i = 0; i < randoms.Length; i++)
+            {
+                randNormal[i] = this.TruncateDecimal(lowBind + randoms[i] * (highBind - lowBind), 4);
+            }
+
+            return randNormal;
+        }
+
+        public double[] generateNormalDistrib(int media, int desviacion, double[] randoms)
+        {
+            double[] randNormal = new double[randoms.Length];
+
+
+
+            return randNormal;
+        }
+
+        public double[,] validateFrecuencies(double[] nums, int intervals, int lowBind = 0, int highBind = 1)
+        {
+            double[,] frecuencies = buildIntervals(intervals, nums.Length, lowBind, highBind);
             int index = 0;
             int frecObs = 0;
 
@@ -209,18 +229,21 @@ namespace SIM_G7_TP1.Models
             return intervals;
         }
 
-        private double[,] buildIntervals(int numIntervals, int numsTotals) 
+        private double[,] buildIntervals(int numIntervals, int numsTotals, int lowBind = 0, int highBind = 1)
         {
             double[,] intervals = new double[numIntervals, 6];
             double low = 0;
             double high = 0;
             double frecEsp = 0;
+            double range = highBind - lowBind;
+            double intervalRange = Math.Round(((double)range / numIntervals), 4);
 
+            low = lowBind;
+            high = lowBind;
             for (int i = 0; i < numIntervals; i++)
             {
                 low = high;
-                var high1 = Math.Round(((double)1 / numIntervals), 4);
-                high = Math.Round(low + high1, 4);
+                high = Math.Round(low + intervalRange, 4);
                 intervals[i, 0] = low;
                 intervals[i, 1] = high;
                 frecEsp = Math.Round(((double)numsTotals) / numIntervals, 4);

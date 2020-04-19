@@ -16,3 +16,4 @@ C:\FACU\SIM\Sim\SIM-G7-TP1\obj\Debug\SIM_G7_TP1.Properties.Resources.resources
 C:\FACU\SIM\Sim\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.csproj.GenerateResource.Cache
 C:\FACU\SIM\Sim\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.exe
 C:\FACU\SIM\Sim\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.pdb
+C:\FACU\SIM\Sim\SIM-G7-TP1\obj\Debug\SIM_G7_TP1.TP3.resources

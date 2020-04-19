@@ -14,7 +14,7 @@ namespace SIM_G7_TP1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Main());
+            Application.Run(new TP3());
         }
     }
 }
