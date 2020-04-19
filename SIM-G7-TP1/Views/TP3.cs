@@ -40,17 +40,21 @@ namespace SIM_G7_TP1
         private void generateNormalDistrib()
         {
             Int32 rndNumCount = Convert.ToInt32(nudRandomNumbersCount.Value);
-            int seed = Convert.ToInt16(nudLangSeed.Value);
+            int seed = Convert.ToInt16(nudNormalDistribSeed.Value);
+            double media = Convert.ToDouble(nudNormalDistribMedia.Value);
+            double deviation = Convert.ToDouble(nudNormalDistribDeviation.Value);
+
             RandomGenerator rndGen = new RandomGenerator(seed);
 
             this.Cursor = Cursors.WaitCursor;
             timer = Stopwatch.StartNew();
             randomNumbers = rndGen.generateLangRandom(rndNumCount);
+            randomNumbers = rndGen.generateNormalDistrib(media, deviation, randomNumbers);
             timer.Stop();
             lblElapsedTimeGenerator.Text = timer.ElapsedMilliseconds.ToString();
 
             fillDGNumbers(randomNumbers);
-            generateFrecuencies();
+            generateFrecuencies(rndGen.MenorValor, rndGen.MayorValor);
             this.Cursor = Cursors.Default;
         }
 
@@ -71,39 +75,40 @@ namespace SIM_G7_TP1
             randomNumbers = rndGen.generateLangRandom(rndNumCount);
             randomNumbers = rndGen.generateUniformDistrib(A, B, randomNumbers);
             fillDGNumbers(randomNumbers);
-            generateFrecuencies();
+            //generateFrecuencies();
             this.Cursor = Cursors.Default;
         }
 
         private void generateExponentialDistrib()
         {
             int rndNumCount = Convert.ToInt16(nudRandomNumbersCount.Value);
-            int seed = Convert.ToInt16(nudCongrMultiSeed.Value);
-            int constMulti = Convert.ToInt16(nudCongrMultiConstMulti.Value);
-            int magMod = Convert.ToInt16(nudCongrMultiMagnitudModulo.Value);
+            int seed = Convert.ToInt16(nudExponentialDistribSeed.Value);
+            double lambda = Convert.ToDouble(nudExponentialDistribLambda.Value);
+
 
             //if (congrControl(seed, constMulti, magMod)) return;
 
-            var rndGen = new RandomGenerator(seed, constMulti, magMod, 0);
+            var rndGen = new RandomGenerator(seed);
 
             this.Cursor = Cursors.WaitCursor;
-            randomNumbers = rndGen.generateCongrMultiRandom(rndNumCount);
+            randomNumbers = rndGen.generateLangRandom(rndNumCount);
+            randomNumbers = rndGen.generateExponentialDistrib(lambda, randomNumbers);
             fillDGNumbers(randomNumbers);
-            generateFrecuencies();
+
+            generateFrecuencies(rndGen.MenorValor, rndGen.MayorValor);
             this.Cursor = Cursors.Default;
         }
 
-        private void generateFrecuencies()
+        private void generateFrecuencies(double min, double max)
         {
             RandomGenerator gen = new RandomGenerator();
             int numIntervals = Convert.ToInt16(nudNumInvervals.Value);
-            int A = Convert.ToInt16(nudUniformDistribA.Value);
-            int B = Convert.ToInt16(nudUniformDistribB.Value);
+
 
             if (numIntervals > 0)
             {
                 timer = Stopwatch.StartNew();
-                var frecuencias = gen.validateFrecuencies(randomNumbers, numIntervals, A, B);
+                var frecuencias = gen.validateFrecuencies(randomNumbers, numIntervals, min, max);
                 timer.Stop();
                 lblElapsedTimeFrecuencies.Text = timer.ElapsedMilliseconds.ToString();
 
@@ -173,17 +178,6 @@ namespace SIM_G7_TP1
             graficoObtenida.Series[0].Points.Clear();
             graficoObtenida.Series[1].Points.Clear();
             gradlib.Visible = false;
-        }
-
-        private void generateTestChi()
-        {
-            randomNumbers = new[]
-            {
-                0.15, 0.22, 0.41, 0.65, 0.84, 0.81, 0.62, 0.45, 0.32, 0.07, 0.11, 0.29, 0.58, 0.73, 0.93, 0.97, 0.79,
-                0.55, 0.35, 0.09, 0.99, 0.51, 0.35, 0.02, 0.19, 0.24, 0.98, 0.10, 0.31, 0.17
-            };
-            fillDGNumbers(randomNumbers);
-            generateFrecuencies();
         }
 
         private bool linerControl(int semilla, int a, int m, int c)

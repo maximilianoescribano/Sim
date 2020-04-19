@@ -148,16 +148,57 @@ namespace SIM_G7_TP1.Models
             return randNormal;
         }
 
-        public double[] generateNormalDistrib(int media, int desviacion, double[] randoms)
+        public double[] generateExponentialDistrib(double lambda, double[] randoms)
         {
             double[] randNormal = new double[randoms.Length];
+            double x = 0;
+            MayorValor = 0;
+            MenorValor = Double.MaxValue;;
 
+            for (int i = 0; i < randoms.Length; i++)
+            {
+                x = (Math.Log(1 - randoms[i])) / -lambda;
+                randNormal[i] = this.TruncateDecimal(x, 4);
+            }
 
+            setMinMax(randNormal);
 
             return randNormal;
         }
 
-        public double[,] validateFrecuencies(double[] nums, int intervals, int lowBind = 0, int highBind = 1)
+        public double[] generateNormalDistrib(double media, double desviacion, double[] randoms)
+        {
+            double[] randNormal = new double[randoms.Length];
+            double z = 0;
+
+            double[] seedRandoms = generateUniformDistrib(1, randoms.Length, randoms);
+
+            for (int i = 0; i < randoms.Length; i++)
+			{
+                this.Semilla = (int)seedRandoms[i];
+                double[] rand = generateLangRandom(12);
+			    double sumRnd = rand.Sum();
+                z = ((sumRnd - 6) * desviacion) + media;
+                randNormal[i] = z;
+			}
+
+            setMinMax(randNormal);
+
+            return randNormal;
+        }
+
+        private void setMinMax(double[] nums)
+        {
+            if (nums.Length == 0)
+            {
+                return;
+            }
+
+            MenorValor = nums.Min();
+            MayorValor = nums.Max();
+        }
+
+        public double[,] validateFrecuencies(double[] nums, int intervals, double lowBind = 0, double highBind = 1)
         {
             double[,] frecuencies = buildIntervals(intervals, nums.Length, lowBind, highBind);
             int index = 0;
@@ -229,7 +270,7 @@ namespace SIM_G7_TP1.Models
             return intervals;
         }
 
-        private double[,] buildIntervals(int numIntervals, int numsTotals, int lowBind = 0, int highBind = 1)
+        private double[,] buildIntervals(int numIntervals, int numsTotals, double lowBind = 0, double highBind = 1)
         {
             double[,] intervals = new double[numIntervals, 6];
             double low = 0;

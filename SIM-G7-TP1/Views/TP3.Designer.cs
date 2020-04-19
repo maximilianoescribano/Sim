@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblElapsedTimeGenerator = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -54,15 +54,13 @@
             this.nudUniformDistribA = new System.Windows.Forms.NumericUpDown();
             this.nudUniformDistribSeed = new System.Windows.Forms.NumericUpDown();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.nudCongrMultiMagnitudModulo = new System.Windows.Forms.NumericUpDown();
-            this.nudCongrMultiConstMulti = new System.Windows.Forms.NumericUpDown();
-            this.nudCongrMultiSeed = new System.Windows.Forms.NumericUpDown();
+            this.nudExponentialDistribLambda = new System.Windows.Forms.NumericUpDown();
+            this.nudExponentialDistribSeed = new System.Windows.Forms.NumericUpDown();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label2 = new System.Windows.Forms.Label();
-            this.nudLangSeed = new System.Windows.Forms.NumericUpDown();
+            this.nudNormalDistribSeed = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblElapsedTimeFrecuencies = new System.Windows.Forms.Label();
             this.gradlib = new System.Windows.Forms.Label();
@@ -73,6 +71,10 @@
             this.columna4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label7 = new System.Windows.Forms.Label();
+            this.nudNormalDistribMedia = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.nudNormalDistribDeviation = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudNumInvervals)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudRandomNumbersCount)).BeginInit();
@@ -83,14 +85,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudUniformDistribA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudUniformDistribSeed)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCongrMultiMagnitudModulo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCongrMultiConstMulti)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCongrMultiSeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudExponentialDistribLambda)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudExponentialDistribSeed)).BeginInit();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudLangSeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudNormalDistribSeed)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.graficoObtenida)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtgIntervalos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudNormalDistribMedia)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudNormalDistribDeviation)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -281,12 +284,10 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label9);
-            this.tabPage2.Controls.Add(this.nudCongrMultiMagnitudModulo);
-            this.tabPage2.Controls.Add(this.nudCongrMultiConstMulti);
-            this.tabPage2.Controls.Add(this.nudCongrMultiSeed);
+            this.tabPage2.Controls.Add(this.nudExponentialDistribLambda);
+            this.tabPage2.Controls.Add(this.nudExponentialDistribSeed);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -295,23 +296,14 @@
             this.tabPage2.Text = "Exponencial";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(15, 58);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(13, 13);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "μ";
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(15, 32);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(13, 13);
+            this.label8.Size = new System.Drawing.Size(12, 13);
             this.label8.TabIndex = 11;
-            this.label8.Text = "ƛ";
+            this.label8.Text = "λ";
             // 
             // label9
             // 
@@ -322,31 +314,29 @@
             this.label9.TabIndex = 10;
             this.label9.Text = "Semilla:";
             // 
-            // nudCongrMultiMagnitudModulo
+            // nudExponentialDistribLambda
             // 
-            this.nudCongrMultiMagnitudModulo.Location = new System.Drawing.Point(181, 58);
-            this.nudCongrMultiMagnitudModulo.Name = "nudCongrMultiMagnitudModulo";
-            this.nudCongrMultiMagnitudModulo.Size = new System.Drawing.Size(120, 20);
-            this.nudCongrMultiMagnitudModulo.TabIndex = 9;
+            this.nudExponentialDistribLambda.DecimalPlaces = 2;
+            this.nudExponentialDistribLambda.Location = new System.Drawing.Point(181, 32);
+            this.nudExponentialDistribLambda.Name = "nudExponentialDistribLambda";
+            this.nudExponentialDistribLambda.Size = new System.Drawing.Size(120, 20);
+            this.nudExponentialDistribLambda.TabIndex = 8;
             // 
-            // nudCongrMultiConstMulti
+            // nudExponentialDistribSeed
             // 
-            this.nudCongrMultiConstMulti.Location = new System.Drawing.Point(181, 32);
-            this.nudCongrMultiConstMulti.Name = "nudCongrMultiConstMulti";
-            this.nudCongrMultiConstMulti.Size = new System.Drawing.Size(120, 20);
-            this.nudCongrMultiConstMulti.TabIndex = 8;
-            // 
-            // nudCongrMultiSeed
-            // 
-            this.nudCongrMultiSeed.Location = new System.Drawing.Point(181, 6);
-            this.nudCongrMultiSeed.Name = "nudCongrMultiSeed";
-            this.nudCongrMultiSeed.Size = new System.Drawing.Size(120, 20);
-            this.nudCongrMultiSeed.TabIndex = 7;
+            this.nudExponentialDistribSeed.Location = new System.Drawing.Point(181, 6);
+            this.nudExponentialDistribSeed.Name = "nudExponentialDistribSeed";
+            this.nudExponentialDistribSeed.Size = new System.Drawing.Size(120, 20);
+            this.nudExponentialDistribSeed.TabIndex = 7;
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label6);
+            this.tabPage3.Controls.Add(this.nudNormalDistribDeviation);
+            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.nudNormalDistribMedia);
             this.tabPage3.Controls.Add(this.label2);
-            this.tabPage3.Controls.Add(this.nudLangSeed);
+            this.tabPage3.Controls.Add(this.nudNormalDistribSeed);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Size = new System.Drawing.Size(307, 109);
@@ -357,23 +347,23 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(43, 16);
+            this.label2.Location = new System.Drawing.Point(18, 6);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Semilla:";
             // 
-            // nudLangSeed
+            // nudNormalDistribSeed
             // 
-            this.nudLangSeed.Location = new System.Drawing.Point(195, 16);
-            this.nudLangSeed.Maximum = new decimal(new int[] {
+            this.nudNormalDistribSeed.Location = new System.Drawing.Point(184, 6);
+            this.nudNormalDistribSeed.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
-            this.nudLangSeed.Name = "nudLangSeed";
-            this.nudLangSeed.Size = new System.Drawing.Size(95, 20);
-            this.nudLangSeed.TabIndex = 2;
+            this.nudNormalDistribSeed.Name = "nudNormalDistribSeed";
+            this.nudNormalDistribSeed.Size = new System.Drawing.Size(120, 20);
+            this.nudNormalDistribSeed.TabIndex = 2;
             // 
             // groupBox2
             // 
@@ -411,29 +401,29 @@
             // graficoObtenida
             // 
             this.graficoObtenida.AllowDrop = true;
-            chartArea3.AxisX.MajorGrid.Enabled = false;
-            chartArea3.AxisX.Title = "Intervalos / Clases";
-            chartArea3.AxisX.TitleAlignment = System.Drawing.StringAlignment.Near;
-            chartArea3.AxisY.Title = "Frecuencia";
-            chartArea3.AxisY.TitleAlignment = System.Drawing.StringAlignment.Near;
-            chartArea3.Name = "ChartArea1";
-            this.graficoObtenida.ChartAreas.Add(chartArea3);
+            chartArea2.AxisX.MajorGrid.Enabled = false;
+            chartArea2.AxisX.Title = "Intervalos / Clases";
+            chartArea2.AxisX.TitleAlignment = System.Drawing.StringAlignment.Near;
+            chartArea2.AxisY.Title = "Frecuencia";
+            chartArea2.AxisY.TitleAlignment = System.Drawing.StringAlignment.Near;
+            chartArea2.Name = "ChartArea1";
+            this.graficoObtenida.ChartAreas.Add(chartArea2);
             this.graficoObtenida.ImeMode = System.Windows.Forms.ImeMode.On;
-            legend3.Name = "Legend1";
-            this.graficoObtenida.Legends.Add(legend3);
+            legend2.Name = "Legend1";
+            this.graficoObtenida.Legends.Add(legend2);
             this.graficoObtenida.Location = new System.Drawing.Point(6, 172);
             this.graficoObtenida.Name = "graficoObtenida";
             this.graficoObtenida.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.LegendText = "Observada";
-            series5.Name = "Observada";
-            series5.SmartLabelStyle.Enabled = false;
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Esperada";
-            this.graficoObtenida.Series.Add(series5);
-            this.graficoObtenida.Series.Add(series6);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.LegendText = "Observada";
+            series3.Name = "Observada";
+            series3.SmartLabelStyle.Enabled = false;
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Esperada";
+            this.graficoObtenida.Series.Add(series3);
+            this.graficoObtenida.Series.Add(series4);
             this.graficoObtenida.Size = new System.Drawing.Size(991, 497);
             this.graficoObtenida.SuppressExceptions = true;
             this.graficoObtenida.TabIndex = 10;
@@ -445,14 +435,14 @@
             this.dtgIntervalos.AllowUserToAddRows = false;
             this.dtgIntervalos.AllowUserToDeleteRows = false;
             this.dtgIntervalos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgIntervalos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgIntervalos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dtgIntervalos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgIntervalos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columna1,
@@ -471,8 +461,8 @@
             // 
             // columna1
             // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columna1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columna1.DefaultCellStyle = dataGridViewCellStyle4;
             this.columna1.HeaderText = "Intervalos";
             this.columna1.Name = "columna1";
             this.columna1.ReadOnly = true;
@@ -501,6 +491,40 @@
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(18, 31);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(13, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "μ";
+            // 
+            // nudNormalDistribMedia
+            // 
+            this.nudNormalDistribMedia.DecimalPlaces = 2;
+            this.nudNormalDistribMedia.Location = new System.Drawing.Point(184, 31);
+            this.nudNormalDistribMedia.Name = "nudNormalDistribMedia";
+            this.nudNormalDistribMedia.Size = new System.Drawing.Size(120, 20);
+            this.nudNormalDistribMedia.TabIndex = 13;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(18, 57);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(14, 13);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "σ";
+            // 
+            // nudNormalDistribDeviation
+            // 
+            this.nudNormalDistribDeviation.DecimalPlaces = 2;
+            this.nudNormalDistribDeviation.Location = new System.Drawing.Point(184, 57);
+            this.nudNormalDistribDeviation.Name = "nudNormalDistribDeviation";
+            this.nudNormalDistribDeviation.Size = new System.Drawing.Size(120, 20);
+            this.nudNormalDistribDeviation.TabIndex = 15;
+            // 
             // TP3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -524,16 +548,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudUniformDistribSeed)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCongrMultiMagnitudModulo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCongrMultiConstMulti)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCongrMultiSeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudExponentialDistribLambda)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudExponentialDistribSeed)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudLangSeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudNormalDistribSeed)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.graficoObtenida)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dtgIntervalos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudNormalDistribMedia)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudNormalDistribDeviation)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -554,19 +579,17 @@
         internal System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.NumericUpDown nudNumInvervals;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown nudLangSeed;
+        private System.Windows.Forms.NumericUpDown nudNormalDistribSeed;
         private System.Windows.Forms.NumericUpDown nudUniformDistribB;
         private System.Windows.Forms.NumericUpDown nudUniformDistribA;
         private System.Windows.Forms.NumericUpDown nudUniformDistribSeed;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown nudCongrMultiMagnitudModulo;
-        private System.Windows.Forms.NumericUpDown nudCongrMultiConstMulti;
-        private System.Windows.Forms.NumericUpDown nudCongrMultiSeed;
+        private System.Windows.Forms.NumericUpDown nudExponentialDistribLambda;
+        private System.Windows.Forms.NumericUpDown nudExponentialDistribSeed;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown nudRandomNumbersCount;
         private System.Windows.Forms.Label label10;
@@ -579,6 +602,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.Label lblElapsedTimeFrecuencies;
         private System.Windows.Forms.Label lblElapsedTimeGenerator;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.NumericUpDown nudNormalDistribMedia;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.NumericUpDown nudNormalDistribDeviation;
     }
 }
 
