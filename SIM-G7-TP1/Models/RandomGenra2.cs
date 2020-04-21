@@ -115,7 +115,7 @@ namespace SIM_G7_TP1.Models
         public List<double[]>  GenerateExponentialFrecuencies(uint cantIntervalos,double lambda, double[] randoms)
         {
             var min = randoms.Min();
-            var max = randoms.Max();
+            var max = randoms.Max() + 0.01;
             var intervalRange = Math.Round((max - min) / cantIntervalos, 4);
 
             var a = new List<double[]>();
@@ -172,7 +172,7 @@ namespace SIM_G7_TP1.Models
         public List<double[]>  GenerateNormalFrecuencies(uint cantIntervalos, double media, double desvEstandar, double[] randoms)
         {
             var min = randoms.Min();
-            var max = randoms.Max();
+            var max = randoms.Max() + 0.01;
             var intervalRange = Math.Round((max - min) / cantIntervalos, 4);
 
 

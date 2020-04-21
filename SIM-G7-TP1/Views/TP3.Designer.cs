@@ -452,14 +452,14 @@
             series1.ChartArea = "ChartArea1";
             series1.CustomProperties = "PointWidth=1";
             series1.Legend = "Legend1";
-            series1.Name = "Esperada";
+            series1.LegendText = "Observada";
+            series1.Name = "Observada";
+            series1.SmartLabelStyle.Enabled = false;
             series2.BorderColor = System.Drawing.Color.Red;
             series2.ChartArea = "ChartArea1";
             series2.CustomProperties = "PointWidth=1";
             series2.Legend = "Legend1";
-            series2.LegendText = "Observada";
-            series2.Name = "Observada";
-            series2.SmartLabelStyle.Enabled = false;
+            series2.Name = "Esperada";
             this.graficoObtenida.Series.Add(series1);
             this.graficoObtenida.Series.Add(series2);
             this.graficoObtenida.Size = new System.Drawing.Size(991, 497);
