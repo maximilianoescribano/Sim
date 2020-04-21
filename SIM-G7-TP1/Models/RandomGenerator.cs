@@ -7,6 +7,7 @@ namespace SIM_G7_TP1.Models
 {
     public class RandomGenerator
     {
+        #region TP1
         private int _a;
         private int _c;
         private int _m;
@@ -78,16 +79,13 @@ namespace SIM_G7_TP1.Models
             _mayorValor = 0;
         }
 
-        public double[] generateLangRandom(int count)
+        public double[] generateLangRandom(uint count)
         {
             var rnd = new Random(Semilla);
             var nums = new double[count];
 
             for (var i = 0; i < count; i++)
-            {
-                //nums[i] = Math.Round(rnd.NextDouble(), 4);
                 nums[i] = TruncateDecimal(rnd.NextDouble(), 4);
-            }
 
             return nums;
         }
@@ -136,14 +134,14 @@ namespace SIM_G7_TP1.Models
             return nums;
         }
 
+#endregion TP1
+
         public double[] generateUniformDistrib(int lowBind, int highBind, double[] randoms)
         {
-            double[] randNormal = new double[randoms.Length];
+           var randNormal = new double[randoms.Length];
 
-            for (int i = 0; i < randoms.Length; i++)
-            {
+            for (var i = 0; i < randoms.Length; i++)
                 randNormal[i] = this.TruncateDecimal(lowBind + randoms[i] * (highBind - lowBind), 4);
-            }
 
             return randNormal;
         }
@@ -216,6 +214,27 @@ namespace SIM_G7_TP1.Models
 
             //return oldMethod(nums, intervals);
         }
+
+
+
+        public double[,] validateFrecuenciesExp(double[] nums, int intervals, double lowBind = 0, double highBind = 1)
+        {
+            double[,] frecuencies = buildIntervals(intervals, nums.Length, lowBind, highBind);
+            int index = 0;
+            int frecObs = 0;
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                index = getIndexIntervalForNumber(nums[i], frecuencies);
+                frecObs = (int)frecuencies[index, 2];
+                frecObs++;
+                frecuencies[index, 2] = frecObs;
+            }
+
+            return calculateTestValues(frecuencies);
+
+        }
+
 
         private double[,] oldMethod(double[] nums, int intervals)
         {

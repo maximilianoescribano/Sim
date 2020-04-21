@@ -39,7 +39,7 @@ namespace SIM_G7_TP1
 
         private void generateLanguageRandom()
         {
-            Int32 rndNumCount = Convert.ToInt32(nudRandomNumbersCount.Value);
+            var rndNumCount = Convert.ToUInt32(nudRandomNumbersCount.Value);
             int seed = Convert.ToInt16(nudLangSeed.Value);
             RandomGenerator rndGen = new RandomGenerator(seed);
 

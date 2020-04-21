@@ -17,3 +17,13 @@ C:\FACU\SIM\Sim\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.csproj.GenerateResource.Cache
 C:\FACU\SIM\Sim\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.exe
 C:\FACU\SIM\Sim\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.pdb
 C:\FACU\SIM\Sim\SIM-G7-TP1\obj\Debug\SIM_G7_TP1.TP3.resources
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\bin\Debug\SIM-G7-TP1.exe.config
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.exe
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.pdb
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\bin\Debug\SIM-G7-TP1.exe
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\bin\Debug\SIM-G7-TP1.pdb
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.csprojResolveAssemblyReference.cache
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\obj\Debug\SIM_G7_TP1.Main.resources
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\obj\Debug\SIM_G7_TP1.Properties.Resources.resources
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\obj\Debug\SIM_G7_TP1.TP3.resources
+C:\Users\maxi\Documents\simulacion\max\SIM-G7-TP1\obj\Debug\SIM-G7-TP1.csproj.GenerateResource.Cache

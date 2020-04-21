@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -23,138 +24,142 @@ namespace SIM_G7_TP1
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            Stopwatch timer = new Stopwatch();
+            timer.Start();
             switch (tabRandomMethods.SelectedIndex)
             {
                 case 0:
-                    generateUniformDistrib();
+                    GenerateUniformDistrib();
                     break;
                 case 1:
-                    generateExponentialDistrib();
+                    GenerateExponentialDistrib();
                     break;
                 case 2:
-                   generateNormalDistrib();
+                   GenerateNormalDistrib();
                    break;
             }
-        }
-
-        private void generateNormalDistrib()
-        {
-            Int32 rndNumCount = Convert.ToInt32(nudRandomNumbersCount.Value);
-            int seed = Convert.ToInt16(nudNormalDistribSeed.Value);
-            double media = Convert.ToDouble(nudNormalDistribMedia.Value);
-            double deviation = Convert.ToDouble(nudNormalDistribDeviation.Value);
-
-            RandomGenerator rndGen = new RandomGenerator(seed);
-
-            this.Cursor = Cursors.WaitCursor;
-            timer = Stopwatch.StartNew();
-            randomNumbers = rndGen.generateLangRandom(rndNumCount);
-            randomNumbers = rndGen.generateNormalDistrib(media, deviation, randomNumbers);
+            
             timer.Stop();
             lblElapsedTimeGenerator.Text = timer.ElapsedMilliseconds.ToString();
-
-            fillDGNumbers(randomNumbers);
-            generateFrecuencies(rndGen.MenorValor, rndGen.MayorValor);
-            this.Cursor = Cursors.Default;
         }
 
-        private void generateUniformDistrib()
+        private void GenerateUniformDistrib()
         {
-            var rndNumCount = Convert.ToInt32(nudRandomNumbersCount.Value);
-            var seed = Convert.ToInt16(nudUniformDistribSeed.Value);
+            // Variables tomadas de interfaz 
+            var rndNumCount = Convert.ToUInt32(nudRandomNumbersCount.Value);
+            var seed = Convert.ToInt32(nudUniformDistribSeed.Value);
+            var A = Convert.ToUInt32(nudUniformDistribA.Value);
+            var B = Convert.ToUInt32(nudUniformDistribB.Value);
+            var numIntervals = Convert.ToUInt32(nudNumInvervals.Value);
 
-            int A = Convert.ToInt16(nudUniformDistribA.Value);
-            int B = Convert.ToInt16(nudUniformDistribB.Value);
-
-            //if (!linerControl(seed, constMulti, magMod, constAditiv)) return;
-
-            var rndGen = new RandomGenerator();
-
+            var rndGen = new RandomGenra2();
             this.Cursor = Cursors.WaitCursor;
 
-            randomNumbers = rndGen.generateLangRandom(rndNumCount);
-            randomNumbers = rndGen.generateUniformDistrib(A, B, randomNumbers);
-            fillDGNumbers(randomNumbers);
-            //generateFrecuencies();
+            //calculo numero aletorios
+            randomNumbers = rndGen.GenerateUniformDistribution(A, B, rndGen.GenerateCSharpRandoms(seed, rndNumCount));
+            FillDgNumbers(randomNumbers);
             this.Cursor = Cursors.Default;
+
+            //calculo frecuencias
+            if (numIntervals <= 0) return;
+
+            timer = Stopwatch.StartNew();
+            var frecuencias = rndGen.GenerateUniformFrecuencies(numIntervals, randomNumbers);
+           
+            FillDbFrecuencies(frecuencias);
+            gradlib.Visible = true;
+            gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencias.Count - 1));
+            fillChart(frecuencias);
         }
 
-        private void generateExponentialDistrib()
+
+        private void GenerateExponentialDistrib()
         {
-            int rndNumCount = Convert.ToInt16(nudRandomNumbersCount.Value);
-            int seed = Convert.ToInt16(nudExponentialDistribSeed.Value);
-            double lambda = Convert.ToDouble(nudExponentialDistribLambda.Value);
+            var rndNumCount = Convert.ToUInt32(nudRandomNumbersCount.Value);
+            var seed = Convert.ToInt32(nudExponentialDistribSeed.Value);
+            var lambda = Convert.ToDouble(nudExponentialDistribLambda.Value);
+            var numIntervals = Convert.ToUInt32(nudNumInvervals.Value);
 
-
-            //if (congrControl(seed, constMulti, magMod)) return;
-
-            var rndGen = new RandomGenerator(seed);
-
+            var rndGen = new RandomGenra2();
             this.Cursor = Cursors.WaitCursor;
-            randomNumbers = rndGen.generateLangRandom(rndNumCount);
-            randomNumbers = rndGen.generateExponentialDistrib(lambda, randomNumbers);
-            fillDGNumbers(randomNumbers);
 
-            generateFrecuencies(rndGen.MenorValor, rndGen.MayorValor);
+            //calculo numero aletorios
+            randomNumbers = rndGen.GenerateExponentialDistribution(lambda, rndGen.GenerateCSharpRandoms(seed, rndNumCount));
+            FillDgNumbers(randomNumbers);
             this.Cursor = Cursors.Default;
+
+            //calculo frecuencias
+            if (numIntervals <= 0) return;
+
+            timer = Stopwatch.StartNew();
+            var frecuencias = rndGen.GenerateExponentialFrecuencies(numIntervals, lambda, randomNumbers);
+            timer.Stop();
+            lblElapsedTimeFrecuencies.Text = timer.ElapsedMilliseconds.ToString();
+            FillDbFrecuencies(frecuencias);
+            gradlib.Visible = true;
+            gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencias.Count - 1));
+            fillChart(frecuencias);
         }
 
-        private void generateFrecuencies(double min, double max)
+
+        private void GenerateNormalDistrib()
         {
-            RandomGenerator gen = new RandomGenerator();
-            int numIntervals = Convert.ToInt16(nudNumInvervals.Value);
+            var rndNumCount = Convert.ToUInt32(nudRandomNumbersCount.Value);
+            var seed = Convert.ToInt32(nudNormalDistribSeed.Value);
+            var media = Convert.ToDouble(nudNormalDistribMedia.Value);
+            var deviation = Convert.ToDouble(nudNormalDistribDeviation.Value);
+            var numIntervals = Convert.ToUInt32(nudNumInvervals.Value);
 
+            var rndGen = new RandomGenra2();
+            this.Cursor = Cursors.WaitCursor;
 
-            if (numIntervals > 0)
-            {
-                timer = Stopwatch.StartNew();
-                var frecuencias = gen.validateFrecuencies(randomNumbers, numIntervals, min, max);
-                timer.Stop();
-                lblElapsedTimeFrecuencies.Text = timer.ElapsedMilliseconds.ToString();
+            //calculo numero aletorios
+            randomNumbers = rndGen.GenerateNormalDistribution(media, deviation, rndGen.GenerateCSharpRandomsList(seed, rndNumCount));
+            FillDgNumbers(randomNumbers);
+            this.Cursor = Cursors.Default;
 
-                fillDBFrecuencies(frecuencias);
-                gradlib.Visible = true;
-                gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencias.GetLength(0) - 1));
-                fillChart(frecuencias);
-            }
+            //calculo frecuencias
+            if (numIntervals <= 0) return;
+
+            timer = Stopwatch.StartNew();
+            var frecuencias = rndGen.GenerateNormalFrecuencies(numIntervals, media, deviation, randomNumbers);
+            timer.Stop();
+            lblElapsedTimeFrecuencies.Text = timer.ElapsedMilliseconds.ToString();
+            FillDbFrecuencies(frecuencias);
+            gradlib.Visible = true;
+            gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencias.Count - 1));
+            fillChart(frecuencias);
         }
 
-        private void fillDGNumbers(double[] num)
+
+        private void FillDgNumbers(double[] num)
         {
             dtgNumeros.Rows.Clear();
-            for (int i = 0; i < num.Length; i++)
+            for (var i = 0; i < num.Length; i++)
             {
                 dtgNumeros.Rows.Add(i + 1, num[i]);
             }
         }
 
-        private void fillDBFrecuencies(double[,] frec)
+        //Llena tabla frec
+        private void FillDbFrecuencies(List<double[]> frecuencias)
         {
             dtgIntervalos.Rows.Clear();
-            String intervalo = "";
-
-            for (var i = 0; i < frec.GetLength(0); i++)
-            {
-                intervalo = String.Format("{0} - {1}", frec[i, 0], frec[i, 1]);
-                dtgIntervalos.Rows.Add(intervalo, frec[i, 2], frec[i, 3], frec[i, 4], frec[i, 5]);
-            }
-
+            frecuencias.ForEach( x =>
+                     dtgIntervalos.Rows.Add(String.Format("{0} - {1}", x[0], x[1]) , x[2], x[3], x[4], x[5])
+                );
         }
 
-        private void fillChart(double[,] frec)
+        private void fillChart(List<double[]> frecuencias)
         {
-            String intervalo;
-
             graficoObtenida.Series[0].Points.Clear();
             graficoObtenida.Series[1].Points.Clear();
 
-            for (var f = 0; f < frec.GetLength(0); f++)
+            foreach (var frec in frecuencias)
             {
-                intervalo = String.Format("{0} - {1}", frec[f, 1], frec[f, 0]);
-                graficoObtenida.Series["Observada"].Points.AddXY(frec[f, 1], frec[f, 2]);
-                graficoObtenida.Series["Esperada"].Points.AddXY(frec[f, 1], frec[f, 3]);
-                graficoObtenida.Series["Observada"].Points[f].AxisLabel = intervalo;
-
+                graficoObtenida.Series["Observada"].Points.AddXY(frec[1], frec[2]);
+               // graficoObtenida.Series["Esperada"].Points.AddXY(frec[1], frec[3]);
+                graficoObtenida.Series["Observada"].Points[frec.Rank-1].AxisLabel = String.Format("{0} - {1}", frec[1], frec[0]);
             }
 
             graficoObtenida.Series["Observada"].ChartType = SeriesChartType.Column;
@@ -165,8 +170,8 @@ namespace SIM_G7_TP1
             graficoObtenida.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             graficoObtenida.Series["Observada"].IsVisibleInLegend = true;
             graficoObtenida.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Number;
-            graficoObtenida.ChartAreas[0].AxisX.Minimum = frec[frec.GetLowerBound(0), 0];
-            graficoObtenida.ChartAreas[0].AxisX.Maximum = frec[frec.GetUpperBound(0), 1] + ((frec[0, 1] - frec[0, 0]) / 2);
+            graficoObtenida.ChartAreas[0].AxisX.Minimum = frecuencias.First()[0];
+            graficoObtenida.ChartAreas[0].AxisX.Maximum = frecuencias.Last()[1] + ((frecuencias.First()[1] - frecuencias.First()[0]) / 2);
             //graficoObtenida.Series["Observada"]["PointWidth"] = (0.6).ToString();
             //graficoObtenida.Series["Esperada"]["PointWidth"] = (0.6).ToString();
         }
@@ -180,46 +185,7 @@ namespace SIM_G7_TP1
             gradlib.Visible = false;
         }
 
-        private bool linerControl(int semilla, int a, int m, int c)
-        {
-            if (a == 0 && m == 0 && c == 0) return false;
-
-            var cond_a = (a - 1) % 4 == 0;
-            var cond_m = Math.Log(m, 2) % 1 == 0 && m != 1; 
-
-            var a1 = Math.Max(m, c);
-            var b1 = Math.Min(m, c);
-            int resultado;
-            do
-            {
-                resultado = b1;  
-                b1 = a1 % b1;    
-                a1 = resultado;  
-            }
-            while(b1 != 0);
-
-
-            if (cond_a && cond_m && resultado == 1) return true;
-
-            var dialogResult = MessageBox.Show(@"Alguno de los valores es Incorrecto y puede no cumplir con las 
-condiciones necesarias para el buen funcionamiento. ¿Desea Continuar? ", @"Control de valores", MessageBoxButtons.YesNo);
-            return (dialogResult == DialogResult.Yes);
-        }
-
-        private bool congrControl(int semilla, int a, int m)
-        {
-            if (a == 0 && m == 0) return false;
-
-            var cond_a = ((a - 3) % 8 == 0 || (a - 5) % 8 == 0 ) && a != 1;
-            var cond_m = Math.Log(m, 2) % 1 == 0 && m != 1; 
-            var cond_sem = semilla % 2 != 0;
-
-            if (cond_a && cond_m && cond_sem) return true;
-
-            var dialogResult = MessageBox.Show(@"Alguno de los valores es Incorrecto y puede no cumplir con las 
-condiciones necesarias para el buen funcionamiento. ¿Desea Continuar? ", @"Control de valores", MessageBoxButtons.YesNo);
-            return (dialogResult == DialogResult.Yes);
-        }
+      
 
     }
 }
