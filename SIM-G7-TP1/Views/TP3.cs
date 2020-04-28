@@ -50,8 +50,8 @@ namespace SIM_G7_TP1
             // Variables tomadas de interfaz 
             var rndNumCount = Convert.ToUInt32(nudRandomNumbersCount.Value);
             var seed = Convert.ToInt32(nudUniformDistribSeed.Value);
-            var A = Convert.ToUInt32(nudUniformDistribA.Value);
-            var B = Convert.ToUInt32(nudUniformDistribB.Value);
+            var A = Convert.ToDouble(nudUniformDistribA.Value);
+            var B = Convert.ToDouble(nudUniformDistribB.Value);
             var numIntervals = Convert.ToUInt32(nudNumInvervals.Value);
 
             var rndGen = new RandomGenra2();

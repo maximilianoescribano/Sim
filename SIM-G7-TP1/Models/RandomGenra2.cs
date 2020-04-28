@@ -39,7 +39,7 @@ namespace SIM_G7_TP1.Models
             ).ToList();
         }
 
-        public double[] GenerateUniformDistribution(uint a, uint b, double[] randoms)
+        public double[] GenerateUniformDistribution(double a, double b, double[] randoms)
         {
             return randoms.Select(x => (a + (x * (b - a))).TruncateDouble(4)).ToArray();
         }
