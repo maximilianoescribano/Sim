@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblElapsedTimeGenerator = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -164,10 +164,12 @@
             // dtgNumeros
             // 
             this.dtgNumeros.AllowUserToAddRows = false;
+            this.dtgNumeros.AllowUserToDeleteRows = false;
             this.dtgNumeros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgNumeros.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Orden2,
             this.Column1});
+            this.dtgNumeros.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dtgNumeros.Location = new System.Drawing.Point(84, 259);
             this.dtgNumeros.Name = "dtgNumeros";
             this.dtgNumeros.RowHeadersVisible = false;
@@ -437,33 +439,33 @@
             // graficoObtenida
             // 
             this.graficoObtenida.AllowDrop = true;
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.AxisX.Title = "Intervalos / Clases";
-            chartArea2.AxisX.TitleAlignment = System.Drawing.StringAlignment.Near;
-            chartArea2.AxisY.Title = "Frecuencia";
-            chartArea2.AxisY.TitleAlignment = System.Drawing.StringAlignment.Near;
-            chartArea2.Name = "ChartArea1";
-            this.graficoObtenida.ChartAreas.Add(chartArea2);
+            chartArea3.AxisX.MajorGrid.Enabled = false;
+            chartArea3.AxisX.Title = "Intervalos / Clases";
+            chartArea3.AxisX.TitleAlignment = System.Drawing.StringAlignment.Near;
+            chartArea3.AxisY.Title = "Frecuencia";
+            chartArea3.AxisY.TitleAlignment = System.Drawing.StringAlignment.Near;
+            chartArea3.Name = "ChartArea1";
+            this.graficoObtenida.ChartAreas.Add(chartArea3);
             this.graficoObtenida.ImeMode = System.Windows.Forms.ImeMode.On;
-            legend2.Name = "Legend1";
-            this.graficoObtenida.Legends.Add(legend2);
+            legend3.Name = "Legend1";
+            this.graficoObtenida.Legends.Add(legend3);
             this.graficoObtenida.Location = new System.Drawing.Point(6, 172);
             this.graficoObtenida.Name = "graficoObtenida";
             this.graficoObtenida.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            series3.BorderColor = System.Drawing.Color.Red;
-            series3.ChartArea = "ChartArea1";
-            series3.CustomProperties = "PointWidth=1";
-            series3.Legend = "Legend1";
-            series3.LegendText = "Observada";
-            series3.Name = "Observada";
-            series3.SmartLabelStyle.Enabled = false;
-            series4.BorderColor = System.Drawing.Color.Red;
-            series4.ChartArea = "ChartArea1";
-            series4.CustomProperties = "PointWidth=1";
-            series4.Legend = "Legend1";
-            series4.Name = "Esperada";
-            this.graficoObtenida.Series.Add(series3);
-            this.graficoObtenida.Series.Add(series4);
+            series5.BorderColor = System.Drawing.Color.Red;
+            series5.ChartArea = "ChartArea1";
+            series5.CustomProperties = "PointWidth=1";
+            series5.Legend = "Legend1";
+            series5.LegendText = "Observada";
+            series5.Name = "Observada";
+            series5.SmartLabelStyle.Enabled = false;
+            series6.BorderColor = System.Drawing.Color.Red;
+            series6.ChartArea = "ChartArea1";
+            series6.CustomProperties = "PointWidth=1";
+            series6.Legend = "Legend1";
+            series6.Name = "Esperada";
+            this.graficoObtenida.Series.Add(series5);
+            this.graficoObtenida.Series.Add(series6);
             this.graficoObtenida.Size = new System.Drawing.Size(991, 497);
             this.graficoObtenida.SuppressExceptions = true;
             this.graficoObtenida.TabIndex = 10;
@@ -475,14 +477,14 @@
             this.dtgIntervalos.AllowUserToAddRows = false;
             this.dtgIntervalos.AllowUserToDeleteRows = false;
             this.dtgIntervalos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dtgIntervalos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dtgIntervalos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dtgIntervalos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtgIntervalos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.columna1,
@@ -501,8 +503,8 @@
             // 
             // columna1
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.columna1.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.columna1.DefaultCellStyle = dataGridViewCellStyle6;
             this.columna1.HeaderText = "Intervalos";
             this.columna1.Name = "columna1";
             this.columna1.ReadOnly = true;

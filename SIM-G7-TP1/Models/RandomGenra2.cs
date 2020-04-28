@@ -41,7 +41,7 @@ namespace SIM_G7_TP1.Models
 
         public double[] GenerateUniformDistribution(uint a, uint b, double[] randoms)
         {
-            return randoms.Select(x => (a + x * (b - a)).TruncateDouble(4)).ToArray();
+            return randoms.Select(x => (a + (x * (b - a))).TruncateDouble(4)).ToArray();
         }
 
         public double[] GenerateExponentialDistribution(double lambda, double[] randoms)
@@ -181,13 +181,16 @@ namespace SIM_G7_TP1.Models
 
             for (var i = 0; i < cantIntervalos; i++)
             {
-                var intervalStart = min + intervalRange * i;
-                var intervalEnd = intervalStart + intervalRange;
+                var intervalStart = (min + intervalRange * i).TruncateDouble(4);
+                var intervalEnd = (intervalStart + intervalRange).TruncateDouble(4);
                 var frecObs = randoms.CantidadEnIntervalo(intervalStart, intervalEnd);
-                var frecEsperada =
-                ((1 / (desvEstandar * Math.Sqrt(2 * Math.PI))) *
-                 Math.Exp(-0.5 * (Math.Pow((((intervalEnd) - (intervalStart)) / 2 - media) / desvEstandar, 2))) *
-                 randoms.Length).TruncateDouble(4);  
+
+                var marcaClase = (intervalEnd + intervalStart) / 2;
+
+                var probabilidad = (Math.Exp(-0.5 * (Math.Pow((marcaClase - media) / desvEstandar, 2))) / (desvEstandar * Math.Sqrt(2 * Math.PI))) * intervalRange;
+                
+                var frecEsperada = (probabilidad * randoms.Length).TruncateDouble(4);
+
                 var c = Math.Round(Math.Pow(frecObs - frecEsperada, 2) / frecEsperada, 4);
                 calcEstAcum += c;
                 a.Add(

@@ -94,13 +94,13 @@ namespace SIM_G7_TP1
             if (numIntervals <= 0) return;
 
             timer = Stopwatch.StartNew();
-            var frecuencias = rndGen.GenerateExponentialFrecuencies(numIntervals, lambda, randomNumbers);
+            frecuencies = rndGen.GenerateExponentialFrecuencies(numIntervals, lambda, randomNumbers);
             timer.Stop();
             lblElapsedTimeFrecuencies.Text = timer.ElapsedMilliseconds.ToString();
-            FillDbFrecuencies(frecuencias);
+            FillDbFrecuencies(frecuencies);
             gradlib.Visible = true;
-            gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencias.Count - 1));
-            fillChart(frecuencias);
+            gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencies.Count - 1));
+            fillChart(frecuencies);
         }
 
 
@@ -124,13 +124,13 @@ namespace SIM_G7_TP1
             if (numIntervals <= 0) return;
 
             timer = Stopwatch.StartNew();
-            var frecuencias = rndGen.GenerateNormalFrecuencies(numIntervals, media, deviation, randomNumbers);
+            frecuencies = rndGen.GenerateNormalFrecuencies(numIntervals, media, deviation, randomNumbers);
             timer.Stop();
             lblElapsedTimeFrecuencies.Text = timer.ElapsedMilliseconds.ToString();
-            FillDbFrecuencies(frecuencias);
+            FillDbFrecuencies(frecuencies);
             gradlib.Visible = true;
-            gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencias.Count - 1));
-            fillChart(frecuencias);
+            gradlib.Text = String.Format("Grados de Libertad = {0}", (frecuencies.Count - 1));
+            fillChart(frecuencies);
         }
 
 
@@ -160,7 +160,7 @@ namespace SIM_G7_TP1
             foreach (var frec in frecuencias)
             {
                 graficoObtenida.Series["Observada"].Points.AddXY(frec[1], frec[2]);
-               // graficoObtenida.Series["Esperada"].Points.AddXY(frec[1], frec[3]);
+                graficoObtenida.Series["Esperada"].Points.AddXY(frec[1], frec[3]);
                 graficoObtenida.Series["Observada"].Points[frec.Rank-1].AxisLabel = String.Format("{0} - {1}", frec[1], frec[0]);
             }
 
@@ -169,7 +169,7 @@ namespace SIM_G7_TP1
             graficoObtenida.Series["Observada"].YValueType = ChartValueType.Int32;
             //graficoObtenida.ChartAreas[0].AxisX.LabelStyle.Interval = ((frec[0, 1] - frec[0, 0])/2);
             graficoObtenida.ChartAreas[0].AxisX.LabelAutoFitStyle = LabelAutoFitStyles.LabelsAngleStep30;
-            graficoObtenida.ChartAreas[0].AxisX.Interval = 0;
+            graficoObtenida.ChartAreas[0].AxisX.Interval = 100;
             graficoObtenida.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             graficoObtenida.Series["Observada"].IsVisibleInLegend = true;
             graficoObtenida.ChartAreas[0].AxisX.IntervalType = DateTimeIntervalType.Number;
@@ -215,15 +215,13 @@ namespace SIM_G7_TP1
                 worksheet.Cells[2 + i, 5] = (double)frecuencies.ElementAt(i)[5];
             }
 
-            var topLeft = "A2";
-            var bottomRight = "C" + (frecuencies.Count + 1);
+            String topLeft = "A2";
+            String bottomRight = "C" + (frecuencies.Count + 1);
 
             // Add chart.
-            var charts = worksheet.ChartObjects() as
-                Microsoft.Office.Interop.Excel.ChartObjects;
-            var chartObject = charts.Add(330, 10, 600, 400) as
-                Microsoft.Office.Interop.Excel.ChartObject;
-            var chart = chartObject.Chart;
+            Excel.ChartObjects charts = worksheet.ChartObjects() as Microsoft.Office.Interop.Excel.ChartObjects;
+            Excel.ChartObject chartObject = charts.Add(330, 10, 600, 400); //as Microsoft.Office.Interop.Excel.ChartObject;
+            Excel.Chart chart = chartObject.Chart;
 
             // Set chart range.
             var range = worksheet.get_Range(topLeft, bottomRight);
