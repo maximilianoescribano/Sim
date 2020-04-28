@@ -51,7 +51,7 @@ namespace SIM_G7_TP1.Models
 
         public double[] GenerateNormalDistribution(double media, double desviacion, List<double[]> randoms)
         {
-            return randoms.Select(x => ((x.Sum() - 6) * desviacion) + media).ToArray();
+            return randoms.Select(x => (((x.Sum() - 6) * desviacion) + media).TruncateDouble(4)).ToArray();
         }
 
         public List<double[]>  GenerateUniformFrecuencies(uint cantIntervalos, double[] randoms)

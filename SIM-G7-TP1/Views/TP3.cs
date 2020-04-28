@@ -22,6 +22,7 @@ namespace SIM_G7_TP1
         public TP3()
         {
             InitializeComponent();
+            
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -192,6 +193,8 @@ namespace SIM_G7_TP1
                 return;
             }
 
+            this.Cursor = Cursors.WaitCursor;
+
             Excel.Application app = new Excel.Application();
             Excel.Workbook workbook = app.Workbooks.Add(Type.Missing);
             Excel.Worksheet worksheet = null;
@@ -244,6 +247,8 @@ namespace SIM_G7_TP1
             chartGroup.Overlap = 0;
             chartGroup.GapWidth = 0;
             chartGroup.HasSeriesLines = false;
+
+            this.Cursor = Cursors.Default;
 
             app.Visible = true;
             //app.Quit();
