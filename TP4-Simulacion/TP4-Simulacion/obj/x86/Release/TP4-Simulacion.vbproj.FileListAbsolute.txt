@@ -1,0 +1,11 @@
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Release\TP4-Simulacion.exe
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Release\TP4-Simulacion.pdb
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Release\TP4-Simulacion.xml
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Release\TP4_Simulacion.frm_main.resources
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Release\TP4_Simulacion.frm_PoliticaA.resources
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Release\TP4_Simulacion.frm_PoliticaB.resources
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Release\TP4_Simulacion.Resources.resources
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Release\TP4-Simulacion.vbproj.GenerateResource.Cache
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Release\TP4-Simulacion.exe
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Release\TP4-Simulacion.xml
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Release\TP4-Simulacion.pdb

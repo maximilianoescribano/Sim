@@ -1,0 +1,87 @@
+C:\Users\LucasNueva\AppData\Local\Temporary Projects\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+C:\Users\LucasNueva\AppData\Local\Temporary Projects\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+C:\Users\LucasNueva\AppData\Local\Temporary Projects\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+C:\Users\LucasNueva\AppData\Local\Temporary Projects\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaA.resources
+C:\Users\LucasNueva\AppData\Local\Temporary Projects\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+C:\Users\LucasNueva\AppData\Local\Temporary Projects\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache
+C:\Users\LucasNueva\AppData\Local\Temporary Projects\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+C:\Users\LucasNueva\AppData\Local\Temporary Projects\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+C:\Users\LucasNueva\AppData\Local\Temporary Projects\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaA.resources
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache
+C:\Users\LucasNueva\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaB.resources
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaA.resources
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaB.resources
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+C:\Users\LucasNotebook\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaA.resources
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaB.resources
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+C:\Users\LucasNotebook\Documents\GitHub\simulacion\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache
+E:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+E:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+E:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+E:\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+E:\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+E:\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+E:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaA.resources
+E:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaB.resources
+E:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+E:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache
+H:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+H:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+H:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+H:\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+H:\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+H:\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+H:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaA.resources
+H:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaB.resources
+H:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+H:\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaA.resources
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_PoliticaB.resources
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache
+C:\Users\user\Desktop\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_main.resources
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbprojAssemblyReference.cache
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_main.resources
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.cache
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.CoreCompileInputs.cache
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+C:\Users\Lucas Parese\Desktop\TP4\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+C:\FACU\SIM\2020\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+C:\FACU\SIM\2020\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+C:\FACU\SIM\2020\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
