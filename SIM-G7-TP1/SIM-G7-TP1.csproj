@@ -76,6 +76,12 @@
     <Compile Include="Views\TP3.Designer.cs">
       <DependentUpon>TP3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\TP4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TP4.Designer.cs">
+      <DependentUpon>TP4.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -91,6 +97,9 @@
     </Compile>
     <EmbeddedResource Include="Views\TP3.resx">
       <DependentUpon>TP3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TP4.resx">
+      <DependentUpon>TP4.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
