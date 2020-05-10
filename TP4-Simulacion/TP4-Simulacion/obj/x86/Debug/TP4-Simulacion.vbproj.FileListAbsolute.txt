@@ -85,3 +85,9 @@ C:\FACU\SIM\2020\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
 C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
 C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
 C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
+C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_main.resources
+C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache

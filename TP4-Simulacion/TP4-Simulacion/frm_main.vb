@@ -96,10 +96,10 @@
             demanda = getDemanda(rndDemanda)
             acumuladorCantDecenasAPedirPoliticaB += demanda
             If demanda > stockDisponible Then
-                costoStockOut = (demanda - stockDisponible) * 10 * costoStockOutIndvidual
+                costoStockOut = (demanda - stockDisponible) * 12 * costoStockOutIndvidual
                 stockDisponible = 0
             Else
-                costoMantenimiento = (stockDisponible - demanda) * 10 * costoAlmacenamientoIndividual
+                costoMantenimiento = (stockDisponible - demanda) * 12 * costoAlmacenamientoIndividual
                 stockDisponible -= demanda
             End If
 
