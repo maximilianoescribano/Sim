@@ -1,7 +1,7 @@
 ﻿Public Class frm_main
 
     Dim cantDias, desde, hasta, frecuenciaPedido, diaLlegadaPedido, cantStockPedido, stockDisponible As Integer
-    Dim costoAcum As Long
+    Dim costoAcum As Double
     Dim isA As Boolean
     Dim mostrar As Boolean = False
     Dim rowCount As Integer
@@ -14,6 +14,7 @@
         txtCantDias.Value = 1
         txtDesde.Value = 1
         txtHasta.Value = 1
+        Text = "SIM TP4 - Montecarlo - Grupo 7"
     End Sub
  
     Private Sub btnSimular_Click(sender As System.Object, e As System.EventArgs) Handles btnSimular.Click
@@ -61,6 +62,11 @@
         Dim cantidadPedido As Integer
         Dim costoStockOutIndvidual As Double = txtCS.Text
         Dim costoAlmacenamientoIndividual As Double = txtCA.Text
+
+        cantDias = txtCantDias.Text
+        desde = txtDesde.Text
+        hasta = txtHasta.Text
+
         cantidadPedido = txtCantidadPedido.Text
         costoAcum = 0
         stockDisponible = 20
@@ -138,10 +144,10 @@
     End Sub
 
     Function realizarPedido(dia As Integer, cantPedir As Integer) As Double
-
         Dim rndDemora As Double = Rnd()
         Dim demora As Integer = getDemora(rndDemora)
         diaLlegadaPedido = dia + demora
+
         If mostrar Then
             gridSimulacion.Rows(rowCount).Cells(3).Value = rndDemora
             gridSimulacion.Rows(rowCount).Cells(4).Value = demora
@@ -149,9 +155,10 @@
             gridSimulacion.Rows(rowCount).Cells(6).Value = diaLlegadaPedido
 
         End If
-        cantStockPedido = cantPedir
-        Return getCosto(cantPedir) * cantPedir
 
+        cantStockPedido = cantPedir
+
+        Return getCosto(cantPedir) * cantPedir
     End Function
 
     Function getDemanda(rndDemanda As Double) As Integer
@@ -181,11 +188,11 @@
         If rndDemanda >= probDemanda40 And rndDemanda < probDemanda50 Then
             demanda = 50
         End If
+
         Return demanda
     End Function
 
     Function getDemora(rndDemora As Double) As Integer
-
         Dim demora As Integer
         Dim probDemora1 As Double = txtProbDemora1.Text
         Dim probDemora2 As Double = txtProbDemora2.Text + probDemora1
@@ -204,6 +211,7 @@
         If rndDemora >= probDemora3 And rndDemora < probDemora4 Then
             demora = 4
         End If
+
         Return demora
     End Function
 
@@ -213,14 +221,13 @@
         Dim costo2 As Double = txtCosto2.Text
         Dim costo3 As Double = txtCosto3.Text
 
-        'CHECKEAR SI LAS COMPARACIONES (INCLUYE/EXCLUYE) SON CORRECTAS DE ACUERDO A LA TABLA
-        If pedido < 100 Then
+        If pedido <= 100 Then
             costo = 200
         End If
-        If pedido >= 100 And pedido < 200 Then
+        If pedido > 100 And pedido <= 200 Then
             costo = 280
         End If
-        If pedido >= 200 Then
+        If pedido > 200 Then
             costo = 300
         End If
 
@@ -228,49 +235,14 @@
     End Function
 
     Function checkValues() As Boolean
-        If Integer.TryParse(txtCantDias.Text, cantDias) Then
-            cantDias = txtCantDias.Text
-            If cantDias > 0 Then
-
-            Else
-                MsgBox("La cantidad de días debe ser un número mayor a 0", MsgBoxStyle.Critical, AcceptButton)
-                txtCantDias.Focus()
-                Return False
-            End If
-        Else
-            MsgBox("La cantidad de días debe ser un número entero", MsgBoxStyle.Critical, AcceptButton)
-            txtCantDias.Focus()
+        If txtHasta.Value > txtCantDias.Value Then
+            MsgBox("Hasta debe ser un número menor o igual a " & txtCantDias.Value, MsgBoxStyle.Critical, AcceptButton)
+            txtHasta.Focus()
             Return False
         End If
 
-        If Integer.TryParse(txtDesde.Text, desde) Then
-            desde = txtDesde.Text
-            If desde > 0 Then
-                desde = txtDesde.Text
-
-            Else
-                MsgBox("Desde debe ser un número mayor a 0", MsgBoxStyle.Critical, AcceptButton)
-                txtDesde.Focus()
-                Return False
-            End If
-        Else
-            MsgBox("Desde debe ser un número entero", MsgBoxStyle.Critical, AcceptButton)
-            txtDesde.Focus()
-            Return False
-        End If
-
-        If Integer.TryParse(txtHasta.Text, hasta) Then
-            hasta = txtHasta.Text
-            If hasta <= cantDias Then
-                hasta = txtHasta.Text
-
-            Else
-                MsgBox("Desde debe ser un número menor o igual a " & cantDias, MsgBoxStyle.Critical, AcceptButton)
-                txtHasta.Focus()
-                Return False
-            End If
-        Else
-            MsgBox("Hasta debe ser un número entero", MsgBoxStyle.Critical, AcceptButton)
+        If txtDesde.Value > txtHasta.Value Then
+            MsgBox("Desde debe ser un número menor o igual a " & txtHasta.Value, MsgBoxStyle.Critical, AcceptButton)
             txtHasta.Focus()
             Return False
         End If
