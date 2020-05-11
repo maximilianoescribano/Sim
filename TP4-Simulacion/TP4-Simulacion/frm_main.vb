@@ -5,23 +5,17 @@
     Dim isA As Boolean
     Dim mostrar As Boolean = False
     Dim rowCount As Integer
+
     Public Sub New()
         ' This call is required by the Windows Form Designer.
         InitializeComponent()
         ' Add any initialization after the InitializeComponent() call.
         radioA.Select()
-        txtCantDias.Text = 1
-        txtDesde.Text = 1
-        txtHasta.Text = 1
+        txtCantDias.Value = 1
+        txtDesde.Value = 1
+        txtHasta.Value = 1
     End Sub
  
-
-    Private Sub txtCantDias_TextChanged(sender As System.Object, e As System.EventArgs) Handles txtCantDias.TextChanged
-        txtHasta.Text = txtCantDias.Text
-
-    End Sub
-
-    
     Private Sub btnSimular_Click(sender As System.Object, e As System.EventArgs) Handles btnSimular.Click
 
         If checkValues() Then
@@ -96,10 +90,10 @@
             demanda = getDemanda(rndDemanda)
             acumuladorCantDecenasAPedirPoliticaB += demanda
             If demanda > stockDisponible Then
-                costoStockOut = (demanda - stockDisponible) * 12 * costoStockOutIndvidual
+                costoStockOut = (demanda - stockDisponible) * 10 * costoStockOutIndvidual
                 stockDisponible = 0
             Else
-                costoMantenimiento = (stockDisponible - demanda) * 12 * costoAlmacenamientoIndividual
+                costoMantenimiento = (stockDisponible - demanda) * 10 * costoAlmacenamientoIndividual
                 stockDisponible -= demanda
             End If
 
@@ -142,7 +136,6 @@
 
         txtTotal.Text = costoAcum
     End Sub
-
 
     Function realizarPedido(dia As Integer, cantPedir As Integer) As Double
 
@@ -190,6 +183,7 @@
         End If
         Return demanda
     End Function
+
     Function getDemora(rndDemora As Double) As Integer
 
         Dim demora As Integer
@@ -212,11 +206,14 @@
         End If
         Return demora
     End Function
+
     Function getCosto(pedido As Integer) As Integer
         Dim costo As Integer
         Dim costo1 As Double = txtCosto1.Text
         Dim costo2 As Double = txtCosto2.Text
         Dim costo3 As Double = txtCosto3.Text
+
+        'CHECKEAR SI LAS COMPARACIONES (INCLUYE/EXCLUYE) SON CORRECTAS DE ACUERDO A LA TABLA
         If pedido < 100 Then
             costo = 200
         End If
@@ -226,8 +223,10 @@
         If pedido >= 200 Then
             costo = 300
         End If
+
         Return costo
     End Function
+
     Function checkValues() As Boolean
         If Integer.TryParse(txtCantDias.Text, cantDias) Then
             cantDias = txtCantDias.Text
@@ -276,6 +275,18 @@
             Return False
         End If
 
+        If Not ValidateProbDemandas() Then
+            MsgBox("La sumatoria de probabilidades de Demandas debe ser igual a 1", MsgBoxStyle.Critical, AcceptButton)
+            txtProbDemora1.Focus()
+            Return False
+        End If
+
+        If Not ValidateProbDemoras() Then
+            MsgBox("La sumatoria de probabilidades de Demoras debe ser igual a 1", MsgBoxStyle.Critical, AcceptButton)
+            txtProbDemora1.Focus()
+            Return False
+        End If
+
         If radioA.Checked Then
             isA = True
         Else
@@ -285,4 +296,33 @@
         Return True
 
     End Function
+
+    Function ValidateProbDemandas() As Boolean
+        Dim probTotal As Double = 0
+
+        probTotal += txtProbDemanda0.Value
+        probTotal += txtProbDemanda10.Value
+        probTotal += txtProbDemanda20.Value
+        probTotal += txtProbDemanda30.Value
+        probTotal += txtProbDemanda40.Value
+        probTotal += txtProbDemanda50.Value
+
+        Return probTotal.Equals(1.0)
+    End Function
+
+    Function ValidateProbDemoras() As Boolean
+        Dim probTotal As Double = 0
+
+        probTotal += txtProbDemora1.Value
+        probTotal += txtProbDemora2.Value
+        probTotal += txtProbDemora3.Value
+        probTotal += txtProbDemora4.Value
+
+        Return probTotal.Equals(1.0)
+    End Function
+
+    Private Sub txtCantDias_ValueChanged(sender As Object, e As EventArgs) Handles txtCantDias.ValueChanged
+        txtHasta.Value = txtCantDias.Value
+    End Sub
+
 End Class
