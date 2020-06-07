@@ -22,7 +22,7 @@ Partial Class frm_main
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.gridSimulacion = New System.Windows.Forms.DataGridView()
         Me.relojDiaCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.rndDemandaCol = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -89,40 +89,40 @@ Partial Class frm_main
         Me.txtCA = New System.Windows.Forms.NumericUpDown()
         Me.txtCS = New System.Windows.Forms.NumericUpDown()
         Me.txtCantDias = New System.Windows.Forms.NumericUpDown()
-        CType(Me.gridSimulacion, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel1.SuspendLayout()
-        Me.Panel2.SuspendLayout()
-        CType(Me.txtHasta, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtDesde, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.groupBox3.SuspendLayout()
-        Me.groupBox6.SuspendLayout()
-        CType(Me.txtProbDemora4, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtProbDemora3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtProbDemora2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtProbDemora1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.groupBox5.SuspendLayout()
-        CType(Me.txtProbDemanda50, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtProbDemanda40, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtProbDemanda30, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtProbDemanda20, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtProbDemanda10, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtProbDemanda0, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox1.SuspendLayout()
-        CType(Me.txtCosto3, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtCosto2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtCosto1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox2.SuspendLayout()
-        CType(Me.txtCantidadPedido, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtCA, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtCS, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtCantDias, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+        CType(Me.gridSimulacion,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.Panel1.SuspendLayout
+        Me.Panel2.SuspendLayout
+        CType(Me.txtHasta,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtDesde,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.groupBox3.SuspendLayout
+        Me.groupBox6.SuspendLayout
+        CType(Me.txtProbDemora4,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtProbDemora3,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtProbDemora2,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtProbDemora1,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.groupBox5.SuspendLayout
+        CType(Me.txtProbDemanda50,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtProbDemanda40,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtProbDemanda30,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtProbDemanda20,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtProbDemanda10,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtProbDemanda0,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.GroupBox1.SuspendLayout
+        CType(Me.txtCosto3,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtCosto2,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtCosto1,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.GroupBox2.SuspendLayout
+        CType(Me.txtCantidadPedido,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtCA,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtCS,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtCantDias,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.SuspendLayout
         '
         'gridSimulacion
         '
-        Me.gridSimulacion.AllowUserToAddRows = False
-        Me.gridSimulacion.AllowUserToDeleteRows = False
-        Me.gridSimulacion.AllowUserToResizeRows = False
+        Me.gridSimulacion.AllowUserToAddRows = false
+        Me.gridSimulacion.AllowUserToDeleteRows = false
+        Me.gridSimulacion.AllowUserToResizeRows = false
         Me.gridSimulacion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.gridSimulacion.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.relojDiaCol, Me.rndDemandaCol, Me.demandaCol, Me.rndDemoraCol, Me.demoraCol, Me.ordenColocadaCol, Me.llegadaPedidoCol, Me.stockCol, Me.costoOrdenamientoCol, Me.costoMantenimientoCol, Me.costoStockOutCol, Me.costoTotalDiaCol, Me.costoAcumuladoCol})
         Me.gridSimulacion.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
@@ -140,8 +140,8 @@ Partial Class frm_main
         '
         'rndDemandaCol
         '
-        DataGridViewCellStyle13.NullValue = Nothing
-        Me.rndDemandaCol.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.rndDemandaCol.DefaultCellStyle = DataGridViewCellStyle1
         Me.rndDemandaCol.HeaderText = "RND Demanda"
         Me.rndDemandaCol.Name = "rndDemandaCol"
         Me.rndDemandaCol.Width = 70
@@ -213,8 +213,8 @@ Partial Class frm_main
         '
         'Label1
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.AutoSize = true
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
         Me.Label1.Location = New System.Drawing.Point(14, 29)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(117, 15)
@@ -233,8 +233,8 @@ Partial Class frm_main
         '
         'Label2
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.AutoSize = true
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
         Me.Label2.Location = New System.Drawing.Point(3, 20)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(55, 15)
@@ -243,29 +243,29 @@ Partial Class frm_main
         '
         'radioB
         '
-        Me.radioB.AutoSize = True
+        Me.radioB.AutoSize = true
         Me.radioB.Location = New System.Drawing.Point(71, 35)
         Me.radioB.Name = "radioB"
         Me.radioB.Size = New System.Drawing.Size(102, 17)
         Me.radioB.TabIndex = 1
-        Me.radioB.TabStop = True
+        Me.radioB.TabStop = true
         Me.radioB.Text = "B (cada 10 dias)"
-        Me.radioB.UseVisualStyleBackColor = True
+        Me.radioB.UseVisualStyleBackColor = true
         '
         'radioA
         '
-        Me.radioA.AutoSize = True
+        Me.radioA.AutoSize = true
         Me.radioA.Location = New System.Drawing.Point(71, 7)
         Me.radioA.Name = "radioA"
         Me.radioA.Size = New System.Drawing.Size(96, 17)
         Me.radioA.TabIndex = 0
-        Me.radioA.TabStop = True
+        Me.radioA.TabStop = true
         Me.radioA.Text = "A (cada 7 dias)"
-        Me.radioA.UseVisualStyleBackColor = True
+        Me.radioA.UseVisualStyleBackColor = true
         '
         'Label3
         '
-        Me.Label3.AutoSize = True
+        Me.Label3.AutoSize = true
         Me.Label3.Location = New System.Drawing.Point(74, 10)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(38, 13)
@@ -274,7 +274,7 @@ Partial Class frm_main
         '
         'Label4
         '
-        Me.Label4.AutoSize = True
+        Me.Label4.AutoSize = true
         Me.Label4.Location = New System.Drawing.Point(74, 38)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(49, 13)
@@ -315,8 +315,8 @@ Partial Class frm_main
         '
         'Label5
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.AutoSize = true
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
         Me.Label5.Location = New System.Drawing.Point(4, 20)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(56, 15)
@@ -330,21 +330,21 @@ Partial Class frm_main
         Me.btnSimular.Size = New System.Drawing.Size(85, 35)
         Me.btnSimular.TabIndex = 9
         Me.btnSimular.Text = "Simular"
-        Me.btnSimular.UseVisualStyleBackColor = True
+        Me.btnSimular.UseVisualStyleBackColor = true
         '
         'txtTotal
         '
         Me.txtTotal.Location = New System.Drawing.Point(105, 600)
         Me.txtTotal.Name = "txtTotal"
-        Me.txtTotal.ReadOnly = True
+        Me.txtTotal.ReadOnly = true
         Me.txtTotal.Size = New System.Drawing.Size(111, 20)
         Me.txtTotal.TabIndex = 11
         Me.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         '
         'Label6
         '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.AutoSize = true
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
         Me.Label6.Location = New System.Drawing.Point(8, 600)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(91, 15)
@@ -361,7 +361,7 @@ Partial Class frm_main
         Me.groupBox3.Padding = New System.Windows.Forms.Padding(2)
         Me.groupBox3.Size = New System.Drawing.Size(419, 202)
         Me.groupBox3.TabIndex = 26
-        Me.groupBox3.TabStop = False
+        Me.groupBox3.TabStop = false
         Me.groupBox3.Text = "Probabilidades"
         '
         'groupBox6
@@ -380,7 +380,7 @@ Partial Class frm_main
         Me.groupBox6.Padding = New System.Windows.Forms.Padding(2)
         Me.groupBox6.Size = New System.Drawing.Size(190, 125)
         Me.groupBox6.TabIndex = 8
-        Me.groupBox6.TabStop = False
+        Me.groupBox6.TabStop = false
         Me.groupBox6.Text = "Demora (en dias)"
         '
         'txtProbDemora4
@@ -429,7 +429,7 @@ Partial Class frm_main
         '
         'label16
         '
-        Me.label16.AutoSize = True
+        Me.label16.AutoSize = true
         Me.label16.Location = New System.Drawing.Point(16, 93)
         Me.label16.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.label16.Name = "label16"
@@ -439,7 +439,7 @@ Partial Class frm_main
         '
         'label17
         '
-        Me.label17.AutoSize = True
+        Me.label17.AutoSize = true
         Me.label17.Location = New System.Drawing.Point(16, 71)
         Me.label17.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.label17.Name = "label17"
@@ -449,7 +449,7 @@ Partial Class frm_main
         '
         'label18
         '
-        Me.label18.AutoSize = True
+        Me.label18.AutoSize = true
         Me.label18.Location = New System.Drawing.Point(16, 50)
         Me.label18.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.label18.Name = "label18"
@@ -459,7 +459,7 @@ Partial Class frm_main
         '
         'label19
         '
-        Me.label19.AutoSize = True
+        Me.label19.AutoSize = true
         Me.label19.Location = New System.Drawing.Point(16, 26)
         Me.label19.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.label19.Name = "label19"
@@ -487,7 +487,7 @@ Partial Class frm_main
         Me.groupBox5.Padding = New System.Windows.Forms.Padding(2)
         Me.groupBox5.Size = New System.Drawing.Size(170, 173)
         Me.groupBox5.TabIndex = 1
-        Me.groupBox5.TabStop = False
+        Me.groupBox5.TabStop = false
         Me.groupBox5.Text = "Demanda por dia (decenas)"
         '
         'txtProbDemanda50
@@ -558,7 +558,7 @@ Partial Class frm_main
         '
         'Label8
         '
-        Me.Label8.AutoSize = True
+        Me.Label8.AutoSize = true
         Me.Label8.Location = New System.Drawing.Point(16, 143)
         Me.Label8.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label8.Name = "Label8"
@@ -568,7 +568,7 @@ Partial Class frm_main
         '
         'Label7
         '
-        Me.Label7.AutoSize = True
+        Me.Label7.AutoSize = true
         Me.Label7.Location = New System.Drawing.Point(16, 119)
         Me.Label7.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label7.Name = "Label7"
@@ -578,7 +578,7 @@ Partial Class frm_main
         '
         'label15
         '
-        Me.label15.AutoSize = True
+        Me.label15.AutoSize = true
         Me.label15.Location = New System.Drawing.Point(16, 96)
         Me.label15.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.label15.Name = "label15"
@@ -588,7 +588,7 @@ Partial Class frm_main
         '
         'label14
         '
-        Me.label14.AutoSize = True
+        Me.label14.AutoSize = true
         Me.label14.Location = New System.Drawing.Point(16, 74)
         Me.label14.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.label14.Name = "label14"
@@ -598,7 +598,7 @@ Partial Class frm_main
         '
         'label11
         '
-        Me.label11.AutoSize = True
+        Me.label11.AutoSize = true
         Me.label11.Location = New System.Drawing.Point(16, 51)
         Me.label11.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.label11.Name = "label11"
@@ -608,7 +608,7 @@ Partial Class frm_main
         '
         'label10
         '
-        Me.label10.AutoSize = True
+        Me.label10.AutoSize = true
         Me.label10.Location = New System.Drawing.Point(16, 28)
         Me.label10.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.label10.Name = "label10"
@@ -630,7 +630,7 @@ Partial Class frm_main
         Me.GroupBox1.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox1.Size = New System.Drawing.Size(225, 99)
         Me.GroupBox1.TabIndex = 9
-        Me.GroupBox1.TabStop = False
+        Me.GroupBox1.TabStop = false
         Me.GroupBox1.Text = "Costo de las decenas pedidas  (en pesos)"
         '
         'txtCosto3
@@ -666,7 +666,7 @@ Partial Class frm_main
         '
         'Label12
         '
-        Me.Label12.AutoSize = True
+        Me.Label12.AutoSize = true
         Me.Label12.Location = New System.Drawing.Point(16, 71)
         Me.Label12.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label12.Name = "Label12"
@@ -676,7 +676,7 @@ Partial Class frm_main
         '
         'Label13
         '
-        Me.Label13.AutoSize = True
+        Me.Label13.AutoSize = true
         Me.Label13.Location = New System.Drawing.Point(16, 50)
         Me.Label13.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label13.Name = "Label13"
@@ -686,7 +686,7 @@ Partial Class frm_main
         '
         'Label20
         '
-        Me.Label20.AutoSize = True
+        Me.Label20.AutoSize = true
         Me.Label20.Location = New System.Drawing.Point(16, 26)
         Me.Label20.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label20.Name = "Label20"
@@ -696,7 +696,7 @@ Partial Class frm_main
         '
         'Label22
         '
-        Me.Label22.AutoSize = True
+        Me.Label22.AutoSize = true
         Me.Label22.Location = New System.Drawing.Point(16, 26)
         Me.Label22.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label22.Name = "Label22"
@@ -706,7 +706,7 @@ Partial Class frm_main
         '
         'Label21
         '
-        Me.Label21.AutoSize = True
+        Me.Label21.AutoSize = true
         Me.Label21.Location = New System.Drawing.Point(16, 50)
         Me.Label21.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label21.Name = "Label21"
@@ -716,7 +716,7 @@ Partial Class frm_main
         '
         'Label9
         '
-        Me.Label9.AutoSize = True
+        Me.Label9.AutoSize = true
         Me.Label9.Location = New System.Drawing.Point(16, 71)
         Me.Label9.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
         Me.Label9.Name = "Label9"
@@ -738,7 +738,7 @@ Partial Class frm_main
         Me.GroupBox2.Padding = New System.Windows.Forms.Padding(2)
         Me.GroupBox2.Size = New System.Drawing.Size(225, 97)
         Me.GroupBox2.TabIndex = 27
-        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.TabStop = false
         Me.GroupBox2.Text = "Valores del enunciado (por dia y unidad)"
         '
         'txtCantidadPedido
@@ -782,7 +782,7 @@ Partial Class frm_main
         '
         'frm_main
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1000, 627)
         Me.Controls.Add(Me.txtCantDias)
@@ -798,43 +798,43 @@ Partial Class frm_main
         Me.Controls.Add(Me.gridSimulacion)
         Me.Name = "frm_main"
         Me.Text = "frm_main"
-        CType(Me.gridSimulacion, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
-        CType(Me.txtHasta, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtDesde, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.groupBox3.ResumeLayout(False)
-        Me.groupBox6.ResumeLayout(False)
-        Me.groupBox6.PerformLayout()
-        CType(Me.txtProbDemora4, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtProbDemora3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtProbDemora2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtProbDemora1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.groupBox5.ResumeLayout(False)
-        Me.groupBox5.PerformLayout()
-        CType(Me.txtProbDemanda50, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtProbDemanda40, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtProbDemanda30, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtProbDemanda20, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtProbDemanda10, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtProbDemanda0, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
-        CType(Me.txtCosto3, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtCosto2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtCosto1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
-        CType(Me.txtCantidadPedido, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtCA, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtCS, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtCantDias, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        CType(Me.gridSimulacion,System.ComponentModel.ISupportInitialize).EndInit
+        Me.Panel1.ResumeLayout(false)
+        Me.Panel1.PerformLayout
+        Me.Panel2.ResumeLayout(false)
+        Me.Panel2.PerformLayout
+        CType(Me.txtHasta,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtDesde,System.ComponentModel.ISupportInitialize).EndInit
+        Me.groupBox3.ResumeLayout(false)
+        Me.groupBox6.ResumeLayout(false)
+        Me.groupBox6.PerformLayout
+        CType(Me.txtProbDemora4,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtProbDemora3,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtProbDemora2,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtProbDemora1,System.ComponentModel.ISupportInitialize).EndInit
+        Me.groupBox5.ResumeLayout(false)
+        Me.groupBox5.PerformLayout
+        CType(Me.txtProbDemanda50,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtProbDemanda40,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtProbDemanda30,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtProbDemanda20,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtProbDemanda10,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtProbDemanda0,System.ComponentModel.ISupportInitialize).EndInit
+        Me.GroupBox1.ResumeLayout(false)
+        Me.GroupBox1.PerformLayout
+        CType(Me.txtCosto3,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtCosto2,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtCosto1,System.ComponentModel.ISupportInitialize).EndInit
+        Me.GroupBox2.ResumeLayout(false)
+        Me.GroupBox2.PerformLayout
+        CType(Me.txtCantidadPedido,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtCA,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtCS,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtCantDias,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ResumeLayout(false)
+        Me.PerformLayout
 
-    End Sub
+End Sub
     Friend WithEvents gridSimulacion As System.Windows.Forms.DataGridView
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Panel1 As System.Windows.Forms.Panel

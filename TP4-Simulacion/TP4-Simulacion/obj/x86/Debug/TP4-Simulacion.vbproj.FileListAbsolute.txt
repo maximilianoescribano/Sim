@@ -91,3 +91,13 @@ C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
 C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_main.resources
 C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
 C:\FACU\SIM\Sim\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.xml
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.exe
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.pdb
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\bin\Debug\TP4-Simulacion.xml
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbprojResolveAssemblyReference.cache
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.frm_main.resources
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4_Simulacion.Resources.resources
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.vbproj.GenerateResource.Cache
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.exe
+C:\Users\maxi\Documents\simulacion\max\TP4-Simulacion\TP4-Simulacion\obj\x86\Debug\TP4-Simulacion.pdb
