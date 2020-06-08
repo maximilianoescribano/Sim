@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TP5_Simulacion.Modelos;
 
 namespace TP5_Simulacion
 {
@@ -25,16 +26,911 @@ namespace TP5_Simulacion
 
         private void Simular()
         {
+
+            var lista_personas = new List<Persona>();
+
+            var cola_empleado = new List<Persona>();
+
+            var cola_silla = new List<Persona>();
+
+            var empleado_1 = new Empleado();
+            var empleado_2 = new Empleado();
+            var silla1 = new Silla();
+            var silla2 = new Silla();
+            var silla3 = new Silla();
+            var silla4 = new Silla();
+            var silla5 = new Silla();
+
+            var reloj = (double)txtEntradaPersonas.Value;
+            var persona_ultima_llegada = 0;
+            var persona_proxima_llegada = persona_ultima_llegada + reloj;
+
             gridSimulacion.Rows.Clear();
+
             var rnd = new Random();
-            gridSimulacion.Rows.Add(new[] {"0", "Inicializacion", "4", "4", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" });
+            gridSimulacion.Rows.Add(new[] { "0", "Inicializacion", "0", $"{txtEntradaPersonas.Value}", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" });
+            var num_persona = 1;
+
             for (int i = 1; i < txtCantMinutos.Value; i++)
             {
-                var random = rnd.NextDouble().TruncateDouble(4);
-                var evento = GetTipoAtencion(random);
-                gridSimulacion.Rows.Add(new[] { $"{i}", $"llega_persona_{i}", "4", "8", $"{random}", $"{evento}", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" });
-               
-            }
+                var random_atencion = rnd.NextDouble().TruncateDouble(4);
+                var evento = GetTipoAtencion(random_atencion);
+
+                double rnd_rl = 0, rnd_rc, rnd_pl;
+                double tiempo_atencion = 0;
+
+                #region nueva persona
+
+                if ((persona_proxima_llegada < empleado_1.TiempoFinAtencion || empleado_1.Libre) &&
+                    (persona_proxima_llegada < empleado_2.TiempoFinAtencion || empleado_2.Libre) &&
+                    (persona_proxima_llegada < silla1.TiempoFinAtencion || silla1.Libre) &&
+                    (persona_proxima_llegada < silla2.TiempoFinAtencion || silla2.Libre) &&
+                    (persona_proxima_llegada < silla3.TiempoFinAtencion || silla3.Libre) &&
+                    (persona_proxima_llegada < silla4.TiempoFinAtencion || silla4.Libre) &&
+                    (persona_proxima_llegada < silla5.TiempoFinAtencion || silla5.Libre))
+                {
+                    reloj = persona_proxima_llegada;
+                    var persona = new Persona(reloj, evento) { Numero = num_persona };
+                    lista_personas.Add(persona);
+                    num_persona++;
+                    if (evento == "Recibir Libro")
+                    {
+                        tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+                        persona.Evento_tiempo = tiempo_atencion;
+                        var bandera = true;
+                        persona.Estado = Estado.SADL;
+                       
+                        if (empleado_1.Libre && bandera)
+                        {
+                            empleado_1.Libre = false;
+                            empleado_1.TiempoFinAtencion = reloj + tiempo_atencion;
+                            empleado_1.Atendiendo = persona;
+                            bandera = false;
+                        }
+                        if (empleado_2.Libre && bandera)
+                        {
+                            empleado_2.Libre = false;
+                            empleado_2.TiempoFinAtencion = reloj + tiempo_atencion;
+                            empleado_2.Atendiendo = persona;
+                            bandera = false;
+                        }
+                        if (!(empleado_2.Libre && empleado_1.Libre) && bandera)
+                        {
+                            persona.Estado = Estado.EA;
+                            cola_empleado.Add(persona);
+                        }
+
+                        gridSimulacion.Rows.Add(new[]
+                        {
+                            $"{i}", $"llega_persona_{persona.Numero}", $"{reloj}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada+ (double)txtEntradaPersonas.Value}",
+                            $"{random_atencion}", $"{evento}", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
+                             $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                        });
+                    }
+                    if (evento == "Prestar Libro")
+                    {
+                        rnd_rc = rnd.NextDouble().TruncateDouble(4);
+                        tiempo_atencion = GetTiempoAtencionPrestamo(rnd_rc);
+                        persona.Evento_tiempo = tiempo_atencion;
+                        var bandera = true;
+                        persona.Estado = Estado.SARL;
+                        if (empleado_1.Libre && bandera)
+                        {
+                            empleado_1.Libre = false;
+                            empleado_1.TiempoFinAtencion = reloj + tiempo_atencion;
+                            empleado_1.Atendiendo = persona;
+                            bandera = false;
+                        }
+                        if (empleado_2.Libre && bandera)
+                        {
+                            empleado_2.Libre = false;
+                            empleado_2.TiempoFinAtencion = reloj + tiempo_atencion;
+                            empleado_2.Atendiendo = persona;
+                            bandera = false;
+                        }
+                        if (!(empleado_2.Libre && empleado_1.Libre) && bandera)
+                        {
+                            persona.Estado = Estado.EA;
+                            cola_empleado.Add(persona);
+                        }
+
+                        gridSimulacion.Rows.Add(new[]
+                        {
+                            $"{i}", $"llega_persona_{persona.Numero}", $"{reloj}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada+ (double)txtEntradaPersonas.Value}",
+                            $"{random_atencion}", $"{evento}", "-",
+                            "-", $"{rnd_rc}", $"{tiempo_atencion}", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
+                             $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                        });
+                    }
+
+                    if (evento == "Realizar Consulta")
+                    {
+                        rnd_pl = rnd.NextDouble().TruncateDouble(4);
+                        tiempo_atencion = GetTiempoAtencionConsulta(rnd_pl);
+                        persona.Evento_tiempo = tiempo_atencion;
+                        var bandera = true;
+                        persona.Estado = Estado.SAC;
+                        if (empleado_1.Libre && bandera)
+                        {
+                            empleado_1.Libre = false;
+                            empleado_1.TiempoFinAtencion = reloj + tiempo_atencion;
+                            empleado_1.Atendiendo = persona;
+                            bandera = false;
+                        }
+                        if (empleado_2.Libre && bandera)
+                        {
+                            empleado_2.Libre = false;
+                            empleado_2.TiempoFinAtencion = reloj + tiempo_atencion;
+                            empleado_2.Atendiendo = persona;
+                            bandera = false;
+                        }
+                        if (!(empleado_2.Libre && empleado_1.Libre) && bandera)
+                        {
+                            persona.Estado = Estado.EA;
+                            cola_empleado.Add(persona);
+                        }
+
+                        gridSimulacion.Rows.Add(new[]
+                        {
+                            $"{i}", $"llega_persona_{persona.Numero}", $"{reloj}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada+ (double)txtEntradaPersonas.Value}",
+                            $"{random_atencion}", $"{evento}", "-",
+                            "-", "-", "-", $"{rnd_pl}", $"{tiempo_atencion}", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
+                             $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                        });
+                    }
+                    persona.Historico.Add(new[] { reloj.ToString(), persona.Minuto_llegada.ToString(), persona.Estado.ToString() });
+                    persona_proxima_llegada = persona_proxima_llegada + (double)txtEntradaPersonas.Value;
+                    continue;
+                }
+
+                #endregion nueva persona
+
+                #region empleado 1
+
+                if (((empleado_1.TiempoFinAtencion < empleado_2.TiempoFinAtencion || empleado_2.Libre) &&
+                    (empleado_1.TiempoFinAtencion < silla1.TiempoFinAtencion || silla1.Libre) &&
+                    (empleado_1.TiempoFinAtencion < silla2.TiempoFinAtencion || silla2.Libre) &&
+                    (empleado_1.TiempoFinAtencion < silla3.TiempoFinAtencion || silla3.Libre) &&
+                    (empleado_1.TiempoFinAtencion < silla4.TiempoFinAtencion || silla4.Libre) &&
+                    (empleado_1.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !empleado_1.Libre)
+                {
+                    empleado_1.Atendiendo.Minuto_Salida = empleado_1.TiempoFinAtencion;
+
+                    if (empleado_1.Atendiendo.Estado == Estado.SADL)
+                    {
+                        if (cola_empleado.Any())
+                        {
+                            var esperando = cola_empleado.First();
+                            esperando.Estado = Estado.SADL;
+                            esperando.Historico.Add(new[] { reloj.ToString(), esperando.Minuto_llegada.ToString(), esperando.Estado.ToString() });
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_devolucion_{empleado_1.Atendiendo.Numero}",
+                                $"{empleado_1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_1.TiempoFinAtencion + esperando.Evento_tiempo}", $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
+                                 $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                            });
+
+                            empleado_1.Libre = false;
+                            empleado_1.TiempoFinAtencion = empleado_1.TiempoFinAtencion + esperando.Evento_tiempo;
+                            empleado_1.Atendiendo = esperando;
+                            cola_empleado.RemoveAt(0);
+
+                            continue;
+                        }
+                        else
+                        {
+
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_devolucion_{empleado_1.Atendiendo.Numero}",
+                                $"{empleado_1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
+                                 $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                            });
+                        }
+
+                    }
+
+                    if (empleado_1.Atendiendo.Estado == Estado.SARL)
+                    {
+                        var random_accion = rnd.NextDouble().TruncateDouble(4);
+                        var accion = GetAccionPersona(random_atencion);
+                        var show = accion == "Lee Biblioteca" ? txtTiempoLectura.Value.ToString() : "-";
+                        string silla1txt = "-", silla2txt = "-", silla3txt = "-", silla4txt = "-", silla5txt = "-";
+
+                        if (accion == "Lee Biblioteca")
+                        {
+                            if (!(silla1.Libre || silla2.Libre || silla3.Libre || silla4.Libre || silla5.Libre))
+                            {
+                                empleado_1.Atendiendo.Estado = Estado.EAB;
+                                cola_silla.Add(empleado_1.Atendiendo);
+                                empleado_1.Atendiendo.Historico.Add(new[] { reloj.ToString(), empleado_1.Atendiendo.Minuto_llegada.ToString(), empleado_1.Atendiendo.Estado.ToString() });
+                            }
+                            else
+                            {
+                                var bandera = true;
+                                if (silla1.Libre)
+                                {
+                                    silla1.Libre = false;
+                                    silla1.TiempoFinAtencion = empleado_1.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla1.persona = empleado_1.Atendiendo;
+                                    silla1.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+                                if (silla2.Libre && bandera)
+                                {
+                                    silla2.Libre = false;
+                                    silla2.TiempoFinAtencion = empleado_1.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla2.persona = empleado_1.Atendiendo;
+                                    silla2.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+                                if (silla3.Libre && bandera)
+                                {
+                                    silla3.Libre = false;
+                                    silla3.TiempoFinAtencion = empleado_1.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla3.persona = empleado_1.Atendiendo;
+                                    silla3.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+                                if (silla4.Libre && bandera)
+                                {
+                                    silla4.Libre = false;
+                                    silla4.TiempoFinAtencion = empleado_1.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla4.persona = empleado_1.Atendiendo;
+                                    silla4.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+                                if (silla5.Libre && bandera)
+                                {
+                                    silla5.Libre = false;
+                                    silla5.TiempoFinAtencion = empleado_1.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla5.persona = empleado_1.Atendiendo;
+                                    silla5.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+
+                            }
+                            silla1txt = silla1.Libre ? "-" : silla1.TiempoFinAtencion.ToString();
+                            silla2txt = silla2.Libre ? "-" : silla2.TiempoFinAtencion.ToString();
+                            silla3txt = silla3.Libre ? "-" : silla3.TiempoFinAtencion.ToString();
+                            silla4txt = silla4.Libre ? "-" : silla4.TiempoFinAtencion.ToString();
+                            silla5txt = silla5.Libre ? "-" : silla5.TiempoFinAtencion.ToString();
+
+
+                        }
+
+                        if (cola_empleado.Any())
+                        {
+                            var esperando = cola_empleado.First();
+                            esperando.Estado = Estado.SADL;
+                            esperando.Historico.Add(new[] { reloj.ToString(), esperando.Minuto_llegada.ToString(), esperando.Estado.ToString() });
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_retiro_{empleado_1.Atendiendo.Numero}",
+                                $"{empleado_1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_1.TiempoFinAtencion + esperando.Evento_tiempo}", $"{empleado_2.TiempoFinAtencion}", $"{random_accion}", $"{accion}", $"{show}", $"{silla1txt}",
+                                 $"{silla2txt}",  $"{silla3txt}", $"{silla4txt}",  $"{silla5txt}"
+                            });
+
+                            empleado_1.Libre = false;
+                            empleado_1.TiempoFinAtencion = empleado_1.TiempoFinAtencion + esperando.Evento_tiempo;
+                            empleado_1.Atendiendo = esperando;
+                            cola_empleado.RemoveAt(0);
+
+                            continue;
+                        }
+                        else
+                        {
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_retiro_{empleado_1.Atendiendo.Numero}",
+                                $"{empleado_1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_2.TiempoFinAtencion}", $"{random_accion}", $"{accion}", $"{show}", $"{silla1txt}",
+                                 $"{silla2txt}",  $"{silla3txt}", $"{silla4txt}",  $"{silla5txt}"
+                            });
+                        }
+
+
+
+                    }
+
+                    if (empleado_1.Atendiendo.Estado == Estado.SAC)
+                    {
+                        if (cola_empleado.Any())
+                        {
+                            var esperando = cola_empleado.First();
+                            esperando.Estado = Estado.SADL;
+                            esperando.Historico.Add(new[] { reloj.ToString(), esperando.Minuto_llegada.ToString(), esperando.Estado.ToString() });
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_consulta_{empleado_1.Atendiendo.Numero}",
+                                $"{empleado_1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_1.TiempoFinAtencion + esperando.Evento_tiempo}", $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", "-",
+                                "-", "-", "-", "-"
+                            });
+
+                            empleado_1.Libre = false;
+                            empleado_1.TiempoFinAtencion = empleado_1.TiempoFinAtencion + esperando.Evento_tiempo;
+                            empleado_1.Atendiendo = esperando;
+                            cola_empleado.RemoveAt(0);
+
+                            continue;
+                        }
+                        else
+                        {
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_consulta_{empleado_1.Atendiendo.Numero}",
+                                $"{empleado_1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", "-", "-", "-", "-", "-"
+                            });
+                        }
+
+                    }
+
+                    empleado_1.Libre = true;
+                    empleado_1.TiempoFinAtencion = 0;
+                    empleado_1.Atendiendo = null;
+
+                    continue;
+                }
+
+                #endregion empleado 1
+
+                #region empleado 2
+
+                if (((empleado_2.TiempoFinAtencion < silla1.TiempoFinAtencion || silla1.Libre) &&
+                   (empleado_2.TiempoFinAtencion < silla2.TiempoFinAtencion || silla2.Libre) &&
+                   (empleado_2.TiempoFinAtencion < silla3.TiempoFinAtencion || silla3.Libre) &&
+                   (empleado_2.TiempoFinAtencion < silla4.TiempoFinAtencion || silla4.Libre) &&
+                   (empleado_2.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !empleado_2.Libre)
+                {
+
+                    empleado_2.Atendiendo.Minuto_Salida = empleado_2.TiempoFinAtencion;
+
+                    if (empleado_2.Atendiendo.Estado == Estado.SADL)
+                    {
+                        if (cola_empleado.Any())
+                        {
+                            var esperando = cola_empleado.First();
+                            esperando.Estado = Estado.SADL;
+                            esperando.Historico.Add(new[] { reloj.ToString(), esperando.Minuto_llegada.ToString(), esperando.Estado.ToString() });
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_devolucion_{empleado_2.Atendiendo.Numero}", $"{empleado_2.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-","-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_1.TiempoFinAtencion}", $"{empleado_2.TiempoFinAtencion + esperando.Evento_tiempo}", "-", "-", "-",
+                                 $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                            });
+
+                            empleado_2.Libre = false;
+                            empleado_2.TiempoFinAtencion = empleado_2.TiempoFinAtencion + esperando.Evento_tiempo;
+                            empleado_2.Atendiendo = esperando;
+                            cola_empleado.RemoveAt(0);
+
+                            continue;
+                        }
+                        else
+                        {
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_devolucion_{empleado_2.Atendiendo.Numero}", $"{empleado_2.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-","-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_1.TiempoFinAtencion}", "-", "-", "-", "-",
+                                 $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                            });
+                        }
+
+                    }
+
+                    if (empleado_2.Atendiendo.Estado == Estado.SARL)
+                    {
+
+                        var random_accion = rnd.NextDouble().TruncateDouble(4);
+                        var accion = GetAccionPersona(random_atencion);
+                        var show = accion == "Lee Biblioteca" ? txtTiempoLectura.Value.ToString() : "-";
+                        string silla1txt = "-", silla2txt = "-", silla3txt = "-", silla4txt = "-", silla5txt = "-";
+
+                        if (accion == "Lee Biblioteca")
+                        {
+                            if (!(silla1.Libre || silla2.Libre || silla3.Libre || silla4.Libre || silla5.Libre))
+                            {
+                                empleado_2.Atendiendo.Estado = Estado.EAB; 
+                                cola_silla.Add(empleado_2.Atendiendo);
+                            }
+                            else
+                            {
+                                var bandera = true;
+                                if (silla1.Libre)
+                                {
+                                    silla1.Libre = false;
+                                    silla1.TiempoFinAtencion = empleado_2.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla1.persona = empleado_2.Atendiendo;
+                                    silla1.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+                                if (silla2.Libre && bandera)
+                                {
+                                    silla2.Libre = false;
+                                    silla2.TiempoFinAtencion = empleado_2.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla2.persona = empleado_2.Atendiendo;
+                                    silla2.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+                                if (silla3.Libre && bandera)
+                                {
+                                    silla3.Libre = false;
+                                    silla3.TiempoFinAtencion = empleado_2.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla3.persona = empleado_2.Atendiendo;
+                                    silla3.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+                                if (silla4.Libre && bandera)
+                                {
+                                    silla4.Libre = false;
+                                    silla4.TiempoFinAtencion = empleado_2.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla4.persona = empleado_2.Atendiendo;
+                                    silla4.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+                                if (silla5.Libre && bandera)
+                                {
+                                    silla5.Libre = false;
+                                    silla5.TiempoFinAtencion = empleado_2.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                                    silla5.persona = empleado_2.Atendiendo;
+                                    silla5.persona.Estado = Estado.LB;
+                                    bandera = false;
+                                }
+
+                            }
+                            silla1txt = silla1.Libre ? "-" : silla1.TiempoFinAtencion.ToString();
+                            silla2txt = silla2.Libre ? "-" : silla2.TiempoFinAtencion.ToString();
+                            silla3txt = silla3.Libre ? "-" : silla3.TiempoFinAtencion.ToString();
+                            silla4txt = silla4.Libre ? "-" : silla4.TiempoFinAtencion.ToString();
+                            silla5txt = silla5.Libre ? "-" : silla5.TiempoFinAtencion.ToString();
+                            empleado_2.Atendiendo.Historico.Add(new[] { reloj.ToString(), empleado_2.Atendiendo.Minuto_llegada.ToString(), empleado_2.Atendiendo.Estado.ToString() });
+                        }
+
+                        if (cola_empleado.Any())
+                        {
+                            var esperando = cola_empleado.First();
+                            esperando.Estado = Estado.SADL;
+                            esperando.Historico.Add(new[] { reloj.ToString(), esperando.Minuto_llegada.ToString(), esperando.Estado.ToString() });
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_retiro_{empleado_2.Atendiendo.Numero}",
+                                $"{empleado_2.TiempoFinAtencion}",$"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_1.TiempoFinAtencion}", $"{empleado_2.TiempoFinAtencion + esperando.Evento_tiempo}", $"{random_accion}", $"{accion}", $"{show}", $"{silla1txt}",
+                                 $"{silla2txt}",  $"{silla3txt}", $"{silla4txt}",  $"{silla5txt}"
+                            });
+                            empleado_2.Libre = false;
+                            empleado_2.TiempoFinAtencion = empleado_2.TiempoFinAtencion + esperando.Evento_tiempo;
+                            empleado_2.Atendiendo = esperando;
+                            cola_empleado.RemoveAt(0);
+                            continue;
+                        }
+                        else
+                        {
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_retiro_{empleado_2.Atendiendo.Numero}",
+                                $"{empleado_2.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_1.TiempoFinAtencion}", "-",  $"{random_accion}", $"{accion}", $"{show}", $"{silla1txt}",
+                                 $"{silla2txt}",  $"{silla3txt}", $"{silla4txt}",  $"{silla5txt}"
+                            });
+                        }
+
+                    }
+
+                    if (empleado_2.Atendiendo.Estado == Estado.SAC)
+                    {
+                        if (cola_empleado.Any())
+                        {
+                            var esperando = cola_empleado.First();
+                            esperando.Estado = Estado.SADL;
+
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_consulta_{empleado_2.Atendiendo.Numero}",
+                                $"{empleado_2.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_1.TiempoFinAtencion}", $"{empleado_2.TiempoFinAtencion + esperando.Evento_tiempo}", "-", "-", "-", "-",
+                                "-", "-", "-", "-"
+                            });
+                            empleado_2.Libre = false;
+                            empleado_2.TiempoFinAtencion = empleado_2.TiempoFinAtencion + esperando.Evento_tiempo;
+                            empleado_2.Atendiendo = esperando;
+                            cola_empleado.RemoveAt(0);
+                            continue;
+                        }
+                        else
+                        {
+                            gridSimulacion.Rows.Add(new[]
+                            {
+                                $"{i}", $"fin_atencion_consulta_{empleado_2.Atendiendo.Numero}",
+                                $"{empleado_2.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                                "-", "-", "-", "-", "-", "-", "-", "-", "-",
+                                $"{empleado_1.TiempoFinAtencion}", "-", "-", "-", "-", "-", "-", "-", "-", "-"
+                            });
+                        }
+
+                    }
+
+
+
+                    empleado_2.Libre = true;
+                    empleado_2.TiempoFinAtencion = 0;
+                    empleado_2.Atendiendo = null;
+                    continue;
+
+                }
+
+                #endregion empleado 2
+
+                #region silla 1
+
+                if (((silla1.TiempoFinAtencion < silla2.TiempoFinAtencion || silla2.Libre) &&
+                     (silla1.TiempoFinAtencion < silla3.TiempoFinAtencion || silla3.Libre) &&
+                     (silla1.TiempoFinAtencion < silla4.TiempoFinAtencion || silla4.Libre) &&
+                     (silla1.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !silla1.Libre)
+                {
+
+ 
+                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+
+                    silla1.persona.Evento_tiempo = tiempo_atencion;
+                    var bandera = true;
+                    silla1.persona.Estado = Estado.SADL;
+                    if (empleado_1.Libre && bandera)
+                    {
+                        empleado_1.Libre = false;
+                        empleado_1.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_1.Atendiendo = silla1.persona;
+                        bandera = false;
+                    }
+                    if (empleado_2.Libre && bandera)
+                    {
+                        empleado_2.Libre = false;
+                        empleado_2.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_2.Atendiendo = silla1.persona;
+                        bandera = false;
+                    }
+                    if (!(empleado_2.Libre && empleado_1.Libre) && bandera)
+                    {
+                        silla1.persona.Estado = Estado.EA;
+                        cola_empleado.Add(silla1.persona);
+                    }
+
+                    if (cola_silla.Any())
+                    {
+                        var esperando = cola_silla.First();
+                        esperando.Estado = Estado.LB;
+
+                        gridSimulacion.Rows.Add(new[]
+                        {
+                                $"{i}", $"fin_lectura_{silla1.persona.Numero}", $"{silla1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", $"{silla1.TiempoFinAtencion + (double)txtTiempoLectura.Value}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                            });
+
+                        silla1.Libre = false;
+                        silla1.TiempoFinAtencion = silla1.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                        silla1.persona = esperando;
+                        cola_silla.RemoveAt(0);
+
+                        continue;
+                    }
+
+                    gridSimulacion.Rows.Add(new[]
+                       {
+                            $"{i}", $"fin_lectura_{silla1.persona.Numero}", $"{silla1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", "-",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                        });
+
+                    silla1.Libre = true;
+                    silla1.TiempoFinAtencion = 0;
+                    silla1.persona = null;
+                    continue;
+
+                }
+
+                #endregion silla 1
+
+                #region silla 2
+
+                if (((silla2.TiempoFinAtencion < silla3.TiempoFinAtencion || silla3.Libre) &&
+                     (silla2.TiempoFinAtencion < silla4.TiempoFinAtencion || silla4.Libre) &&
+                     (silla2.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !silla2.Libre)
+                {
+                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+
+                    silla2.persona.Evento_tiempo = tiempo_atencion;
+                    var bandera = true;
+                    silla2.persona.Estado = Estado.SADL;
+                    if (empleado_1.Libre && bandera)
+                    {
+                        empleado_1.Libre = false;
+                        empleado_1.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_1.Atendiendo = silla2.persona;
+                        bandera = false;
+                    }
+                    if (empleado_2.Libre && bandera)
+                    {
+                        empleado_2.Libre = false;
+                        empleado_2.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_2.Atendiendo = silla2.persona;
+                        bandera = false;
+                    }
+                    if (!(empleado_2.Libre && empleado_1.Libre) && bandera)
+                    {
+                        silla2.persona.Estado = Estado.EA;
+                        cola_empleado.Add(silla2.persona);
+                    }
+
+                    if (cola_silla.Any())
+                    {
+                        var esperando = cola_silla.First();
+                        esperando.Estado = Estado.LB;
+
+                        gridSimulacion.Rows.Add(new[]
+                        {
+                                $"{i}", $"fin_lectura_{silla2.persona.Numero}", $"{silla2.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",$"{silla1.GetTiempoAtencion()}", $"{silla2.TiempoFinAtencion + (double)txtTiempoLectura.Value}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                            });
+
+                        silla2.Libre = false;
+                        silla2.TiempoFinAtencion = silla2.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                        silla2.persona = esperando;
+                        cola_silla.RemoveAt(0);
+
+                        continue;
+                    }
+
+
+                    gridSimulacion.Rows.Add(new[]
+                       {
+                            $"{i}", $"fin_lectura_{silla2.persona.Numero}", $"{silla2.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", $"{silla1.GetTiempoAtencion()}", "-", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                        });
+
+                    silla2.Libre = true;
+                    silla2.TiempoFinAtencion = 0;
+                    silla2.persona = null;
+                    continue;
+
+                }
+
+                #endregion silla 2
+
+                #region silla 3
+
+                if (((silla3.TiempoFinAtencion < silla4.TiempoFinAtencion || silla4.Libre) &&
+                     (silla3.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !silla3.Libre)
+                {
+                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+
+                    silla3.persona.Evento_tiempo = tiempo_atencion;
+                    var bandera = true;
+                    silla3.persona.Estado = Estado.SADL;
+                    if (empleado_1.Libre && bandera)
+                    {
+                        empleado_1.Libre = false;
+                        empleado_1.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_1.Atendiendo = silla3.persona;
+                        bandera = false;
+                    }
+                    if (empleado_2.Libre && bandera)
+                    {
+                        empleado_2.Libre = false;
+                        empleado_2.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_2.Atendiendo = silla3.persona;
+                        bandera = false;
+                    }
+                    if (!(empleado_2.Libre && empleado_1.Libre) && bandera)
+                    {
+                        silla3.persona.Estado = Estado.EA;
+                        cola_empleado.Add(silla3.persona);
+                    }
+
+                    if (cola_silla.Any())
+                    {
+                        var esperando = cola_silla.First();
+                        esperando.Estado = Estado.LB;
+
+                        gridSimulacion.Rows.Add(new[]
+                        {
+                                $"{i}", $"fin_lectura_{silla3.persona.Numero}", $"{silla3.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",$"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}" ,$"{silla3.TiempoFinAtencion + (double)txtTiempoLectura.Value}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                            });
+
+                        silla3.Libre = false;
+                        silla3.TiempoFinAtencion = silla3.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                        silla3.persona = esperando;
+                        cola_silla.RemoveAt(0);
+
+                        continue;
+                    }
+
+
+                    gridSimulacion.Rows.Add(new[]
+                       {
+                            $"{i}", $"fin_lectura_{silla3.persona.Numero}", $"{silla3.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}", "-",  $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}"
+                        });
+
+                    silla3.Libre = true;
+                    silla3.TiempoFinAtencion = 0;
+                    silla3.persona = null;
+                    continue;
+                }
+
+                #endregion silla 3
+
+                #region silla 4
+
+                if (((silla4.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !silla4.Libre)
+                {
+                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+
+                    silla4.persona.Evento_tiempo = tiempo_atencion;
+                    var bandera = true;
+                    silla4.persona.Estado = Estado.SADL;
+                    if (empleado_1.Libre && bandera)
+                    {
+                        empleado_1.Libre = false;
+                        empleado_1.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_1.Atendiendo = silla4.persona;
+                        bandera = false;
+                    }
+                    if (empleado_2.Libre && bandera)
+                    {
+                        empleado_2.Libre = false;
+                        empleado_2.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_2.Atendiendo = silla4.persona;
+                        bandera = false;
+                    }
+                    if (!(empleado_2.Libre && empleado_1.Libre) && bandera)
+                    {
+                        silla4.persona.Estado = Estado.EA;
+                        cola_empleado.Add(silla4.persona);
+                    }
+
+                    if (cola_silla.Any())
+                    {
+                        var esperando = cola_silla.First();
+                        esperando.Estado = Estado.LB;
+
+                        gridSimulacion.Rows.Add(new[]
+                        {
+                                $"{i}", $"fin_lectura_{silla4.persona.Numero}", $"{silla4.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",$"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}" , $"{silla3.GetTiempoAtencion()}",$"{silla4.TiempoFinAtencion + (double)txtTiempoLectura.Value}" , $"{silla5.GetTiempoAtencion()}"
+                            });
+
+                        silla4.Libre = false;
+                        silla4.TiempoFinAtencion = silla4.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                        silla4.persona = esperando;
+                        cola_silla.RemoveAt(0);
+
+                        continue;
+                    }
+
+
+                    gridSimulacion.Rows.Add(new[]
+                       {
+                            $"{i}", $"fin_lectura_{silla4.persona.Numero}", $"{silla4.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",  $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" ,"-", $"{silla5.GetTiempoAtencion()}"
+                        });
+
+                    silla4.Libre = true;
+                    silla4.TiempoFinAtencion = 0;
+                    silla4.persona = null;
+                    continue;
+                }
+
+                #endregion silla 4
+
+                #region silla 5
+
+                if (true)
+                {
+                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+
+                    silla5.persona.Evento_tiempo = tiempo_atencion;
+                    var bandera = true;
+                    silla5.persona.Estado = Estado.SADL;
+                    if (empleado_1.Libre && bandera)
+                    {
+                        empleado_1.Libre = false;
+                        empleado_1.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_1.Atendiendo = silla5.persona;
+                        bandera = false;
+                    }
+                    if (empleado_2.Libre && bandera)
+                    {
+                        empleado_2.Libre = false;
+                        empleado_2.TiempoFinAtencion = reloj + tiempo_atencion;
+                        empleado_2.Atendiendo = silla5.persona;
+                        bandera = false;
+                    }
+                    if (!(empleado_2.Libre && empleado_1.Libre) && bandera)
+                    {
+                        silla5.persona.Estado = Estado.EA;
+                        cola_empleado.Add(silla5.persona);
+                    }
+
+                    if (cola_silla.Any())
+                    {
+                        var esperando = cola_silla.First();
+                        esperando.Estado = Estado.LB;
+
+                        gridSimulacion.Rows.Add(new[]
+                        {
+                                $"{i}", $"fin_lectura_{silla5.persona.Numero}", $"{silla5.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",$"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}" , $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.TiempoFinAtencion + (double)txtTiempoLectura.Value}"
+                            });
+
+                        silla5.Libre = false;
+                        silla5.TiempoFinAtencion = silla5.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                        silla5.persona = esperando;
+                        cola_silla.RemoveAt(0);
+
+                        continue;
+                    }
+
+
+                    gridSimulacion.Rows.Add(new[]
+                       {
+                            $"{i}", $"fin_lectura_{silla5.persona.Numero}", $"{silla5.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
+                            "-", $"Recibir Libro", $"{rnd_rl}",
+                            $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
+                            $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", "-"
+                        });
+
+                    silla5.Libre = true;
+                    silla5.TiempoFinAtencion = 0;
+                    silla5.persona = null;
+                    continue;
+                }
+
+                #endregion silla 5
+
+                
+        }
+                
+                
+          
+            
         }
 
 
@@ -42,7 +938,7 @@ namespace TP5_Simulacion
 
         private string GetTipoAtencion(double rand)
         {
-            if (rand < (double) txtProbAtencion0.Value)
+            if (rand < (double)txtProbAtencion0.Value)
                 return "Recibir Libro";
             return rand >= (double)(txtProbAtencion0.Value + txtProbAtencion1.Value) ? "Realizar Consulta" : "Prestar Libro";
         }
@@ -52,26 +948,24 @@ namespace TP5_Simulacion
             return rand < (double)txtProbRetiraB.Value ? "Se Retira" : "Lee Biblioteca";
         }
 
-        private double GetTiempoAtencionDevolucion()
+        private double GetTiempoAtencionDevolucion(out double rand)
         {
             var rnd = new Random();
-            var sum = 0.0;
+            rand = 0.0;
             for (var i = 0; i < 11; i++)
-                sum += rnd.NextDouble();
-            return (sum * (double)txtDevolucionDesv.Value) + (double)txtDevolucionMedia.Value;
+                rand += rnd.NextDouble().TruncateDouble(4);
+            return (rand * (double)txtDevolucionDesv.Value) + (double)txtDevolucionMedia.Value;
         }
 
-        private double GetTiempoAtencionPrestamo()
+        private double GetTiempoAtencionPrestamo(double rnd)
         {
-            var rnd = new Random();
-            return ((double)txtRetiraExpMedia.Value * Math.Log(1 - rnd.NextDouble()));
+            return ((double)-txtRetiraExpMedia.Value * Math.Log(1 - rnd)).TruncateDouble(4);
         }
 
-        private double GetTiempoAtencionConsulta()
+        private double GetTiempoAtencionConsulta(double rnd)
         {
-            var rnd = new Random();
-            return (double) txtConsultasRA.Value +
-                   rnd.NextDouble() * ((double) txtConsultasRB.Value - (double) txtConsultasRA.Value);
+            return ((double)txtConsultasRA.Value +
+                   rnd * ((double)txtConsultasRB.Value - (double)txtConsultasRA.Value)).TruncateDouble(4);
         }
 
 
@@ -130,6 +1024,9 @@ namespace TP5_Simulacion
             probTotal += (double)txtProbQuedaB.Value;
             return probTotal.Equals(1.0);
         }
+
+
+        
     }
 
     public static class Helpers
@@ -140,6 +1037,6 @@ namespace TP5_Simulacion
             return (Math.Truncate(val * value)) / val;
         }
 
-     
+
     }
 }

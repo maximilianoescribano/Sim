@@ -9,18 +9,28 @@ namespace TP5_Simulacion.Modelos
     public class Persona
     {
 
-        public Persona(int minuto_llegado)
+        public Persona(double minuto_llegado, string evento)
         {
             this.Minuto_llegada = minuto_llegado;
+            this.Evento = evento;
+            Historico = new List<string[]>();
         }
 
-        public int Minuto_llegada { get; set; }
+        public double Minuto_llegada { get; set; }
 
-        public int Minuto_Salida { get; set; }
+        public double Minuto_Salida { get; set; }
 
         public Estado Estado { get; set; }
 
+        public string Evento { get; set; }
+
+        public double Evento_tiempo { get; set; }
+
         public int CantLibrosRetirados { get; set; }
+        
+        public int Numero { get; set; }
+
+        public List<string[]> Historico { get; set; }
     }
 
 

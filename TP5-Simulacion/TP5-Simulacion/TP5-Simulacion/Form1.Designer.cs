@@ -51,7 +51,7 @@
             this.Label4 = new System.Windows.Forms.Label();
             this.Label3 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtTiempoConsulta = new System.Windows.Forms.NumericUpDown();
+            this.txtTiempoLectura = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.txtDevolucionDesv = new System.Windows.Forms.NumericUpDown();
             this.txtDevolucionMedia = new System.Windows.Forms.NumericUpDown();
@@ -87,6 +87,12 @@
             this.asiento3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.asiento4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.asiento5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.grillaObjetos = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtProbQuedaB)).BeginInit();
@@ -100,7 +106,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtHasta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDesde)).BeginInit();
             this.GroupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTiempoConsulta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTiempoLectura)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDevolucionDesv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDevolucionMedia)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtConsultasRB)).BeginInit();
@@ -108,6 +114,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtConsultasRA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEntradaPersonas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridSimulacion)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grillaObjetos)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox3
@@ -347,7 +357,7 @@
             this.txtCantMinutos.Size = new System.Drawing.Size(79, 20);
             this.txtCantMinutos.TabIndex = 30;
             this.txtCantMinutos.Value = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
@@ -448,7 +458,7 @@
             // 
             // GroupBox1
             // 
-            this.GroupBox1.Controls.Add(this.txtTiempoConsulta);
+            this.GroupBox1.Controls.Add(this.txtTiempoLectura);
             this.GroupBox1.Controls.Add(this.label6);
             this.GroupBox1.Controls.Add(this.txtDevolucionDesv);
             this.GroupBox1.Controls.Add(this.txtDevolucionMedia);
@@ -469,19 +479,19 @@
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Valores Parametrizables (en minutos)";
             // 
-            // txtTiempoConsulta
+            // txtTiempoLectura
             // 
-            this.txtTiempoConsulta.DecimalPlaces = 2;
-            this.txtTiempoConsulta.Location = new System.Drawing.Point(169, 128);
-            this.txtTiempoConsulta.Maximum = new decimal(new int[] {
+            this.txtTiempoLectura.DecimalPlaces = 2;
+            this.txtTiempoLectura.Location = new System.Drawing.Point(169, 128);
+            this.txtTiempoLectura.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.txtTiempoConsulta.Name = "txtTiempoConsulta";
-            this.txtTiempoConsulta.Size = new System.Drawing.Size(76, 20);
-            this.txtTiempoConsulta.TabIndex = 15;
-            this.txtTiempoConsulta.Value = new decimal(new int[] {
+            this.txtTiempoLectura.Name = "txtTiempoLectura";
+            this.txtTiempoLectura.Size = new System.Drawing.Size(76, 20);
+            this.txtTiempoLectura.TabIndex = 15;
+            this.txtTiempoLectura.Value = new decimal(new int[] {
             30,
             0,
             0,
@@ -684,42 +694,47 @@
             this.asiento4,
             this.asiento5});
             this.gridSimulacion.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.gridSimulacion.Location = new System.Drawing.Point(11, 269);
+            this.gridSimulacion.Location = new System.Drawing.Point(0, 0);
             this.gridSimulacion.Name = "gridSimulacion";
             this.gridSimulacion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSimulacion.Size = new System.Drawing.Size(1095, 332);
+            this.gridSimulacion.Size = new System.Drawing.Size(1464, 416);
             this.gridSimulacion.TabIndex = 33;
             // 
             // filaNumero
             // 
             this.filaNumero.HeaderText = "Fila";
             this.filaNumero.Name = "filaNumero";
+            this.filaNumero.Width = 30;
             // 
             // Evento
             // 
             this.Evento.HeaderText = "Evento";
             this.Evento.Name = "Evento";
+            this.Evento.Width = 150;
             // 
             // relojMinCol
             // 
             this.relojMinCol.HeaderText = "Reloj (Min)";
             this.relojMinCol.Name = "relojMinCol";
-            this.relojMinCol.Width = 40;
+            this.relojMinCol.Width = 50;
             // 
             // tiempoEntreLlegadas
             // 
             this.tiempoEntreLlegadas.HeaderText = "Tiempo Entre Llegadas";
             this.tiempoEntreLlegadas.Name = "tiempoEntreLlegadas";
+            this.tiempoEntreLlegadas.Width = 50;
             // 
             // proxLlegada
             // 
             this.proxLlegada.HeaderText = "Proxima Llegada";
             this.proxLlegada.Name = "proxLlegada";
+            this.proxLlegada.Width = 50;
             // 
             // rndTipoAtencion
             // 
             this.rndTipoAtencion.HeaderText = "Rnd Tipo Atencion";
             this.rndTipoAtencion.Name = "rndTipoAtencion";
+            this.rndTipoAtencion.Width = 80;
             // 
             // tipoAtencion
             // 
@@ -730,46 +745,55 @@
             // 
             this.rndDevolucion.HeaderText = "Rnd Devolucion";
             this.rndDevolucion.Name = "rndDevolucion";
+            this.rndDevolucion.Width = 80;
             // 
             // tiempoAtencionDevolucion
             // 
             this.tiempoAtencionDevolucion.HeaderText = "Tiempo Atencion Devolucion";
             this.tiempoAtencionDevolucion.Name = "tiempoAtencionDevolucion";
+            this.tiempoAtencionDevolucion.Width = 50;
             // 
             // rndPrestamo
             // 
             this.rndPrestamo.HeaderText = "Rnd Prestamo";
             this.rndPrestamo.Name = "rndPrestamo";
+            this.rndPrestamo.Width = 80;
             // 
             // tiempoAtencionPrestamo
             // 
             this.tiempoAtencionPrestamo.HeaderText = "Tiempo Atencion Prestamo";
             this.tiempoAtencionPrestamo.Name = "tiempoAtencionPrestamo";
+            this.tiempoAtencionPrestamo.Width = 50;
             // 
             // rndConsulta
             // 
             this.rndConsulta.HeaderText = "Rnd Consulta";
             this.rndConsulta.Name = "rndConsulta";
+            this.rndConsulta.Width = 80;
             // 
             // tiempoAtencionConsulta
             // 
             this.tiempoAtencionConsulta.HeaderText = "Tiempo Atencion Consulta";
             this.tiempoAtencionConsulta.Name = "tiempoAtencionConsulta";
+            this.tiempoAtencionConsulta.Width = 50;
             // 
             // empleado1
             // 
             this.empleado1.HeaderText = "Empleado 1";
             this.empleado1.Name = "empleado1";
+            this.empleado1.Width = 80;
             // 
             // empleado2
             // 
             this.empleado2.HeaderText = "Empleado 2";
             this.empleado2.Name = "empleado2";
+            this.empleado2.Width = 80;
             // 
             // rndLectura
             // 
             this.rndLectura.HeaderText = "Rnd Lectura";
             this.rndLectura.Name = "rndLectura";
+            this.rndLectura.Width = 80;
             // 
             // accion
             // 
@@ -780,38 +804,104 @@
             // 
             this.tiempoPermanencia.HeaderText = "Tiempo Permanencia";
             this.tiempoPermanencia.Name = "tiempoPermanencia";
+            this.tiempoPermanencia.Width = 50;
             // 
             // asiento1
             // 
             this.asiento1.HeaderText = "Asiento 1";
             this.asiento1.Name = "asiento1";
+            this.asiento1.Width = 60;
             // 
             // asiento2
             // 
             this.asiento2.HeaderText = "Asiento 2";
             this.asiento2.Name = "asiento2";
+            this.asiento2.Width = 60;
             // 
             // asiento3
             // 
             this.asiento3.HeaderText = "Asiento 3";
             this.asiento3.Name = "asiento3";
+            this.asiento3.Width = 60;
             // 
             // asiento4
             // 
             this.asiento4.HeaderText = "Asiento 4";
             this.asiento4.Name = "asiento4";
+            this.asiento4.Width = 60;
             // 
             // asiento5
             // 
             this.asiento5.HeaderText = "Asiento 5";
             this.asiento5.Name = "asiento5";
+            this.asiento5.Width = 60;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(15, 298);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1472, 438);
+            this.tabControl1.TabIndex = 34;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.gridSimulacion);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1464, 412);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Simulacion";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.grillaObjetos);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1464, 412);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Objetos";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // grillaObjetos
+            // 
+            this.grillaObjetos.AllowUserToAddRows = false;
+            this.grillaObjetos.AllowUserToDeleteRows = false;
+            this.grillaObjetos.AllowUserToResizeRows = false;
+            this.grillaObjetos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grillaObjetos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn3});
+            this.grillaObjetos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.grillaObjetos.Location = new System.Drawing.Point(0, -2);
+            this.grillaObjetos.Name = "grillaObjetos";
+            this.grillaObjetos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grillaObjetos.Size = new System.Drawing.Size(1464, 416);
+            this.grillaObjetos.TabIndex = 34;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Fila";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 30;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Reloj (Min)";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 50;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1118, 621);
-            this.Controls.Add(this.gridSimulacion);
+            this.ClientSize = new System.Drawing.Size(1544, 785);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.GroupBox1);
             this.Controls.Add(this.Panel2);
             this.Controls.Add(this.txtCantMinutos);
@@ -837,7 +927,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtDesde)).EndInit();
             this.GroupBox1.ResumeLayout(false);
             this.GroupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtTiempoConsulta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtTiempoLectura)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDevolucionDesv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDevolucionMedia)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtConsultasRB)).EndInit();
@@ -845,6 +935,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtConsultasRA)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtEntradaPersonas)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridSimulacion)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grillaObjetos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -875,7 +969,7 @@
         internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.Label Label3;
         private System.Windows.Forms.GroupBox GroupBox1;
-        internal System.Windows.Forms.NumericUpDown txtTiempoConsulta;
+        internal System.Windows.Forms.NumericUpDown txtTiempoLectura;
         private System.Windows.Forms.Label label6;
         internal System.Windows.Forms.NumericUpDown txtDevolucionDesv;
         internal System.Windows.Forms.NumericUpDown txtDevolucionMedia;
@@ -911,6 +1005,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn asiento3;
         private System.Windows.Forms.DataGridViewTextBoxColumn asiento4;
         private System.Windows.Forms.DataGridViewTextBoxColumn asiento5;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        internal System.Windows.Forms.DataGridView grillaObjetos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
     }
 }
 

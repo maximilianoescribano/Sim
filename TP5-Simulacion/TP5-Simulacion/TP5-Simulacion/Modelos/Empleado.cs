@@ -10,6 +10,14 @@ namespace TP5_Simulacion.Modelos
     {
 
         public Empleado()
-        { }
+        {
+            Libre = true;
+        }
+
+        public bool Libre { get; set; }
+
+        public double TiempoFinAtencion { get; set; }
+
+        public Persona Atendiendo { get; set; }
     }
 }
