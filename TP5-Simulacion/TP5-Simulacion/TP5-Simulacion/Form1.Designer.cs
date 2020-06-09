@@ -64,6 +64,12 @@
             this.Label13 = new System.Windows.Forms.Label();
             this.Label20 = new System.Windows.Forms.Label();
             this.gridSimulacion = new System.Windows.Forms.DataGridView();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.grillaObjetos = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.filaNumero = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Evento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.relojMinCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -87,12 +93,9 @@
             this.asiento3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.asiento4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.asiento5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.grillaObjetos = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AcumuladorTiempo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Cantidad_Personas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Objetos = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtProbQuedaB)).BeginInit();
@@ -128,7 +131,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(470, 159);
+            this.groupBox3.Size = new System.Drawing.Size(484, 159);
             this.groupBox3.TabIndex = 27;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Probabilidades";
@@ -139,7 +142,7 @@
             this.groupBox6.Controls.Add(this.txtProbRetiraB);
             this.groupBox6.Controls.Add(this.label18);
             this.groupBox6.Controls.Add(this.label19);
-            this.groupBox6.Location = new System.Drawing.Point(245, 24);
+            this.groupBox6.Location = new System.Drawing.Point(253, 24);
             this.groupBox6.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Padding = new System.Windows.Forms.Padding(2);
@@ -332,7 +335,7 @@
             // 
             // btnSimular
             // 
-            this.btnSimular.Location = new System.Drawing.Point(916, 79);
+            this.btnSimular.Location = new System.Drawing.Point(987, 86);
             this.btnSimular.Name = "btnSimular";
             this.btnSimular.Size = new System.Drawing.Size(85, 35);
             this.btnSimular.TabIndex = 28;
@@ -342,7 +345,7 @@
             // 
             // txtCantMinutos
             // 
-            this.txtCantMinutos.Location = new System.Drawing.Point(157, 24);
+            this.txtCantMinutos.Location = new System.Drawing.Point(171, 24);
             this.txtCantMinutos.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -368,9 +371,9 @@
             this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label1.Location = new System.Drawing.Point(12, 24);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(139, 15);
+            this.Label1.Size = new System.Drawing.Size(159, 15);
             this.Label1.TabIndex = 29;
-            this.Label1.Text = "Cantidad de Minutos";
+            this.Label1.Text = "Cantidad de Iteraciones";
             // 
             // Panel2
             // 
@@ -379,7 +382,7 @@
             this.Panel2.Controls.Add(this.Label5);
             this.Panel2.Controls.Add(this.Label4);
             this.Panel2.Controls.Add(this.Label3);
-            this.Panel2.Location = new System.Drawing.Point(256, 12);
+            this.Panel2.Location = new System.Drawing.Point(270, 12);
             this.Panel2.Name = "Panel2";
             this.Panel2.Size = new System.Drawing.Size(225, 59);
             this.Panel2.TabIndex = 31;
@@ -470,7 +473,7 @@
             this.GroupBox1.Controls.Add(this.Label12);
             this.GroupBox1.Controls.Add(this.Label13);
             this.GroupBox1.Controls.Add(this.Label20);
-            this.GroupBox1.Location = new System.Drawing.Point(501, 12);
+            this.GroupBox1.Location = new System.Drawing.Point(572, 19);
             this.GroupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Padding = new System.Windows.Forms.Padding(2);
@@ -692,13 +695,77 @@
             this.asiento2,
             this.asiento3,
             this.asiento4,
-            this.asiento5});
+            this.asiento5,
+            this.AcumuladorTiempo,
+            this.Cantidad_Personas,
+            this.Objetos});
             this.gridSimulacion.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.gridSimulacion.Location = new System.Drawing.Point(0, 0);
             this.gridSimulacion.Name = "gridSimulacion";
             this.gridSimulacion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridSimulacion.Size = new System.Drawing.Size(1464, 416);
             this.gridSimulacion.TabIndex = 33;
+            this.gridSimulacion.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridSimulacion_CellContentClick);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(15, 298);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1472, 438);
+            this.tabControl1.TabIndex = 34;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.gridSimulacion);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1464, 412);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Simulacion";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.grillaObjetos);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1464, 412);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Objetos";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // grillaObjetos
+            // 
+            this.grillaObjetos.AllowUserToAddRows = false;
+            this.grillaObjetos.AllowUserToDeleteRows = false;
+            this.grillaObjetos.AllowUserToResizeRows = false;
+            this.grillaObjetos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grillaObjetos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn3});
+            this.grillaObjetos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.grillaObjetos.Location = new System.Drawing.Point(0, -2);
+            this.grillaObjetos.Name = "grillaObjetos";
+            this.grillaObjetos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grillaObjetos.Size = new System.Drawing.Size(1464, 416);
+            this.grillaObjetos.TabIndex = 34;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Fila";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 30;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Reloj (Min)";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 50;
             // 
             // filaNumero
             // 
@@ -836,65 +903,22 @@
             this.asiento5.Name = "asiento5";
             this.asiento5.Width = 60;
             // 
-            // tabControl1
+            // AcumuladorTiempo
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(15, 298);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1472, 438);
-            this.tabControl1.TabIndex = 34;
+            this.AcumuladorTiempo.HeaderText = "Acumulador Tiempo";
+            this.AcumuladorTiempo.Name = "AcumuladorTiempo";
             // 
-            // tabPage1
+            // Cantidad_Personas
             // 
-            this.tabPage1.Controls.Add(this.gridSimulacion);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1464, 412);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Simulacion";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.Cantidad_Personas.HeaderText = "Cantidad Personas";
+            this.Cantidad_Personas.Name = "Cantidad_Personas";
             // 
-            // tabPage2
+            // Objetos
             // 
-            this.tabPage2.Controls.Add(this.grillaObjetos);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1464, 412);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Objetos";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // grillaObjetos
-            // 
-            this.grillaObjetos.AllowUserToAddRows = false;
-            this.grillaObjetos.AllowUserToDeleteRows = false;
-            this.grillaObjetos.AllowUserToResizeRows = false;
-            this.grillaObjetos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grillaObjetos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn3});
-            this.grillaObjetos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.grillaObjetos.Location = new System.Drawing.Point(0, -2);
-            this.grillaObjetos.Name = "grillaObjetos";
-            this.grillaObjetos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grillaObjetos.Size = new System.Drawing.Size(1464, 416);
-            this.grillaObjetos.TabIndex = 34;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Fila";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 30;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Reloj (Min)";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 50;
+            this.Objetos.HeaderText = "Objetos";
+            this.Objetos.Name = "Objetos";
+            this.Objetos.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Objetos.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // Form1
             // 
@@ -982,6 +1006,12 @@
         private System.Windows.Forms.Label Label13;
         private System.Windows.Forms.Label Label20;
         internal System.Windows.Forms.DataGridView gridSimulacion;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        internal System.Windows.Forms.DataGridView grillaObjetos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn filaNumero;
         private System.Windows.Forms.DataGridViewTextBoxColumn Evento;
         private System.Windows.Forms.DataGridViewTextBoxColumn relojMinCol;
@@ -1005,12 +1035,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn asiento3;
         private System.Windows.Forms.DataGridViewTextBoxColumn asiento4;
         private System.Windows.Forms.DataGridViewTextBoxColumn asiento5;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        internal System.Windows.Forms.DataGridView grillaObjetos;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AcumuladorTiempo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad_Personas;
+        private System.Windows.Forms.DataGridViewButtonColumn Objetos;
     }
 }
 
