@@ -1117,16 +1117,15 @@ namespace TP5_Simulacion
                     grillaObjetos.Columns.Add($"persona{personas.Numero}", $"Persona {personas.Numero}");
                     if (personas.Historico.Count > 1)
                     {
-                        if (personas.Historico.Count(x => double.Parse(x[0]) > b) > 1)
-                        {
-                            str_to_show.Add($"Minuto llego = {personas.Historico[0][1]} , Estado = {personas.Historico[0][2]} ");
-                        }
-                        for (var i = 0; i < personas.Historico.Count; i++)
-                        {
-                            if(double.Parse(personas.Historico[i][0]) > b)
-                                str_to_show.Add($"Minuto llego = {personas.Historico[i-1][1]} , Estado = {personas.Historico[i-1][2]} ");
+                        var to_show = personas.Historico.Where(x => double.Parse(x[0]) < b).Last();
+                        str_to_show.Add($"Minuto llego = {to_show[1]} , Estado = {to_show[2]} ");
 
-                        }
+                        //for (var i = 0; i < personas.Historico.Count; i++)
+                        //{
+                        //    if(double.Parse(personas.Historico[i][0]) > b)
+                        //        str_to_show.Add($"Minuto llego = {personas.Historico[i-1][1]} , Estado = {personas.Historico[i-1][2]} ");
+
+                        //}
                     }
                     else
                     {
