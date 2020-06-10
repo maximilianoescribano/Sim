@@ -95,6 +95,15 @@
             this.asiento5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AcumuladorTiempo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cantidad_Personas = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_empleado_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_empleado_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_cola1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_silla_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_silla_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_silla_3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_silla_4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_silla_5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.col_cola2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Objetos = new System.Windows.Forms.DataGridViewButtonColumn();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -698,6 +707,15 @@
             this.asiento5,
             this.AcumuladorTiempo,
             this.Cantidad_Personas,
+            this.col_empleado_1,
+            this.col_empleado_2,
+            this.col_cola1,
+            this.col_silla_1,
+            this.col_silla_2,
+            this.col_silla_3,
+            this.col_silla_4,
+            this.col_silla_5,
+            this.col_cola2,
             this.Objetos});
             this.gridSimulacion.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.gridSimulacion.Location = new System.Drawing.Point(0, 0);
@@ -913,6 +931,51 @@
             this.Cantidad_Personas.HeaderText = "Cantidad Personas";
             this.Cantidad_Personas.Name = "Cantidad_Personas";
             // 
+            // col_empleado_1
+            // 
+            this.col_empleado_1.HeaderText = "Empleado 1 Estado";
+            this.col_empleado_1.Name = "col_empleado_1";
+            // 
+            // col_empleado_2
+            // 
+            this.col_empleado_2.HeaderText = "Empleado 2 Estado";
+            this.col_empleado_2.Name = "col_empleado_2";
+            // 
+            // col_cola1
+            // 
+            this.col_cola1.HeaderText = "Cola Empleados";
+            this.col_cola1.Name = "col_cola1";
+            // 
+            // col_silla_1
+            // 
+            this.col_silla_1.HeaderText = "Silla 1 Estado";
+            this.col_silla_1.Name = "col_silla_1";
+            // 
+            // col_silla_2
+            // 
+            this.col_silla_2.HeaderText = "Silla 2 Estado";
+            this.col_silla_2.Name = "col_silla_2";
+            // 
+            // col_silla_3
+            // 
+            this.col_silla_3.HeaderText = "Silla 3 Estado";
+            this.col_silla_3.Name = "col_silla_3";
+            // 
+            // col_silla_4
+            // 
+            this.col_silla_4.HeaderText = "Silla 4 Estado";
+            this.col_silla_4.Name = "col_silla_4";
+            // 
+            // col_silla_5
+            // 
+            this.col_silla_5.HeaderText = "Silla 5 Estado";
+            this.col_silla_5.Name = "col_silla_5";
+            // 
+            // col_cola2
+            // 
+            this.col_cola2.HeaderText = "Cola Sillas";
+            this.col_cola2.Name = "col_cola2";
+            // 
             // Objetos
             // 
             this.Objetos.HeaderText = "Objetos";
@@ -1037,6 +1100,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn asiento5;
         private System.Windows.Forms.DataGridViewTextBoxColumn AcumuladorTiempo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Cantidad_Personas;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_empleado_1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_empleado_2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_cola1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_silla_1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_silla_2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_silla_3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_silla_4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_silla_5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn col_cola2;
         private System.Windows.Forms.DataGridViewButtonColumn Objetos;
     }
 }

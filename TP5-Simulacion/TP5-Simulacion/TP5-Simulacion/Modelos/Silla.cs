@@ -21,5 +21,7 @@ namespace TP5_Simulacion.Modelos
         public Persona persona { get; set; }
 
         public string GetTiempoAtencion() => TiempoFinAtencion == 0 ? "-" : TiempoFinAtencion.ToString();
+
+        public string GetEstado() => this.Libre ? "Libre" : "Ocupado";
     }
 }

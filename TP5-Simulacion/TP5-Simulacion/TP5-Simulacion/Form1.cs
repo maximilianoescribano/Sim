@@ -52,7 +52,7 @@ namespace TP5_Simulacion
             gridSimulacion.Rows.Clear();
 
             var rnd = new Random();
-            gridSimulacion.Rows.Add(new[] { "0", "Inicializacion", "0", $"{txtEntradaPersonas.Value}", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" });
+            gridSimulacion.Rows.Add(new[] { "0", "Inicializacion", "0", $"{txtEntradaPersonas.Value}", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" });
             var num_persona = 1;
 
             for (int i = 1; i < txtCantMinutos.Value; i++)
@@ -62,6 +62,7 @@ namespace TP5_Simulacion
 
                 double rnd_rl = 0, rnd_rc, rnd_pl;
                 double tiempo_atencion = 0;
+
 
                 #region nueva persona
 
@@ -79,7 +80,8 @@ namespace TP5_Simulacion
                     num_persona++;
                     if (evento == "Recibir Libro")
                     {
-                        tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+                        rnd_rl = GetRandomSum();
+                        tiempo_atencion = GetTiempoAtencionDevolucion(rnd_rl);
                         persona.Evento_tiempo = tiempo_atencion;
                         var bandera = true;
                         persona.Estado = Estado.SADL;
@@ -111,7 +113,11 @@ namespace TP5_Simulacion
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
                              $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}", 
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
+
                         });
                     }
                     if (evento == "Prestar Libro")
@@ -148,7 +154,10 @@ namespace TP5_Simulacion
                             "-", $"{rnd_rc}", $"{tiempo_atencion}", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
                              $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                              $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                         });
                     }
 
@@ -186,7 +195,10 @@ namespace TP5_Simulacion
                             "-", "-", "-", $"{rnd_pl}", $"{tiempo_atencion}", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
                              $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                              $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                         });
                     }
                     persona.Historico.Add(new[] { reloj.ToString(), persona.Minuto_llegada.ToString(), persona.Estado.ToString() });
@@ -221,7 +233,10 @@ namespace TP5_Simulacion
                                 "-", "-", "-", "-", "-", "-", "-", "-",
                                 $"{empleado_1.TiempoFinAtencion + esperando.Evento_tiempo}", $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
                                  $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                  $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
 
                             empleado_1.Libre = false;
@@ -241,7 +256,10 @@ namespace TP5_Simulacion
                                 "-", "-", "-", "-", "-", "-", "-", "-", "-",
                                 $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
                                  $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                  $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
                         }
                         
@@ -252,7 +270,6 @@ namespace TP5_Simulacion
                         var random_accion = rnd.NextDouble().TruncateDouble(4);
                         var accion = GetAccionPersona(random_atencion);
                         var show = accion == "Lee Biblioteca" ? txtTiempoLectura.Value.ToString() : "-";
-                        string silla1txt = "-", silla2txt = "-", silla3txt = "-", silla4txt = "-", silla5txt = "-";
 
                         if (accion == "Lee Biblioteca")
                         {
@@ -260,11 +277,6 @@ namespace TP5_Simulacion
                             {
                                 empleado_1.Atendiendo.Estado = Estado.EAB;
                                 cola_silla.Add(empleado_1.Atendiendo);
-                                empleado_1.Atendiendo.Historico.Add(new[]
-                                {
-                                    reloj.ToString(), empleado_1.Atendiendo.Minuto_llegada.ToString(),
-                                    empleado_1.Atendiendo.Estado.ToString()
-                                });
                             }
                             else
                             {
@@ -313,16 +325,16 @@ namespace TP5_Simulacion
                                     silla5.persona = empleado_1.Atendiendo;
                                     silla5.persona.Estado = Estado.LB;
                                     bandera = false;
+                                    
                                 }
 
                             }
-                            silla1txt = silla1.Libre ? "-" : silla1.TiempoFinAtencion.ToString();
-                            silla2txt = silla2.Libre ? "-" : silla2.TiempoFinAtencion.ToString();
-                            silla3txt = silla3.Libre ? "-" : silla3.TiempoFinAtencion.ToString();
-                            silla4txt = silla4.Libre ? "-" : silla4.TiempoFinAtencion.ToString();
-                            silla5txt = silla5.Libre ? "-" : silla5.TiempoFinAtencion.ToString();
 
-
+                            empleado_1.Atendiendo.Historico.Add(new[]
+                               {
+                                    reloj.ToString(), empleado_1.Atendiendo.Minuto_llegada.ToString(),
+                                    empleado_1.Atendiendo.Estado.ToString()
+                             });
                         }
                         else
                         {
@@ -341,9 +353,12 @@ namespace TP5_Simulacion
                                 $"{i}", $"fin_atencion_retiro_{empleado_1.Atendiendo.Numero}",
                                 $"{empleado_1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
                                 "-", "-", "-", "-", "-", "-", "-", "-",
-                                $"{empleado_1.TiempoFinAtencion + esperando.Evento_tiempo}", $"{empleado_2.TiempoFinAtencion}", $"{random_accion}", $"{accion}", $"{show}", $"{silla1txt}",
-                                 $"{silla2txt}",  $"{silla3txt}", $"{silla4txt}",  $"{silla5txt}",
-                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                $"{empleado_1.TiempoFinAtencion + esperando.Evento_tiempo}", $"{empleado_2.TiempoFinAtencion}", $"{random_accion}", $"{accion}", $"{show}", 
+                                 $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
+                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                  $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
 
                             empleado_1.Libre = false;
@@ -361,9 +376,12 @@ namespace TP5_Simulacion
                                 $"{i}", $"fin_atencion_retiro_{empleado_1.Atendiendo.Numero}",
                                 $"{empleado_1.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
                                 "-", "-", "-", "-", "-", "-", "-", "-", "-",
-                                $"{empleado_2.TiempoFinAtencion}", $"{random_accion}", $"{accion}", $"{show}", $"{silla1txt}",
-                                 $"{silla2txt}",  $"{silla3txt}", $"{silla4txt}",  $"{silla5txt}",
-                                  $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                $"{empleado_2.TiempoFinAtencion}", $"{random_accion}", $"{accion}", $"{show}",
+                                $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
+                                  $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                   $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
                             
                         }
@@ -387,7 +405,10 @@ namespace TP5_Simulacion
                                 "-", "-", "-", "-", "-", "-", "-", "-",
                                 $"{empleado_1.TiempoFinAtencion + esperando.Evento_tiempo}", $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
                                 $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                                $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                 $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
 
                             empleado_1.Libre = false;
@@ -406,7 +427,10 @@ namespace TP5_Simulacion
                                 "-", "-", "-", "-", "-", "-", "-", "-", "-",
                                 $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",
                                 $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                                $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                 $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
                         }
 
@@ -445,7 +469,10 @@ namespace TP5_Simulacion
                                 "-","-", "-", "-", "-", "-", "-", "-",
                                 $"{empleado_1.TiempoFinAtencion}", $"{empleado_2.TiempoFinAtencion + esperando.Evento_tiempo}", "-", "-", "-",
                                  $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                  $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
 
                             empleado_2.Libre = false;
@@ -464,7 +491,10 @@ namespace TP5_Simulacion
                                 "-","-", "-", "-", "-", "-", "-", "-",
                                 $"{empleado_1.TiempoFinAtencion}", "-", "-", "-", "-",
                                  $"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                  $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
                         }
                         
@@ -474,9 +504,9 @@ namespace TP5_Simulacion
                     {
 
                         var random_accion = rnd.NextDouble().TruncateDouble(4);
-                        var accion = GetAccionPersona(random_atencion);
+                        var accion = GetAccionPersona(random_accion);
                         var show = accion == "Lee Biblioteca" ? txtTiempoLectura.Value.ToString() : "-";
-                        string silla1txt = "-", silla2txt = "-", silla3txt = "-", silla4txt = "-", silla5txt = "-";
+                        
 
                         if (accion == "Lee Biblioteca")
                         {
@@ -535,11 +565,7 @@ namespace TP5_Simulacion
                                 }
 
                             }
-                            silla1txt = silla1.Libre ? "-" : silla1.TiempoFinAtencion.ToString();
-                            silla2txt = silla2.Libre ? "-" : silla2.TiempoFinAtencion.ToString();
-                            silla3txt = silla3.Libre ? "-" : silla3.TiempoFinAtencion.ToString();
-                            silla4txt = silla4.Libre ? "-" : silla4.TiempoFinAtencion.ToString();
-                            silla5txt = silla5.Libre ? "-" : silla5.TiempoFinAtencion.ToString();
+                           
                             empleado_2.Atendiendo.Historico.Add(new[]
                             {
                                 reloj.ToString(), empleado_2.Atendiendo.Minuto_llegada.ToString(),
@@ -561,9 +587,12 @@ namespace TP5_Simulacion
                                 $"{i}", $"fin_atencion_retiro_{empleado_2.Atendiendo.Numero}",
                                 $"{empleado_2.TiempoFinAtencion}",$"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
                                 "-", "-", "-", "-", "-", "-", "-", "-",
-                                $"{empleado_1.TiempoFinAtencion}", $"{empleado_2.TiempoFinAtencion + esperando.Evento_tiempo}", $"{random_accion}", $"{accion}", $"{show}", $"{silla1txt}",
-                                 $"{silla2txt}",  $"{silla3txt}", $"{silla4txt}",  $"{silla5txt}",
-                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                $"{empleado_1.TiempoFinAtencion}", $"{empleado_2.TiempoFinAtencion + esperando.Evento_tiempo}", $"{random_accion}", $"{accion}", $"{show}",
+                                $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
+                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                  $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
                             empleado_2.Libre = false;
                             empleado_2.TiempoFinAtencion = empleado_2.TiempoFinAtencion + esperando.Evento_tiempo;
@@ -578,9 +607,12 @@ namespace TP5_Simulacion
                                 $"{i}", $"fin_atencion_retiro_{empleado_2.Atendiendo.Numero}",
                                 $"{empleado_2.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
                                 "-", "-", "-", "-", "-", "-", "-", "-",
-                                $"{empleado_1.TiempoFinAtencion}", "-",  $"{random_accion}", $"{accion}", $"{show}", $"{silla1txt}",
-                                 $"{silla2txt}",  $"{silla3txt}", $"{silla4txt}",  $"{silla5txt}",
-                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                $"{empleado_1.TiempoFinAtencion}", "-",  $"{random_accion}", $"{accion}", $"{show}",
+                                $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
+                                 $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                  $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
                         }
 
@@ -600,7 +632,10 @@ namespace TP5_Simulacion
                                 "-", "-", "-", "-", "-", "-", "-", "-",
                                 $"{empleado_1.TiempoFinAtencion}", $"{empleado_2.TiempoFinAtencion + esperando.Evento_tiempo}", "-", "-", "-",
                                 $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                                $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                 $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
                             empleado_2.Libre = false;
                             empleado_2.TiempoFinAtencion = empleado_2.TiempoFinAtencion + esperando.Evento_tiempo;
@@ -619,7 +654,10 @@ namespace TP5_Simulacion
                                 "-", "-", "-", "-", "-", "-", "-", "-", "-",
                                 $"{empleado_1.TiempoFinAtencion}", "-", "-", "-",
                                 $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                                $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                                $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                                 $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
                         }
                         
@@ -644,8 +682,8 @@ namespace TP5_Simulacion
                      (silla1.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !silla1.Libre)
                 {
 
- 
-                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+                    rnd_rl = GetRandomSum();
+                    tiempo_atencion = GetTiempoAtencionDevolucion(rnd_rl);
 
                     silla1.persona.Evento_tiempo = tiempo_atencion;
                     var bandera = true;
@@ -682,7 +720,10 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", $"{silla1.TiempoFinAtencion + (double)txtTiempoLectura.Value}",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
 
                         silla1.Libre = false;
@@ -699,7 +740,11 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", "-",$"{silla2.GetTiempoAtencion()}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
+
                         });
 
                     silla1.Libre = true;
@@ -717,7 +762,8 @@ namespace TP5_Simulacion
                      (silla2.TiempoFinAtencion < silla4.TiempoFinAtencion || silla4.Libre) &&
                      (silla2.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !silla2.Libre)
                 {
-                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+                    rnd_rl = GetRandomSum();
+                    tiempo_atencion = GetTiempoAtencionDevolucion( rnd_rl);
 
                     silla2.persona.Evento_tiempo = tiempo_atencion;
                     var bandera = true;
@@ -754,7 +800,10 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",$"{silla1.GetTiempoAtencion()}", $"{silla2.TiempoFinAtencion + (double)txtTiempoLectura.Value}", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
 
                         silla2.Libre = false;
@@ -772,7 +821,10 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", $"{silla1.GetTiempoAtencion()}", "-", $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                         });
 
                     silla2.Libre = true;
@@ -789,7 +841,8 @@ namespace TP5_Simulacion
                 if (((silla3.TiempoFinAtencion < silla4.TiempoFinAtencion || silla4.Libre) &&
                      (silla3.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !silla3.Libre)
                 {
-                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+                    rnd_rl = GetRandomSum();
+                    tiempo_atencion = GetTiempoAtencionDevolucion(rnd_rl);
 
                     silla3.persona.Evento_tiempo = tiempo_atencion;
                     var bandera = true;
@@ -826,7 +879,10 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",$"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}" ,$"{silla3.TiempoFinAtencion + (double)txtTiempoLectura.Value}" , $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
 
                         silla3.Libre = false;
@@ -844,7 +900,10 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}", "-",  $"{silla4.GetTiempoAtencion()}", $"{silla5.GetTiempoAtencion()}",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                         });
 
                     silla3.Libre = true;
@@ -859,7 +918,8 @@ namespace TP5_Simulacion
 
                 if (((silla4.TiempoFinAtencion < silla5.TiempoFinAtencion || silla5.Libre)) && !silla4.Libre)
                 {
-                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+                    rnd_rl = GetRandomSum();
+                    tiempo_atencion = GetTiempoAtencionDevolucion(rnd_rl);
 
                     silla4.persona.Evento_tiempo = tiempo_atencion;
                     var bandera = true;
@@ -896,7 +956,10 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",$"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}" , $"{silla3.GetTiempoAtencion()}",$"{silla4.TiempoFinAtencion + (double)txtTiempoLectura.Value}" , $"{silla5.GetTiempoAtencion()}",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
 
                         silla4.Libre = false;
@@ -914,7 +977,10 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",  $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" ,"-", $"{silla5.GetTiempoAtencion()}",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                         });
 
                     silla4.Libre = true;
@@ -929,7 +995,8 @@ namespace TP5_Simulacion
 
                 if (true)
                 {
-                    tiempo_atencion = GetTiempoAtencionDevolucion(out rnd_rl);
+                    rnd_rl = GetRandomSum();
+                    tiempo_atencion = GetTiempoAtencionDevolucion(rnd_rl);
 
                     silla5.persona.Evento_tiempo = tiempo_atencion;
                     var bandera = true;
@@ -966,7 +1033,10 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-",$"{silla1.GetTiempoAtencion()}",$"{silla2.GetTiempoAtencion()}" , $"{silla3.GetTiempoAtencion()}", $"{silla4.GetTiempoAtencion()}", $"{silla5.TiempoFinAtencion + (double)txtTiempoLectura.Value}",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                             });
 
                         silla5.Libre = false;
@@ -984,7 +1054,10 @@ namespace TP5_Simulacion
                             "-", $"Recibir Libro", $"{rnd_rl}",
                             $"{tiempo_atencion}", "-", "-", "-", "-", $"{empleado_1.TiempoFinAtencion}",
                             $"{empleado_2.TiempoFinAtencion}", "-", "-", "-", $"{silla1.GetTiempoAtencion()}", $"{silla2.GetTiempoAtencion()}",$"{silla3.GetTiempoAtencion()}" , $"{silla4.GetTiempoAtencion()}", "-",
-                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}"
+                            $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
+
+                             $"{empleado_1.GetEstado()}",$"{empleado_2.GetEstado()}", $"{cola_empleado.Count}",
+                             $"{silla1.GetEstado()}",$"{silla2.GetEstado()}", $"{silla3.GetEstado()}", $"{silla4.GetEstado()}", $"{silla5.GetEstado()}",$"{cola_silla.Count}"
                         });
 
                     silla5.Libre = true;
@@ -994,15 +1067,12 @@ namespace TP5_Simulacion
                 }
 
                 #endregion silla 5
-                lista_reloj.Add(reloj);
+                
 
 
         }
 
-            //foreach (var personas in lista_personas)
-            //{
-            //    grillaObjetos.Columns.Add($"persona{personas.Numero}", $"Persona {personas.Numero}");
-            //}
+            
           
             
         }
@@ -1022,12 +1092,18 @@ namespace TP5_Simulacion
             return rand < (double)txtProbRetiraB.Value ? "Se Retira" : "Lee Biblioteca";
         }
 
-        private double GetTiempoAtencionDevolucion(out double rand)
+
+        private double GetRandomSum()
         {
-            var rnd = new Random();
-            rand = 0.0;
+            var rnd = new Random(DateTime.Now.Millisecond);
+            var rand = 0.0;
             for (var i = 0; i < 11; i++)
                 rand += rnd.NextDouble().TruncateDouble(4);
+            return rand;
+        }
+
+        private double GetTiempoAtencionDevolucion(double rand)
+        {
             return (rand * (double)txtDevolucionDesv.Value) + (double)txtDevolucionMedia.Value;
         }
 
