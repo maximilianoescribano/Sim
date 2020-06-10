@@ -64,12 +64,6 @@
             this.Label13 = new System.Windows.Forms.Label();
             this.Label20 = new System.Windows.Forms.Label();
             this.gridSimulacion = new System.Windows.Forms.DataGridView();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.grillaObjetos = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.filaNumero = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Evento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.relojMinCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -105,6 +99,14 @@
             this.col_silla_5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.col_cola2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Objetos = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.grillaObjetos = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox3.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtProbQuedaB)).BeginInit();
@@ -338,9 +340,9 @@
             this.label10.Location = new System.Drawing.Point(3, 28);
             this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(66, 13);
+            this.label10.Size = new System.Drawing.Size(76, 13);
             this.label10.TabIndex = 0;
-            this.label10.Text = "Recibir Libro";
+            this.label10.Text = "Devolver Libro";
             // 
             // btnSimular
             // 
@@ -354,7 +356,7 @@
             // 
             // txtCantMinutos
             // 
-            this.txtCantMinutos.Location = new System.Drawing.Point(171, 24);
+            this.txtCantMinutos.Location = new System.Drawing.Point(191, 24);
             this.txtCantMinutos.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -369,7 +371,7 @@
             this.txtCantMinutos.Size = new System.Drawing.Size(79, 20);
             this.txtCantMinutos.TabIndex = 30;
             this.txtCantMinutos.Value = new decimal(new int[] {
-            10,
+            100,
             0,
             0,
             0});
@@ -378,11 +380,11 @@
             // 
             this.Label1.AutoSize = true;
             this.Label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label1.Location = new System.Drawing.Point(12, 24);
+            this.Label1.Location = new System.Drawing.Point(16, 24);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(159, 15);
+            this.Label1.Size = new System.Drawing.Size(169, 15);
             this.Label1.TabIndex = 29;
-            this.Label1.Text = "Cantidad de Iteraciones";
+            this.Label1.Text = "Tiempo Simulacion (min)";
             // 
             // Panel2
             // 
@@ -391,14 +393,14 @@
             this.Panel2.Controls.Add(this.Label5);
             this.Panel2.Controls.Add(this.Label4);
             this.Panel2.Controls.Add(this.Label3);
-            this.Panel2.Location = new System.Drawing.Point(270, 12);
+            this.Panel2.Location = new System.Drawing.Point(304, 12);
             this.Panel2.Name = "Panel2";
-            this.Panel2.Size = new System.Drawing.Size(225, 59);
+            this.Panel2.Size = new System.Drawing.Size(248, 59);
             this.Panel2.TabIndex = 31;
             // 
             // txtHasta
             // 
-            this.txtHasta.Location = new System.Drawing.Point(129, 33);
+            this.txtHasta.Location = new System.Drawing.Point(152, 36);
             this.txtHasta.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -413,14 +415,14 @@
             this.txtHasta.Size = new System.Drawing.Size(71, 20);
             this.txtHasta.TabIndex = 9;
             this.txtHasta.Value = new decimal(new int[] {
-            1,
+            100,
             0,
             0,
             0});
             // 
             // txtDesde
             // 
-            this.txtDesde.Location = new System.Drawing.Point(128, 7);
+            this.txtDesde.Location = new System.Drawing.Point(152, 7);
             this.txtDesde.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -453,7 +455,7 @@
             // Label4
             // 
             this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(74, 38);
+            this.Label4.Location = new System.Drawing.Point(75, 38);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(49, 13);
             this.Label4.TabIndex = 6;
@@ -462,11 +464,11 @@
             // Label3
             // 
             this.Label3.AutoSize = true;
-            this.Label3.Location = new System.Drawing.Point(74, 10);
+            this.Label3.Location = new System.Drawing.Point(74, 9);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(38, 13);
+            this.Label3.Size = new System.Drawing.Size(63, 13);
             this.Label3.TabIndex = 4;
-            this.Label3.Text = "Desde";
+            this.Label3.Text = "Desde (min)";
             // 
             // GroupBox1
             // 
@@ -725,66 +727,6 @@
             this.gridSimulacion.TabIndex = 33;
             this.gridSimulacion.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridSimulacion_CellContentClick);
             // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(15, 298);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1472, 438);
-            this.tabControl1.TabIndex = 34;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.gridSimulacion);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1464, 412);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Simulacion";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.grillaObjetos);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1464, 412);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Objetos";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // grillaObjetos
-            // 
-            this.grillaObjetos.AllowUserToAddRows = false;
-            this.grillaObjetos.AllowUserToDeleteRows = false;
-            this.grillaObjetos.AllowUserToResizeRows = false;
-            this.grillaObjetos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grillaObjetos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn3});
-            this.grillaObjetos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.grillaObjetos.Location = new System.Drawing.Point(0, -2);
-            this.grillaObjetos.Name = "grillaObjetos";
-            this.grillaObjetos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grillaObjetos.Size = new System.Drawing.Size(1464, 416);
-            this.grillaObjetos.TabIndex = 34;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Fila";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 30;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Reloj (Min)";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 50;
-            // 
             // filaNumero
             // 
             this.filaNumero.HeaderText = "Fila";
@@ -983,11 +925,91 @@
             this.Objetos.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Objetos.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(15, 298);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1472, 438);
+            this.tabControl1.TabIndex = 34;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.gridSimulacion);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1464, 412);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Simulacion";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.grillaObjetos);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1464, 412);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Objetos";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // grillaObjetos
+            // 
+            this.grillaObjetos.AllowUserToAddRows = false;
+            this.grillaObjetos.AllowUserToDeleteRows = false;
+            this.grillaObjetos.AllowUserToResizeRows = false;
+            this.grillaObjetos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grillaObjetos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn3});
+            this.grillaObjetos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.grillaObjetos.Location = new System.Drawing.Point(0, -2);
+            this.grillaObjetos.Name = "grillaObjetos";
+            this.grillaObjetos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grillaObjetos.Size = new System.Drawing.Size(1464, 416);
+            this.grillaObjetos.TabIndex = 34;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Fila";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 30;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            this.dataGridViewTextBoxColumn3.HeaderText = "Reloj (Min)";
+            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            this.dataGridViewTextBoxColumn3.Width = 50;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(1142, 753);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 35;
+            this.label7.Text = "Resultado";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(1245, 748);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(0, 24);
+            this.label8.TabIndex = 36;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1544, 785);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.GroupBox1);
             this.Controls.Add(this.Panel2);
@@ -1110,6 +1132,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn col_silla_5;
         private System.Windows.Forms.DataGridViewTextBoxColumn col_cola2;
         private System.Windows.Forms.DataGridViewButtonColumn Objetos;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
     }
 }
 
