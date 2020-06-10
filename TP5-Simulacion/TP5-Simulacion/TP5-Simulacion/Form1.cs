@@ -1249,7 +1249,7 @@ namespace TP5_Simulacion
                 grillaObjetos.Columns.Add($"Fila_obj", $"Fila");
                 grillaObjetos.Columns.Add($"rlj_min", $"Reloj (min)");
                 var b = double.Parse(gridSimulacion.Rows[e.RowIndex].Cells[2].Value.ToString());
-                var fila = int.Parse(gridSimulacion.Rows[e.RowIndex].Cells[2].Value.ToString());
+                var fila = int.Parse(gridSimulacion.Rows[e.RowIndex].Cells[0].Value.ToString());
                 var personasMostrar = lista_personas.Where(x => (x.Minuto_Salida == 0  && x.Minuto_llegada <= b) || x.Minuto_Salida >= b && x.Minuto_llegada <= b);
                 var str_to_show = new List<string>();
                 str_to_show.Add($"{fila}");
@@ -1278,6 +1278,7 @@ namespace TP5_Simulacion
                 }
                
                 grillaObjetos.Rows.Add(str_to_show.ToArray());
+                tabControl1.SelectedIndex = 1;
             }
         }
 
