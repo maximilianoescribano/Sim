@@ -1053,8 +1053,7 @@ namespace TP5_Simulacion
 
                 #region silla 5
 
-                if (true)
-                {
+                
                     if (silla5.TiempoFinAtencion > (double)txtCantMinutos.Value)
                     {
                         Fin_simulacion();
@@ -1129,7 +1128,7 @@ namespace TP5_Simulacion
                     silla5.TiempoFinAtencion = 0;
                     silla5.persona = null;
                     continue;
-                }
+                
 
                 #endregion silla 5
                 
