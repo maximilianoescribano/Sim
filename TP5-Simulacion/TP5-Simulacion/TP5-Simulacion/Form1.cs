@@ -1249,16 +1249,17 @@ namespace TP5_Simulacion
                 grillaObjetos.Columns.Add($"Fila_obj", $"Fila");
                 grillaObjetos.Columns.Add($"rlj_min", $"Reloj (min)");
                 var b = double.Parse(gridSimulacion.Rows[e.RowIndex].Cells[2].Value.ToString());
+                var fila = int.Parse(gridSimulacion.Rows[e.RowIndex].Cells[2].Value.ToString());
                 var personasMostrar = lista_personas.Where(x => (x.Minuto_Salida == 0  && x.Minuto_llegada <= b) || x.Minuto_Salida >= b && x.Minuto_llegada <= b);
                 var str_to_show = new List<string>();
-                str_to_show.Add("1");
+                str_to_show.Add($"{fila}");
                 str_to_show.Add($"{b}");
                 foreach (var personas in personasMostrar)
                 {
                     grillaObjetos.Columns.Add($"persona{personas.Numero}", $"Persona {personas.Numero}");
                     if (personas.Historico.Count > 1)
                     {
-                        var to_show = personas.Historico.Where(x => double.Parse(x[0]) < b).Last();
+                        var to_show = personas.Historico.Where(x => double.Parse(x[0]) <= b).Last();
                         str_to_show.Add($"Minuto llego = {to_show[1]} , Estado = {to_show[2]} ");
 
                         //for (var i = 0; i < personas.Historico.Count; i++)
