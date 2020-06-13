@@ -95,9 +95,11 @@ namespace TP5_Simulacion
                     reloj = persona_proxima_llegada;
 
                     //creo nueva persona
-                    var persona = new Persona(reloj, evento) { Numero = num_persona };
+                    var persona = new Persona(reloj) { Numero = num_persona };
                     lista_personas.Add(persona);
                     num_persona++;
+
+                    gridSimulacion.Columns.Add($"persona{persona.Numero}", $"Persona {persona.Numero}");
 
                     //calculo tiempos segun eventos y cambio estado
                     if (evento == "Devolver Libro")
@@ -145,7 +147,7 @@ namespace TP5_Simulacion
                     var tiempo_consultar_grilla = rnd_con == 0 ? "-" : tiempo_atencion.ToStringGrid();
 
                     //genero fila de la grilla
-                    AddRowsToGrid(reloj, new[]
+                    var row = new[]
                       {
                             $"{i}", $"llega_persona_{persona.Numero}", $"{reloj}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada+ (double)txtEntradaPersonas.Value}",
                             $"{random_atencion}", $"{evento}",
@@ -158,7 +160,13 @@ namespace TP5_Simulacion
 
                               $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
                              $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}",$"{cola_silla.Count}"
-                        });
+                        };
+
+                    var new_row = row.ToList();
+                    new_row.AddRange(lista_personas.Select(x =>
+                            x.Minuto_Salida == 0 ?
+                    $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
+                    AddRowsToGrid(reloj, new_row.ToArray());
 
                     persona.Historico.Add(new[] { reloj.ToString(), persona.Minuto_llegada.ToString(), persona.Estado.ToString() });
                     persona_proxima_llegada = persona_proxima_llegada + (double)txtEntradaPersonas.Value;
@@ -169,7 +177,8 @@ namespace TP5_Simulacion
 
                 #region empleados
 
-                if (lista_empledos.Where(x => !x.Libre).Min(x => x.TiempoFinAtencion) < (lista_sillas.Any(x => !x.Libre) ?
+                if (lista_empledos.Any(x => !x.Libre) &&
+                    lista_empledos.Where(x => !x.Libre).Min(x => x.TiempoFinAtencion) < (lista_sillas.Any(x => !x.Libre) ?
                     lista_sillas.Where(x => !x.Libre).Min(x => x.TiempoFinAtencion) : double.MaxValue))
                 {
 
@@ -191,12 +200,13 @@ namespace TP5_Simulacion
                         break;
                     }
 
-                    if (empleado.Atendiendo.Estado == Estado.AtendidoDevolucionLibro)
+                    if (empleado.Atendiendo.Estado == Estado.AtendidoDevolucionLibro || empleado.Atendiendo.Estado == Estado.EsperandoAtencionDevolucion)
                     {
                         evento_to_show = $"fin_devolucion_{empleado.Atendiendo.Numero}";
                     }
 
-                    if (empleado.Atendiendo.Estado == Estado.AtendidoRetirarLibro)
+                    if (empleado.Atendiendo.Estado == Estado.AtendidoRetirarLibro ||
+                        empleado.Atendiendo.Estado == Estado.EsperandoAtencionRetirar)
                     {
                         evento_to_show = $"fin_retiro_{empleado.Atendiendo.Numero}";
 
@@ -204,11 +214,25 @@ namespace TP5_Simulacion
                         accion = GetAccionPersona(random_accion);
                         show = accion == "Lee Biblioteca" ? txtTiempoLectura.Value.ToString() : "-";
                         if (accion == "Lee Biblioteca")
+                        {
                             empleado.Atendiendo.Estado = Estado.LeyendoBiblioteca;
-                        cola_silla.Add(empleado.Atendiendo);
+
+                            empleado.Atendiendo.Historico.Add(new[]
+                            {reloj.ToString(), empleado.Atendiendo.Minuto_llegada.ToString(), empleado.Atendiendo.Estado.ToString()});
+
+                            var silla_sentarse = lista_sillas.FirstOrDefault(x => x.Libre);
+                            if (silla_sentarse == null)
+                            {
+                                silla_sentarse = new Silla(lista_sillas.Count);
+                                lista_sillas.Add(silla_sentarse);
+                            }
+                            silla_sentarse.Persona = empleado.Atendiendo;
+                            silla_sentarse.Libre = false;
+                            silla_sentarse.TiempoFinAtencion = empleado.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                        }
                     }
 
-                    if (empleado.Atendiendo.Estado == Estado.AtendidoConsulta)
+                    if (empleado.Atendiendo.Estado == Estado.AtendidoConsulta || empleado.Atendiendo.Estado == Estado.EsperandoAtencionConsulta)
                     {
                         evento_to_show = $"fin_consulta_{empleado.Atendiendo.Numero}";
                     }
@@ -233,8 +257,8 @@ namespace TP5_Simulacion
 
                         empleado.Libre = false;
 
-                        AddRowsToGrid(reloj, new[]
-                        {
+                        var row = new[]
+                         {
                             $"{i}", $"{evento_to_show}",
                             $"{empleado.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
                             "-", "-", "-", "-", "-", "-", "-", "-",
@@ -244,9 +268,15 @@ namespace TP5_Simulacion
                             $"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
                              $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
                              $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}",$"{cola_silla.Count}"
-                        });
+                        };
 
-                        
+                        var new_row = row.ToList();
+                        new_row.AddRange(lista_personas.Select(x =>
+                             x.Minuto_Salida == 0 ?
+                     $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
+                        AddRowsToGrid(reloj, new_row.ToArray());
+
+
                         empleado.TiempoFinAtencion = empleado.TiempoFinAtencion + esperando.Evento_tiempo;
                         empleado.Atendiendo = esperando;
                         cola_empleado.RemoveAt(0);
@@ -266,18 +296,24 @@ namespace TP5_Simulacion
 
                         empleado.Libre = true;
 
-                        AddRowsToGrid(reloj, new[]
-                        {
+                        var row = new[]
+                         {
                             $"{i}", $"{evento_to_show}",
                             $"{empleado.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
                             "-", "-", "-", "-", "-", "-", "-", "-",
-                            $"{empleado_1_time}", $"{empleado_2_time}", "-", "-", "-",
+                            $"{empleado_1_time}", $"{empleado_2_time}",$"{random_accion.ToStringGrid()}", $"{accion}",  $"{show}",
                             $"{lista_sillas[0].GetTiempoAtencion()}",$"{lista_sillas[1].GetTiempoAtencion()}", $"{lista_sillas[2].GetTiempoAtencion()}", $"{lista_sillas[3].GetTiempoAtencion()}", $"{lista_sillas[4].GetTiempoAtencion()}",
                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",
                             $"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
                               $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
                              $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}",$"{cola_silla.Count}"
-                        });
+                        };
+
+                        var new_row = row.ToList();
+                        new_row.AddRange(lista_personas.Select(x =>
+                             x.Minuto_Salida == 0 ?
+                     $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
+                        AddRowsToGrid(reloj, new_row.ToArray());
                     }
 
                     empleado.Atendiendo = null;
@@ -287,12 +323,11 @@ namespace TP5_Simulacion
 
                 #endregion empleados
 
-
                 #region silla 
 
                 var silla =
                        lista_sillas.Where(x => !x.Libre).FirstOrDefault(
-                           x => x.TiempoFinAtencion == lista_sillas.Min(y => y.TiempoFinAtencion));
+                           x => x.TiempoFinAtencion == lista_sillas.Where(z => !z.Libre).Min(y => y.TiempoFinAtencion));
 
                 if (silla == null) throw new ArgumentNullException(nameof(silla));
 
@@ -319,7 +354,7 @@ namespace TP5_Simulacion
                     empleado_libre_silla.TiempoFinAtencion = reloj + tiempo_atencion;
                     empleado_libre_silla.Atendiendo = silla.Persona;
                 }
-                else //no hya empleados libres mando a cola y cambio estado
+                else //no hay empleados libres mando a cola y cambio estado
                 {
 
                     silla.Persona.Estado = (silla.Persona.Estado == Estado.AtendidoDevolucionLibro)
@@ -330,7 +365,9 @@ namespace TP5_Simulacion
                     cola_empleado.Add(silla.Persona);
                 }
 
-                AddRowsToGrid(reloj, new[]
+                silla.Libre = true;
+
+                var row1 = new[]
                     {
                         $"{i}", $"fin_lectura_{silla.Persona.Numero}", $"{silla.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
                         "-", $"Devolver Libro", $"{rnd_rl1}",
@@ -342,10 +379,15 @@ namespace TP5_Simulacion
                               $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
                              $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}",$"{cola_silla.Count}"
 
-                    });
+                    };
+
+                var new_row1 = row1.ToList();
+                new_row1.AddRange(lista_personas.Select(x =>
+                x.Minuto_Salida == 0 ?
+                     $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
+                AddRowsToGrid(reloj, new_row1.ToArray());
 
                 silla.Persona = null;
-                silla.Libre = true;
                 silla.TiempoFinAtencion = 0;
 
                 #endregion silla 
@@ -459,46 +501,44 @@ namespace TP5_Simulacion
             return probTotal.Equals(1.0);
         }
 
-        private void gridSimulacion_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void add_persons_columns()
         {
-            if (e.ColumnIndex == 34)
-            {
-                grillaObjetos.Columns.Clear();
-                grillaObjetos.Rows.Clear();
-                grillaObjetos.Columns.Add($"Fila_obj", $"Fila");
-                grillaObjetos.Columns.Add($"rlj_min", $"Reloj (min)");
-                var b = double.Parse(gridSimulacion.Rows[e.RowIndex].Cells[2].Value.ToString());
-                var fila = int.Parse(gridSimulacion.Rows[e.RowIndex].Cells[0].Value.ToString());
-                var personasMostrar = lista_personas.Where(x => (x.Minuto_Salida == 0 && x.Minuto_llegada <= b) || x.Minuto_Salida >= b && x.Minuto_llegada <= b);
-                var str_to_show = new List<string>();
-                str_to_show.Add($"{fila}");
-                str_to_show.Add($"{b}");
-                foreach (var personas in personasMostrar)
-                {
-                    grillaObjetos.Columns.Add($"persona{personas.Numero}", $"Persona {personas.Numero}");
-                    if (personas.Historico.Count > 1)
-                    {
-                        var to_show = personas.Historico.Where(x => double.Parse(x[0]) <= b).Last();
-                        str_to_show.Add($"Minuto llego = {to_show[1]} , Estado = {to_show[2]} ");
-
-                        //for (var i = 0; i < personas.Historico.Count; i++)
-                        //{
-                        //    if(double.Parse(personas.Historico[i][0]) > b)
-                        //        str_to_show.Add($"Minuto llego = {personas.Historico[i-1][1]} , Estado = {personas.Historico[i-1][2]} ");
-
-                        //}
-                    }
-                    else
-                    {
-                        str_to_show.Add($"Minuto llego = {personas.Historico.Last()[1]} , Estado = {personas.Historico.Last()[2]} ");
-                    }
 
 
-                }
+            //gridSimulacion.Columns.Add($"Fila_obj", $"Fila");
+            //gridSimulacion.Columns.Add($"rlj_min", $"Reloj (min)");
+            //var b = double.Parse(gridSimulacion.Rows[e.RowIndex].Cells[2].Value.ToString());
+            //var fila = int.Parse(gridSimulacion.Rows[e.RowIndex].Cells[0].Value.ToString());
+            //var personasMostrar = lista_personas.Where(x => (x.Minuto_Salida == 0 && x.Minuto_llegada <= b) || x.Minuto_Salida >= b && x.Minuto_llegada <= b);
+            //var str_to_show = new List<string>();
+            //str_to_show.Add($"{fila}");
+            //str_to_show.Add($"{b}");
+            //foreach (var personas in personasMostrar)
+            //{
+            //    grillaObjetos.Columns.Add($"persona{personas.Numero}", $"Persona {personas.Numero}");
+            //    if (personas.Historico.Count > 1)
+            //    {
+            //        var to_show = personas.Historico.Where(x => double.Parse(x[0]) <= b).Last();
+            //        str_to_show.Add($"Minuto llego = {to_show[1]} , Estado = {to_show[2]} ");
 
-                grillaObjetos.Rows.Add(str_to_show.ToArray());
-                tabControl1.SelectedIndex = 1;
-            }
+            //        //for (var i = 0; i < personas.Historico.Count; i++)
+            //        //{
+            //        //    if(double.Parse(personas.Historico[i][0]) > b)
+            //        //        str_to_show.Add($"Minuto llego = {personas.Historico[i-1][1]} , Estado = {personas.Historico[i-1][2]} ");
+
+            //        //}
+            //    }
+            //    else
+            //    {
+            //        str_to_show.Add($"Minuto llego = {personas.Historico.Last()[1]} , Estado = {personas.Historico.Last()[2]} ");
+            //    }
+
+
+            //}
+
+            //grillaObjetos.Rows.Add(str_to_show.ToArray());
+
+
         }
 
         private void AddRowsToGrid(double reloj, string[] row)
