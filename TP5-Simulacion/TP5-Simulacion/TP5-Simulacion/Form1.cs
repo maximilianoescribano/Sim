@@ -83,6 +83,7 @@ namespace TP5_Simulacion
 
                 #region nueva persona
 
+                // proximo evento es de llegada, empleado o silla
                 if (persona_proxima_llegada < (lista_empledos.Any(x => !x.Libre) ? lista_empledos.Where(x => !x.Libre).Min(x => x.TiempoFinAtencion) : double.MaxValue) &&
                     persona_proxima_llegada < (lista_sillas.Any(x => !x.Libre) ? lista_sillas.Where(x => !x.Libre).Min(x => x.TiempoFinAtencion) : double.MaxValue))
                 {
@@ -98,7 +99,7 @@ namespace TP5_Simulacion
                     var persona = new Persona(reloj) { Numero = num_persona };
                     lista_personas.Add(persona);
                     num_persona++;
-
+                    //agrego columna grilla esto cambiar segun si esta en contador
                     gridSimulacion.Columns.Add($"persona{persona.Numero}", $"Persona {persona.Numero}");
 
                     //calculo tiempos segun eventos y cambio estado
@@ -131,7 +132,7 @@ namespace TP5_Simulacion
                         empleado_libre.TiempoFinAtencion = reloj + tiempo_atencion;
                         empleado_libre.Atendiendo = persona;
                     }
-                    else //no hya empleados libres mando a cola y cambio estado
+                    else //no hay empleados libres mando a cola y cambio estado
                     {
 
                         persona.Estado = (persona.Estado == Estado.AtendidoDevolucionLibro)
@@ -167,7 +168,7 @@ namespace TP5_Simulacion
                             x.Minuto_Salida == 0 ?
                     $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
                     AddRowsToGrid(reloj, new_row.ToArray());
-
+                    //agrego al historico de la persona y veo el agreog el proximo evento
                     persona.Historico.Add(new[] { reloj.ToString(), persona.Minuto_llegada.ToString(), persona.Estado.ToString() });
                     persona_proxima_llegada = persona_proxima_llegada + (double)txtEntradaPersonas.Value;
                     continue;
@@ -177,6 +178,7 @@ namespace TP5_Simulacion
 
                 #region empleados
 
+                // analizo si el proximo evento es de empleado o lectura
                 if (lista_empledos.Any(x => !x.Libre) &&
                     lista_empledos.Where(x => !x.Libre).Min(x => x.TiempoFinAtencion) < (lista_sillas.Any(x => !x.Libre) ?
                     lista_sillas.Where(x => !x.Libre).Min(x => x.TiempoFinAtencion) : double.MaxValue))
@@ -186,6 +188,7 @@ namespace TP5_Simulacion
                     string show = "-";
                     var accion = "-";
                     double random_accion = 0;
+
                     //empleado menor tiempo
                     var empleado =
                         lista_empledos.Where(x => !x.Libre).FirstOrDefault(
@@ -199,7 +202,8 @@ namespace TP5_Simulacion
                         Fin_simulacion();
                         break;
                     }
-
+                    
+                    //pregunto estados para ver cual asigno en grilla
                     if (empleado.Atendiendo.Estado == Estado.AtendidoDevolucionLibro || empleado.Atendiendo.Estado == Estado.EsperandoAtencionDevolucion)
                     {
                         evento_to_show = $"fin_devolucion_{empleado.Atendiendo.Numero}";
@@ -209,7 +213,7 @@ namespace TP5_Simulacion
                         empleado.Atendiendo.Estado == Estado.EsperandoAtencionRetirar)
                     {
                         evento_to_show = $"fin_retiro_{empleado.Atendiendo.Numero}";
-
+                        //Si retiro libro analizo se se va a quedar leyendo o se retira
                         random_accion = rnd.NextDouble().TruncateDouble(4);
                         accion = GetAccionPersona(random_accion);
                         show = accion == "Lee Biblioteca" ? txtTiempoLectura.Value.ToString() : "-";
@@ -240,6 +244,7 @@ namespace TP5_Simulacion
                     if (empleado.Atendiendo.Estado != Estado.LeyendoBiblioteca)
                         empleado.Atendiendo.Minuto_Salida = empleado.TiempoFinAtencion;
 
+                    //hay personas en la cola para ser atendidas y agegar el evento
                     if (cola_empleado.Any())
                     {
                         var esperando = cola_empleado.First();
@@ -276,13 +281,14 @@ namespace TP5_Simulacion
                      $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
                         AddRowsToGrid(reloj, new_row.ToArray());
 
-
+                        //agrego al empleado el nuevo tiempo de fin de atencion y cambio persona a la cual atiende
                         empleado.TiempoFinAtencion = empleado.TiempoFinAtencion + esperando.Evento_tiempo;
                         empleado.Atendiendo = esperando;
+                        //elimino persona de la cola
                         cola_empleado.RemoveAt(0);
                         continue;
                     }
-                    else
+                    else // no hay personas en la cola
                     {
 
 
@@ -293,7 +299,7 @@ namespace TP5_Simulacion
                         var empleado_2_time = empleado.Numero == 2
                            ? "-"
                            : lista_empledos[1].GetTiempoAtencion();
-
+                        //libero empleado
                         empleado.Libre = true;
 
                         var row = new[]
@@ -315,7 +321,7 @@ namespace TP5_Simulacion
                      $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
                         AddRowsToGrid(reloj, new_row.ToArray());
                     }
-
+                    //desasigno la persona al empleado y cambio tiempo de atencion
                     empleado.Atendiendo = null;
                     empleado.TiempoFinAtencion = 0;
                     continue;
@@ -325,9 +331,12 @@ namespace TP5_Simulacion
 
                 #region silla 
 
+                //si no paso por las condiciones anteriores es que el proximo evento es de fin de lectura
+                //cual es la silla con menor tiempo
                 var silla =
                        lista_sillas.Where(x => !x.Libre).FirstOrDefault(
                            x => x.TiempoFinAtencion == lista_sillas.Where(z => !z.Libre).Min(y => y.TiempoFinAtencion));
+
 
                 if (silla == null) throw new ArgumentNullException(nameof(silla));
 
@@ -398,7 +407,7 @@ namespace TP5_Simulacion
 
             }
 
-
+            //calculo el tiempo promedio en base a las personas que pasaron y a el tiempo que estuvieron 
             label8.Text = $"{(lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada)) / lista_personas.Count(x => x.Minuto_Salida > 0)).TruncateDouble(2)} minutos ";
 
         }
