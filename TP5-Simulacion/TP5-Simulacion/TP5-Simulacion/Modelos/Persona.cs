@@ -36,11 +36,12 @@ namespace TP5_Simulacion.Modelos
 
     public enum Estado
     {
-        SADL,
-        SARL,
-        SAC,
-        EA,
-        LB,
-        EAB
+        AtendidoDevolucionLibro,
+        AtendidoRetirarLibro,
+        AtendidoConsulta,
+        EsperandoAtencionDevolucion,
+        EsperandoAtencionRetirar,
+        EsperandoAtencionConsulta,
+        LeyendoBiblioteca,
     }
 }
