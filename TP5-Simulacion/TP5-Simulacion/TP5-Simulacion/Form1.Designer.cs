@@ -802,18 +802,21 @@
             // 
             // filaNumero
             // 
+            this.filaNumero.Frozen = true;
             this.filaNumero.HeaderText = "Fila";
             this.filaNumero.Name = "filaNumero";
             this.filaNumero.Width = 30;
             // 
             // Evento
             // 
+            this.Evento.Frozen = true;
             this.Evento.HeaderText = "Evento";
             this.Evento.Name = "Evento";
             this.Evento.Width = 150;
             // 
             // relojMinCol
             // 
+            this.relojMinCol.Frozen = true;
             this.relojMinCol.HeaderText = "Reloj (Min)";
             this.relojMinCol.Name = "relojMinCol";
             this.relojMinCol.Width = 50;
