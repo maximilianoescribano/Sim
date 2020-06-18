@@ -16,6 +16,8 @@ namespace TP5_Simulacion
     {
 
         List<Persona> lista_personas;
+        private List<List<string>> filas;
+
         private int contador;
 
         public Form1()
@@ -31,6 +33,15 @@ namespace TP5_Simulacion
 
         private void Simular()
         {
+            filas = new List<List<string>>();
+            if (lista_personas != null)
+            {
+                foreach (var persona in lista_personas)
+                {
+                    if (gridSimulacion.Columns.Contains($"persona{persona.Numero}"))
+                        gridSimulacion.Columns.Remove($"persona{persona.Numero}");
+                }
+            }
 
             lista_personas = new List<Persona>();
             contador = 0;
@@ -55,6 +66,7 @@ namespace TP5_Simulacion
                 new Silla(5),
             };
 
+            
 
             var reloj = (double)txtEntradaPersonas.Value;
 
@@ -70,14 +82,20 @@ namespace TP5_Simulacion
 
             var num_persona = 1;
 
+           
+
             for (int i = 1; i < txtCantMinutos.Value; i++)
             {
+
+                if ((double)txtDesde.Value < reloj && contador < (double)txtHasta.Value && (double)txtCantMinutos.Value >= reloj)
+                {
+                    contador++;
+                }
 
                 double tiempo_atencion = 0;
 
                 if (reloj > (double)txtCantMinutos.Value)
                 {
-                    Fin_simulacion();
                     break;
                 }
 
@@ -100,7 +118,10 @@ namespace TP5_Simulacion
                     lista_personas.Add(persona);
                     num_persona++;
                     //agrego columna grilla esto cambiar segun si esta en contador
-                    gridSimulacion.Columns.Add($"persona{persona.Numero}", $"Persona {persona.Numero}");
+
+                    //if(contador > 0 && contador < (double)txtHasta.Value)
+                    //    gridSimulacion.Columns.Add($"persona{persona.Numero}", $"Persona {persona.Numero}");
+                 
 
                     //calculo tiempos segun eventos y cambio estado
                     if (evento == "Devolver Libro")
@@ -160,13 +181,13 @@ namespace TP5_Simulacion
                              $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
 
                               $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
-                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}",$"{cola_silla.Count}"
+                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
                         };
 
                     var new_row = row.ToList();
                     new_row.AddRange(lista_personas.Select(x =>
-                            x.Minuto_Salida == 0 ?
-                    $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
+                            x.Minuto_Salida == 0  ?
+                    $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList());
                     AddRowsToGrid(reloj, new_row.ToArray());
                     //agrego al historico de la persona y veo el agreog el proximo evento
                     persona.Historico.Add(new[] { reloj.ToString(), persona.Minuto_llegada.ToString(), persona.Estado.ToString() });
@@ -199,7 +220,6 @@ namespace TP5_Simulacion
                     //mayor tiempo termina simulacion
                     if (empleado.TiempoFinAtencion > (double)txtCantMinutos.Value)
                     {
-                        Fin_simulacion();
                         break;
                     }
                     
@@ -252,6 +272,13 @@ namespace TP5_Simulacion
                         esperando.Historico.Add(new[]
                             {reloj.ToString(), esperando.Minuto_llegada.ToString(), esperando.Estado.ToString()});
 
+                        if (esperando.Estado == Estado.EsperandoAtencionConsulta)
+                            esperando.Estado = Estado.AtendidoConsulta;
+                        if (esperando.Estado == Estado.EsperandoAtencionDevolucion)
+                            esperando.Estado = Estado.AtendidoDevolucionLibro;
+                        if (esperando.Estado == Estado.EsperandoAtencionRetirar)
+                            esperando.Estado = Estado.AtendidoRetirarLibro;
+
                         var empleado_1_time = empleado.Numero == 1
                             ? empleado.TiempoFinAtencion + esperando.Evento_tiempo
                             : lista_empledos[0].TiempoFinAtencion;
@@ -271,15 +298,18 @@ namespace TP5_Simulacion
                             $"{lista_sillas[0].GetTiempoAtencion()}",$"{lista_sillas[1].GetTiempoAtencion()}", $"{lista_sillas[2].GetTiempoAtencion()}", $"{lista_sillas[3].GetTiempoAtencion()}", $"{lista_sillas[4].GetTiempoAtencion()}",
                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",
                             $"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
-                             $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
-                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}",$"{cola_silla.Count}"
+                             $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count - 1}",
+                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
                         };
 
                         var new_row = row.ToList();
                         new_row.AddRange(lista_personas.Select(x =>
-                             x.Minuto_Salida == 0 ?
-                     $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
+                               x.Minuto_Salida == 0  ?
+                      $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList());
                         AddRowsToGrid(reloj, new_row.ToArray());
+
+                        //check
+                        reloj = empleado.TiempoFinAtencion;
 
                         //agrego al empleado el nuevo tiempo de fin de atencion y cambio persona a la cual atiende
                         empleado.TiempoFinAtencion = empleado.TiempoFinAtencion + esperando.Evento_tiempo;
@@ -312,14 +342,16 @@ namespace TP5_Simulacion
                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",
                             $"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
                               $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
-                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}",$"{cola_silla.Count}"
+                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
                         };
 
                         var new_row = row.ToList();
                         new_row.AddRange(lista_personas.Select(x =>
-                             x.Minuto_Salida == 0 ?
-                     $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
+                              x.Minuto_Salida == 0  ?
+                     $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList());
                         AddRowsToGrid(reloj, new_row.ToArray());
+                        //check
+                        reloj = empleado.TiempoFinAtencion;
                     }
                     //desasigno la persona al empleado y cambio tiempo de atencion
                     empleado.Atendiendo = null;
@@ -343,7 +375,6 @@ namespace TP5_Simulacion
 
                 if (silla.TiempoFinAtencion > (double)txtCantMinutos.Value)
                 {
-                    Fin_simulacion();
                     break;
                 }
 
@@ -386,16 +417,17 @@ namespace TP5_Simulacion
                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",
                             $"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
                               $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
-                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}",$"{cola_silla.Count}"
+                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
 
                     };
 
                 var new_row1 = row1.ToList();
                 new_row1.AddRange(lista_personas.Select(x =>
-                x.Minuto_Salida == 0 ?
-                     $"{x.Minuto_llegada} | {x.Estado}" : " ").ToList());
+                     x.Minuto_Salida == 0 ?
+                      $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList());
                 AddRowsToGrid(reloj, new_row1.ToArray());
-
+                //check
+                reloj = silla.TiempoFinAtencion;
                 silla.Persona = null;
                 silla.TiempoFinAtencion = 0;
 
@@ -406,6 +438,32 @@ namespace TP5_Simulacion
 
 
             }
+
+
+          
+
+            foreach (var fila in filas)
+            {
+                for (int i = 0; filas.Last().Count - fila.Count != 0; i++)
+                    fila.Add(" ");
+            }
+
+            for (int i = 33; i < filas.Last().Count; i++)
+            {
+                var test = filas.All(x => x[i] == " ");
+                if(test)
+                    filas.ForEach(x => x.RemoveAt(i));
+                else
+                    gridSimulacion.Columns.Add($"persona{i - 32}", $"Persona {i - 32}");
+            }
+
+            foreach (var fila in filas)
+            {
+                gridSimulacion.Rows.Add(fila.ToArray());
+            }
+
+            Fin_simulacion();
+
 
             //calculo el tiempo promedio en base a las personas que pasaron y a el tiempo que estuvieron 
             label8.Text = $"{(lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada)) / lista_personas.Count(x => x.Minuto_Salida > 0)).TruncateDouble(2)} minutos ";
@@ -555,8 +613,7 @@ namespace TP5_Simulacion
 
             if ((double)txtDesde.Value < reloj && contador < (double)txtHasta.Value && (double)txtCantMinutos.Value >= reloj)
             {
-                gridSimulacion.Rows.Add(row);
-                contador++;
+                filas.Add(row.ToList());
             }
         }
 
