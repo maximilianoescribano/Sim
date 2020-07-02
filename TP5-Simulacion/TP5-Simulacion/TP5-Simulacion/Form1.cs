@@ -702,7 +702,7 @@ namespace TP5_Simulacion
             var ultima_fila = gridSimulacion.Rows[gridSimulacion.Rows.Count - 1].Cells;
 
             gridSimulacion.Rows.Add(new[] { "-", "Fin Simulacion", $"{txtCantMinutos.Value}",
-               "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-",  $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",
+               "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-",  $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",
                 $"{lista_personas.Count(x => x.Minuto_Salida > 0)}", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" });
 
             //grillaPersonas.Rows.Add(new[] { "-" });
