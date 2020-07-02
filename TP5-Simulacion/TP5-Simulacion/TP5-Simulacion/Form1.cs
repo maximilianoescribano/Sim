@@ -68,10 +68,10 @@ namespace TP5_Simulacion
                 new Silla(5),
             };
 
-            if (gridSimulacion.ColumnCount > 33)
+            if (gridSimulacion.ColumnCount > 30)
             {
                 var col = gridSimulacion.ColumnCount;
-                for (int i = 33; i < gridSimulacion.ColumnCount; i++)
+                for (int i = 29; i < gridSimulacion.ColumnCount; i++)
                 {
                     gridSimulacion.Columns.RemoveAt(i);
                     i--;
@@ -122,8 +122,6 @@ namespace TP5_Simulacion
                     //calcular tipo atencion 
                     var random_atencion = rnd.NextDouble().TruncateDouble(4);
                     var evento = GetTipoAtencion(random_atencion);
-
-                   
 
                     reloj = persona_proxima_llegada;
 
@@ -196,12 +194,11 @@ namespace TP5_Simulacion
                             $"{rnd_dev1}",$"{tiempo_devolver_grilla}" ,
                              $"{rnd_pr1}",$"{tiempo_retirar_grilla}" ,
                             $"{rnd_con1}",$"{tiempo_consultar_grilla}" ,
-                            $"{lista_empledos[0].GetTiempoAtencion()}", $"{lista_empledos[1].GetTiempoAtencion()}", "-", "-", "-",
+                            $"{lista_empledos[0].GetTiempoAtencion()}", $"{lista_empledos[1].GetTiempoAtencion()}", "-", "-", "-","-",
                              $"{lista_sillas[0].GetTiempoAtencion()}",$"{lista_sillas[1].GetTiempoAtencion()}", $"{lista_sillas[2].GetTiempoAtencion()}", $"{lista_sillas[3].GetTiempoAtencion()}", $"{lista_sillas[4].GetTiempoAtencion()}",
                              $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
 
-                              $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
-                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
+                              $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}"
                         };
 
                     var row2 = row.ToList();
@@ -233,6 +230,9 @@ namespace TP5_Simulacion
                     string show = "-";
                     var accion = "-";
                     double random_accion = 0;
+                    double random_cantidadHojasLibro = 0;
+                    double cantidadHojasLibro = 0;
+                    double tiempoLectura = 0;
 
                     //empleado menor tiempo
                     var empleado =
@@ -260,9 +260,15 @@ namespace TP5_Simulacion
                         //Si retiro libro analizo se se va a quedar leyendo o se retira
                         random_accion = rnd.NextDouble().TruncateDouble(4);
                         accion = GetAccionPersona(random_accion);
-                        show = accion == "Lee Biblioteca" ? txtTiempoLectura.Value.ToString() : "-";
+                        show = accion == "Lee Biblioteca" ? tiempoLectura.ToString() : "-";
                         if (accion == "Lee Biblioteca")
                         {
+
+                            random_cantidadHojasLibro = rnd.NextDouble().TruncateDouble(4);
+                            cantidadHojasLibro = GetCantidadHojasLibro(random_cantidadHojasLibro);
+                            tiempoLectura = integracionTiempoLectura(cantidadHojasLibro);
+                            show = accion == "Lee Biblioteca" ? tiempoLectura.ToString() : "-";
+
                             empleado.Atendiendo.Estado = Estado.LeyendoBiblioteca;
 
                             empleado.Atendiendo.Historico.Add(new[]
@@ -278,7 +284,7 @@ namespace TP5_Simulacion
                             }
                             silla_sentarse.Persona = empleado.Atendiendo;
                             silla_sentarse.Libre = false;
-                            silla_sentarse.TiempoFinAtencion = empleado.TiempoFinAtencion + (double)txtTiempoLectura.Value;
+                            silla_sentarse.TiempoFinAtencion = empleado.TiempoFinAtencion + (double)tiempoLectura;
                         }
                     }
 
@@ -345,12 +351,11 @@ namespace TP5_Simulacion
                             $"{rnd_dev1}",$"{tiempo_devolver_grilla}" ,
                              $"{rnd_pr1}",$"{tiempo_retirar_grilla}" ,
                             $"{rnd_con1}",$"{tiempo_consultar_grilla}" ,
-                             $"{empleado_1_time}", $"{empleado_2_time}",$"{random_accion.ToStringGrid()}", $"{accion}",  $"{show}",
+                             $"{empleado_1_time}", $"{empleado_2_time}",$"{random_accion.ToStringGrid()}", $"{accion}", $"{random_cantidadHojasLibro.ToStringGrid()}", $"{show}",
                             $"{lista_sillas[0].GetTiempoAtencion()}",$"{lista_sillas[1].GetTiempoAtencion()}", $"{lista_sillas[2].GetTiempoAtencion()}", $"{lista_sillas[3].GetTiempoAtencion()}", $"{lista_sillas[4].GetTiempoAtencion()}",
                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",
                             $"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
-                             $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count - 1}",
-                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
+                             $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count - 1}"
 
                         };
                         var row2 = row.ToList();
@@ -391,12 +396,11 @@ namespace TP5_Simulacion
                             $"{i}", $"{evento_to_show}",
                             $"{empleado.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
                             "-", "-", "-", "-", "-", "-", "-", "-",
-                            $"{empleado_1_time}", $"{empleado_2_time}",$"{random_accion.ToStringGrid()}", $"{accion}",  $"{show}",
+                            $"{empleado_1_time}", $"{empleado_2_time}",$"{random_accion.ToStringGrid()}", $"{accion}",   $"{random_cantidadHojasLibro.ToStringGrid()}", $"{show}",
                             $"{lista_sillas[0].GetTiempoAtencion()}",$"{lista_sillas[1].GetTiempoAtencion()}", $"{lista_sillas[2].GetTiempoAtencion()}", $"{lista_sillas[3].GetTiempoAtencion()}", $"{lista_sillas[4].GetTiempoAtencion()}",
                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",
                             $"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
-                              $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
-                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
+                              $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}"
                         };
 
                         var row2 = row.ToList();
@@ -473,12 +477,11 @@ namespace TP5_Simulacion
                         $"{i}", $"fin_lectura_{silla.Persona.Numero}", $"{silla.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
                         "-", $"Devolver Libro", $"{rndShow}",
                         $"{timpoAtencio}", "-", "-", "-", "-",
-                         $"{lista_empledos[0].GetTiempoAtencion()}", $"{lista_empledos[1].GetTiempoAtencion()}", "-", "-", "-",
+                         $"{lista_empledos[0].GetTiempoAtencion()}", $"{lista_empledos[1].GetTiempoAtencion()}", "-", "-", "-", "-", 
                    $"{lista_sillas[0].GetTiempoAtencion()}",$"{lista_sillas[1].GetTiempoAtencion()}", $"{lista_sillas[2].GetTiempoAtencion()}", $"{lista_sillas[3].GetTiempoAtencion()}", $"{lista_sillas[4].GetTiempoAtencion()}",
                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",
                             $"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
-                              $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}",
-                             $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
+                              $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count}"
 
                     };
 
@@ -712,6 +715,89 @@ namespace TP5_Simulacion
         {
             grillaPersonas.FirstDisplayedScrollingRowIndex = gridSimulacion.FirstDisplayedScrollingRowIndex;
         }
+
+
+        private double GetCantidadHojasLibro(double rnd)
+        {
+
+            return (Math.Truncate(100 + rnd * 250));
+        }
+
+        private void gridSimulacion_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            double cantidadHojasLeidas = 0;
+            double cantidadHojasLibro = 0;
+            double integracion = 0;
+            double constanteKLectura = 0;
+            double t = 0;
+            double hIntegracion = Convert.ToDouble(txtHIntegracion.Text);
+            double rndCantidadHojasLibro;
+            if (!double.TryParse(gridSimulacion.CurrentRow.Cells[17].Value.ToString(), out rndCantidadHojasLibro))
+                return;
+            //double rndCantidadHojasLibro = Convert.ToDouble(gridSimulacion.CurrentRow.Cells[17].Value);
+            Form2 frm = new Form2();
+            cantidadHojasLibro = GetCantidadHojasLibro(rndCantidadHojasLibro);
+            if (cantidadHojasLibro < 200)
+            {
+                constanteKLectura = 100;
+            }
+            else if (cantidadHojasLibro >= 200 && cantidadHojasLibro < 300)
+            {
+                constanteKLectura = 200;
+            }
+            else
+            {
+                constanteKLectura = 300;
+            }
+
+            for (int i = 0; cantidadHojasLeidas < cantidadHojasLibro; i++)
+            {
+                frm.gridEuler.Rows.Add();
+                frm.gridEuler.Rows[i].Cells[0].Value = t;
+                frm.gridEuler.Rows[i].Cells[1].Value = cantidadHojasLeidas;
+                integracion = constanteKLectura / 5;
+                frm.gridEuler.Rows[i].Cells[2].Value = integracion;
+                t = Math.Round((t + hIntegracion), 4);
+                frm.gridEuler.Rows[i].Cells[3].Value = t;
+                cantidadHojasLeidas = cantidadHojasLeidas + hIntegracion * integracion;
+                frm.gridEuler.Rows[i].Cells[4].Value = cantidadHojasLeidas;
+            }
+
+            frm.txtHIntegracion.Text = txtHIntegracion.Text;
+            frm.lblCantHojasLibro.Text = cantidadHojasLibro.ToString();
+            frm.Show();
+        }
+
+        private double integracionTiempoLectura(double cantidadHojasLibro)
+        {
+            double integracion = 0;
+            double tiempoLectura = 0;
+            double constanteKLectura = 0;
+            double cantidadHojasLeidas = 0;
+            double t = 0;
+            double hIntegracion = Convert.ToDouble(txtHIntegracion.Text);
+            if (cantidadHojasLibro < 200)
+            {
+                constanteKLectura = 100;
+            }
+            else if (cantidadHojasLibro >= 200 && cantidadHojasLibro < 300)
+            {
+                constanteKLectura = 200;
+            }
+            else
+            {
+                constanteKLectura = 300;
+            }
+            while (cantidadHojasLeidas < cantidadHojasLibro)
+            {
+                integracion = constanteKLectura / 5;
+                cantidadHojasLeidas = cantidadHojasLeidas + hIntegracion * integracion;
+                t = Math.Round((t + hIntegracion), 4);
+            }
+            tiempoLectura = t * 10;
+            return tiempoLectura;
+        }
+
     }
 
     public static class Helpers
