@@ -16,7 +16,7 @@ namespace TP5_Simulacion
     {
 
         List<Persona> lista_personas;
-        private List<List<string>> filas;
+        private DataTable personasGrilla;
 
         private int contador;
 
@@ -33,15 +33,17 @@ namespace TP5_Simulacion
 
         private void Simular()
         {
-            filas = new List<List<string>>();
-            if (lista_personas != null)
-            {
-                foreach (var persona in lista_personas)
-                {
-                    if (gridSimulacion.Columns.Contains($"persona{persona.Numero}"))
-                        gridSimulacion.Columns.Remove($"persona{persona.Numero}");
-                }
-            }
+            personasGrilla = new DataTable();
+            grillaPersonas.BackgroundColor = Color.White;
+            grillaPersonas.RowHeadersVisible = false;
+            //if (lista_personas != null)
+            //{
+            //    foreach (var persona in lista_personas)
+            //    {
+            //        if (gridSimulacion.Columns.Contains($"persona{persona.Numero}"))
+            //            gridSimulacion.Columns.Remove($"persona{persona.Numero}");
+            //    }
+            //}
 
             lista_personas = new List<Persona>();
             contador = 0;
@@ -66,7 +68,15 @@ namespace TP5_Simulacion
                 new Silla(5),
             };
 
-            
+            if (gridSimulacion.ColumnCount > 33)
+            {
+                var col = gridSimulacion.ColumnCount;
+                for (int i = 33; i < gridSimulacion.ColumnCount; i++)
+                {
+                    gridSimulacion.Columns.RemoveAt(i);
+                    i--;
+                }
+            }
 
             var reloj = (double)txtEntradaPersonas.Value;
 
@@ -75,10 +85,13 @@ namespace TP5_Simulacion
             var persona_proxima_llegada = persona_ultima_llegada + reloj;
 
             gridSimulacion.Rows.Clear();
+            grillaPersonas.DataSource = null;
 
             var rnd = new Random();
 
             gridSimulacion.Rows.Add(new[] { "0", "Inicializacion", "0", $"{txtEntradaPersonas.Value}", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" });
+            personasGrilla.Columns.Add(new DataColumn("Fila"));
+            personasGrilla.Rows.Add(new[] { "0" });
 
             var num_persona = 1;
 
@@ -86,6 +99,7 @@ namespace TP5_Simulacion
 
             for (int i = 1; i < txtCantMinutos.Value; i++)
             {
+                double rnd_dev = 0, rnd_pr = 0, rnd_con = 0;
 
                 if ((double)txtDesde.Value < reloj && contador < (double)txtHasta.Value && (double)txtCantMinutos.Value >= reloj)
                 {
@@ -109,7 +123,7 @@ namespace TP5_Simulacion
                     var random_atencion = rnd.NextDouble().TruncateDouble(4);
                     var evento = GetTipoAtencion(random_atencion);
 
-                    double rnd_dev = 0, rnd_pr = 0, rnd_con = 0;
+                   
 
                     reloj = persona_proxima_llegada;
 
@@ -142,8 +156,8 @@ namespace TP5_Simulacion
                         tiempo_atencion = GetTiempoAtencionConsulta(rnd_con);
                         persona.Estado = Estado.AtendidoConsulta;
                     }
-
-                    persona.Evento_tiempo = tiempo_atencion;
+                    if(!cola_empleado.Any())
+                        persona.Evento_tiempo = tiempo_atencion;
                     //chekeo algun empleado libre para atenderlo y lo asigno
                     var empleado_libre = lista_empledos.FirstOrDefault(x => x.Libre);
 
@@ -164,18 +178,24 @@ namespace TP5_Simulacion
                         cola_empleado.Add(persona);
                     }
 
-                    var tiempo_devolver_grilla = rnd_dev == 0 ? "-" : tiempo_atencion.ToStringGrid();
-                    var tiempo_retirar_grilla = rnd_pr == 0 ? "-" : tiempo_atencion.ToStringGrid();
-                    var tiempo_consultar_grilla = rnd_con == 0 ? "-" : tiempo_atencion.ToStringGrid();
+                    var cola = cola_empleado.Any();
+                    var tiempo_devolver_grilla = ( rnd_dev == 0 || cola) ? "-" : tiempo_atencion.ToStringGrid();
+                    var tiempo_retirar_grilla = (  rnd_pr == 0 || cola) ? "-" : tiempo_atencion.ToStringGrid();
+                    var tiempo_consultar_grilla = (rnd_con == 0 || cola) ? "-" : tiempo_atencion.ToStringGrid();
+
+                    var rnd_dev1 = (rnd_dev == 0 || cola) ? "-" : rnd_dev.ToStringGrid();
+                    var rnd_pr1 = (rnd_pr == 0 || cola) ? "-" : rnd_pr.ToStringGrid();
+                    var rnd_con1 = (rnd_con == 0 || cola) ? "-" : rnd_con.ToStringGrid();
+
 
                     //genero fila de la grilla
                     var row = new[]
                       {
                             $"{i}", $"llega_persona_{persona.Numero}", $"{reloj}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada+ (double)txtEntradaPersonas.Value}",
                             $"{random_atencion}", $"{evento}",
-                            $"{rnd_dev.ToStringGrid()}",$"{tiempo_devolver_grilla}" ,
-                             $"{rnd_pr.ToStringGrid()}",$"{tiempo_retirar_grilla}" ,
-                            $"{rnd_con.ToStringGrid()}",$"{tiempo_consultar_grilla}" ,
+                            $"{rnd_dev1}",$"{tiempo_devolver_grilla}" ,
+                             $"{rnd_pr1}",$"{tiempo_retirar_grilla}" ,
+                            $"{rnd_con1}",$"{tiempo_consultar_grilla}" ,
                             $"{lista_empledos[0].GetTiempoAtencion()}", $"{lista_empledos[1].GetTiempoAtencion()}", "-", "-", "-",
                              $"{lista_sillas[0].GetTiempoAtencion()}",$"{lista_sillas[1].GetTiempoAtencion()}", $"{lista_sillas[2].GetTiempoAtencion()}", $"{lista_sillas[3].GetTiempoAtencion()}", $"{lista_sillas[4].GetTiempoAtencion()}",
                              $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",$"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
@@ -184,11 +204,15 @@ namespace TP5_Simulacion
                              $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
                         };
 
-                    var new_row = row.ToList();
-                    new_row.AddRange(lista_personas.Select(x =>
+                    var row2 = row.ToList();
+                    row2.AddRange(lista_sillas.Skip(5).Select(x => x.GetTiempoAtencion()));
+
+
+                    var new_row = lista_personas.Select(x =>
                             x.Minuto_Salida == 0  ?
-                    $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList());
-                    AddRowsToGrid(reloj, new_row.ToArray());
+                    $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList();
+                    new_row.Insert(0, i.ToString());
+                    AddRowsToGrid(reloj, row2.ToArray(),new_row.ToArray());
                     //agrego al historico de la persona y veo el agreog el proximo evento
                     persona.Historico.Add(new[] { reloj.ToString(), persona.Minuto_llegada.ToString(), persona.Estado.ToString() });
                     persona_proxima_llegada = persona_proxima_llegada + (double)txtEntradaPersonas.Value;
@@ -249,6 +273,8 @@ namespace TP5_Simulacion
                             {
                                 silla_sentarse = new Silla(lista_sillas.Count);
                                 lista_sillas.Add(silla_sentarse);
+                                gridSimulacion.Columns.Add($"silla_{lista_sillas.Count}", $"Silla {lista_sillas.Count}");
+
                             }
                             silla_sentarse.Persona = empleado.Atendiendo;
                             silla_sentarse.Libre = false;
@@ -268,16 +294,30 @@ namespace TP5_Simulacion
                     if (cola_empleado.Any())
                     {
                         var esperando = cola_empleado.First();
-
+                        
                         esperando.Historico.Add(new[]
                             {reloj.ToString(), esperando.Minuto_llegada.ToString(), esperando.Estado.ToString()});
 
                         if (esperando.Estado == Estado.EsperandoAtencionConsulta)
+                        {
+                            rnd_con = rnd.NextDouble().TruncateDouble(4);
+                            tiempo_atencion = GetTiempoAtencionConsulta(rnd_con);
                             esperando.Estado = Estado.AtendidoConsulta;
+                        }
+                            
                         if (esperando.Estado == Estado.EsperandoAtencionDevolucion)
+                        {
+                            rnd_dev = GetRandomSum();
+                            tiempo_atencion = GetTiempoAtencionDevolucion(rnd_dev);
                             esperando.Estado = Estado.AtendidoDevolucionLibro;
+                        }
+
                         if (esperando.Estado == Estado.EsperandoAtencionRetirar)
+                        {
+                            rnd_pr = rnd.NextDouble().TruncateDouble(4);
+                            tiempo_atencion = GetTiempoAtencionPrestamo(rnd_pr);
                             esperando.Estado = Estado.AtendidoRetirarLibro;
+                        }
 
                         var empleado_1_time = empleado.Numero == 1
                             ? empleado.TiempoFinAtencion + esperando.Evento_tiempo
@@ -289,24 +329,38 @@ namespace TP5_Simulacion
 
                         empleado.Libre = false;
 
+                        var tiempo_devolver_grilla = rnd_dev == 0 ? "-" : tiempo_atencion.ToStringGrid();
+                        var tiempo_retirar_grilla = rnd_pr == 0 ? "-" : tiempo_atencion.ToStringGrid();
+                        var tiempo_consultar_grilla = rnd_con == 0 ? "-" : tiempo_atencion.ToStringGrid();
+
+                        var rnd_dev1 = rnd_dev == 0 ? "-" : rnd_dev.ToStringGrid();
+                        var rnd_pr1 = rnd_pr == 0 ? "-" : rnd_pr.ToStringGrid();
+                        var rnd_con1 = rnd_con == 0 ? "-" : rnd_con.ToStringGrid();
+
                         var row = new[]
                          {
                             $"{i}", $"{evento_to_show}",
                             $"{empleado.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
-                            "-", "-", "-", "-", "-", "-", "-", "-",
+                            "-", "-",
+                            $"{rnd_dev1}",$"{tiempo_devolver_grilla}" ,
+                             $"{rnd_pr1}",$"{tiempo_retirar_grilla}" ,
+                            $"{rnd_con1}",$"{tiempo_consultar_grilla}" ,
                              $"{empleado_1_time}", $"{empleado_2_time}",$"{random_accion.ToStringGrid()}", $"{accion}",  $"{show}",
                             $"{lista_sillas[0].GetTiempoAtencion()}",$"{lista_sillas[1].GetTiempoAtencion()}", $"{lista_sillas[2].GetTiempoAtencion()}", $"{lista_sillas[3].GetTiempoAtencion()}", $"{lista_sillas[4].GetTiempoAtencion()}",
                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",
                             $"{lista_personas.Count(x => x.Minuto_Salida > 0)}",
                              $"{lista_empledos[0].GetEstado()}",$"{lista_empledos[1].GetEstado()}", $"{cola_empleado.Count - 1}",
                              $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
-                        };
 
-                        var new_row = row.ToList();
-                        new_row.AddRange(lista_personas.Select(x =>
+                        };
+                        var row2 = row.ToList();
+                        row2.AddRange(lista_sillas.Skip(5).Select(x => x.GetTiempoAtencion()));
+                       
+                        var new_row = lista_personas.Select(x =>
                                x.Minuto_Salida == 0  ?
-                      $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList());
-                        AddRowsToGrid(reloj, new_row.ToArray());
+                      $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList();
+                        new_row.Insert(0, i.ToString());
+                        AddRowsToGrid(reloj, row2.ToArray(), new_row.ToArray());
 
                         //check
                         reloj = empleado.TiempoFinAtencion;
@@ -345,11 +399,14 @@ namespace TP5_Simulacion
                              $"{lista_sillas[0].GetEstado()}",$"{lista_sillas[1].GetEstado()}", $"{lista_sillas[2].GetEstado()}", $"{lista_sillas[3].GetEstado()}", $"{lista_sillas[4].GetEstado()}"
                         };
 
-                        var new_row = row.ToList();
-                        new_row.AddRange(lista_personas.Select(x =>
+                        var row2 = row.ToList();
+                        row2.AddRange(lista_sillas.Skip(5).Select(x => x.GetTiempoAtencion()));
+
+                        var new_row = lista_personas.Select(x =>
                               x.Minuto_Salida == 0  ?
-                     $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList());
-                        AddRowsToGrid(reloj, new_row.ToArray());
+                     $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList();
+                        new_row.Insert(0, i.ToString());
+                        AddRowsToGrid(reloj, row2.ToArray() ,new_row.ToArray());
                         //check
                         reloj = empleado.TiempoFinAtencion;
                     }
@@ -378,10 +435,8 @@ namespace TP5_Simulacion
                     break;
                 }
 
-                var rnd_rl1 = GetRandomSum();
-                tiempo_atencion = GetTiempoAtencionDevolucion(rnd_rl1);
+                double rnd_rl1 = 0; 
 
-                silla.Persona.Evento_tiempo = tiempo_atencion;
                 silla.Persona.Estado = Estado.AtendidoDevolucionLibro;
                 silla.Persona.Historico.Add(new[] { reloj.ToString(), silla.Persona.Minuto_llegada.ToString(), silla.Persona.Estado.ToString() });
 
@@ -390,13 +445,15 @@ namespace TP5_Simulacion
 
                 if (empleado_libre_silla != null)
                 {
+                    rnd_rl1 = GetRandomSum();
+                    tiempo_atencion = GetTiempoAtencionDevolucion(rnd_rl1);
+                    silla.Persona.Evento_tiempo = tiempo_atencion;
                     empleado_libre_silla.Libre = false;
                     empleado_libre_silla.TiempoFinAtencion = reloj + tiempo_atencion;
                     empleado_libre_silla.Atendiendo = silla.Persona;
                 }
                 else //no hay empleados libres mando a cola y cambio estado
                 {
-
                     silla.Persona.Estado = (silla.Persona.Estado == Estado.AtendidoDevolucionLibro)
                         ? Estado.EsperandoAtencionDevolucion
                         : (silla.Persona.Estado == Estado.AtendidoConsulta
@@ -407,11 +464,15 @@ namespace TP5_Simulacion
 
                 silla.Libre = true;
 
+                var rndShow = rnd_rl1.ToStringGrid();
+
+                var timpoAtencio = rnd_rl1 == 0 ? "-" : tiempo_atencion.ToStringGrid();
+
                 var row1 = new[]
                     {
                         $"{i}", $"fin_lectura_{silla.Persona.Numero}", $"{silla.TiempoFinAtencion}", $"{txtEntradaPersonas.Value}", $"{persona_proxima_llegada}",
-                        "-", $"Devolver Libro", $"{rnd_rl1}",
-                        $"{tiempo_atencion}", "-", "-", "-", "-",
+                        "-", $"Devolver Libro", $"{rndShow}",
+                        $"{timpoAtencio}", "-", "-", "-", "-",
                          $"{lista_empledos[0].GetTiempoAtencion()}", $"{lista_empledos[1].GetTiempoAtencion()}", "-", "-", "-",
                    $"{lista_sillas[0].GetTiempoAtencion()}",$"{lista_sillas[1].GetTiempoAtencion()}", $"{lista_sillas[2].GetTiempoAtencion()}", $"{lista_sillas[3].GetTiempoAtencion()}", $"{lista_sillas[4].GetTiempoAtencion()}",
                             $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida - x.Minuto_llegada))}",
@@ -421,11 +482,15 @@ namespace TP5_Simulacion
 
                     };
 
-                var new_row1 = row1.ToList();
-                new_row1.AddRange(lista_personas.Select(x =>
+                var row3 = row1.ToList();
+                row3.AddRange(lista_sillas.Skip(5).Select(x => x.GetTiempoAtencion()));
+
+
+                var new_row1 = lista_personas.Select(x =>
                      x.Minuto_Salida == 0 ?
-                      $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList());
-                AddRowsToGrid(reloj, new_row1.ToArray());
+                      $"{x.Numero} | {x.Minuto_llegada} | {x.Estado}" : " ").ToList();
+                new_row1.Insert(0,i.ToString());
+                AddRowsToGrid(reloj, row3.ToArray(), new_row1.ToArray());
                 //check
                 reloj = silla.TiempoFinAtencion;
                 silla.Persona = null;
@@ -439,29 +504,21 @@ namespace TP5_Simulacion
 
             }
 
-
-          
-
-            foreach (var fila in filas)
+           
+            personasGrilla.Rows.Add(new[] {"-"});
+            var columns = personasGrilla.Columns.Count;
+            for (int i = 0; i < columns; i++)
             {
-                for (int i = 0; filas.Last().Count - fila.Count != 0; i++)
-                    fila.Add(" ");
+                if (
+                    personasGrilla.Rows.Cast<DataRow>()
+                        .All(x => x[i].ToString() == " " || x[i].ToString() == String.Empty))
+                {
+                    columns--;
+                    personasGrilla.Columns.RemoveAt(i);
+                    i--;
+                }
             }
-
-            for (int i = 33; i < filas.Last().Count; i++)
-            {
-                var test = filas.All(x => x[i] == " ");
-                if(test)
-                    filas.ForEach(x => x.RemoveAt(i));
-                else
-                    gridSimulacion.Columns.Add($"persona{i - 32}", $"Persona {i - 32}");
-            }
-
-            foreach (var fila in filas)
-            {
-                gridSimulacion.Rows.Add(fila.ToArray());
-            }
-
+            grillaPersonas.DataSource = personasGrilla;
             Fin_simulacion();
 
 
@@ -608,12 +665,31 @@ namespace TP5_Simulacion
 
         }
 
-        private void AddRowsToGrid(double reloj, string[] row)
+        private void AddRowsToGrid(double reloj, string[] row, string[] personas)
         {
-
-            if ((double)txtDesde.Value < reloj && contador < (double)txtHasta.Value && (double)txtCantMinutos.Value >= reloj)
+           
+            if ((double)txtDesde.Value <= reloj && contador < (double)txtHasta.Value && (double)txtCantMinutos.Value >= reloj)
             {
-                filas.Add(row.ToList());
+                // filas.Add(row.ToList());
+                gridSimulacion.Rows.Add(row);
+
+                if (personas.Length > personasGrilla.Columns.Count)
+                {
+                    for (int i = personasGrilla.Columns.Count; i < personas.Length; i++)
+                    {
+                        personasGrilla.Columns.Add( new DataColumn($"Persona_{i}"));
+                    }
+                }
+
+                personasGrilla.Rows.Add(personas);
+                //if (personas.Length > grillaPersonas.ColumnCount)
+                //{
+                //    for (int i = grillaPersonas.ColumnCount; i < personas.Length; i++)
+                //    {
+                //        grillaPersonas.Columns.Add($"{i}", $"Persona {i}");
+                //    }
+                //}
+                //grillaPersonas.Rows.Add(personas);
             }
         }
 
@@ -626,8 +702,15 @@ namespace TP5_Simulacion
                "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-",  $"{lista_personas.Where(x => x.Minuto_Salida > 0).Sum(x => (x.Minuto_Salida-x.Minuto_llegada))}",
                 $"{lista_personas.Count(x => x.Minuto_Salida > 0)}", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-" });
 
+            //grillaPersonas.Rows.Add(new[] { "-" });
 
 
+
+        }
+
+        private void gridSimulacion_Scroll(object sender, ScrollEventArgs e)
+        {
+            grillaPersonas.FirstDisplayedScrollingRowIndex = gridSimulacion.FirstDisplayedScrollingRowIndex;
         }
     }
 
